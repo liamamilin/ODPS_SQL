@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 DQL操作（SELECT） | ODPS SQL</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 DQL操作（SELECT） | ODPS SQL" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 DQL操作（SELECT） | ODPS SQL" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="米霖" />
+
+
+<meta name="date" content="2024-01-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dml-data-manipulation-language.html"/>
+<link rel="next" href="日期与时间函数.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ODPS SQL</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#odps-sql-的特点"><i class="fa fa-check"></i><b>1.1</b> ODPS SQL 的特点</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#应用场景"><i class="fa fa-check"></i><b>1.2</b> 应用场景</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#odps-sql-与其他-sql-的比较"><i class="fa fa-check"></i><b>1.3</b> ODPS SQL 与其他 SQL 的比较</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="基本语法.html"><a href="基本语法.html"><i class="fa fa-check"></i><b>2</b> 基本语法</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="基本语法.html"><a href="基本语法.html#运算符"><i class="fa fa-check"></i><b>2.1</b> 运算符</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符"><i class="fa fa-check"></i><b>2.1.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.1.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符"><i class="fa fa-check"></i><b>2.1.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.1.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符"><i class="fa fa-check"></i><b>2.1.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.1.4" data-path="基本语法.html"><a href="基本语法.html#位运算符"><i class="fa fa-check"></i><b>2.1.4</b> 位运算符</a></li>
+<li class="chapter" data-level="2.1.5" data-path="基本语法.html"><a href="基本语法.html#其他运算符"><i class="fa fa-check"></i><b>2.1.5</b> 其他运算符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符"><i class="fa fa-check"></i><b>2.2</b> 转义字符</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="基本语法.html"><a href="基本语法.html#转义字符列表"><i class="fa fa-check"></i><b>2.2.1</b> 转义字符列表</a></li>
+<li class="chapter" data-level="2.2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符的重要性"><i class="fa fa-check"></i><b>2.2.2</b> 转义字符的重要性</a></li>
+<li class="chapter" data-level="2.2.3" data-path="基本语法.html"><a href="基本语法.html#注意事项"><i class="fa fa-check"></i><b>2.2.3</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="基本语法.html"><a href="基本语法.html#like-匹配符"><i class="fa fa-check"></i><b>2.3</b> LIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="基本语法.html"><a href="基本语法.html#like-匹配符的使用"><i class="fa fa-check"></i><b>2.3.1</b> LIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.3.2" data-path="基本语法.html"><a href="基本语法.html#示例"><i class="fa fa-check"></i><b>2.3.2</b> 示例</a></li>
+<li class="chapter" data-level="2.3.3" data-path="基本语法.html"><a href="基本语法.html#like-的高级用法"><i class="fa fa-check"></i><b>2.3.3</b> LIKE 的高级用法</a></li>
+<li class="chapter" data-level="2.3.4" data-path="基本语法.html"><a href="基本语法.html#使用-like-时的注意事项"><i class="fa fa-check"></i><b>2.3.4</b> 使用 LIKE 时的注意事项</a></li>
+<li class="chapter" data-level="2.3.5" data-path="基本语法.html"><a href="基本语法.html#转义字符在-like-中的应用"><i class="fa fa-check"></i><b>2.3.5</b> 转义字符在 LIKE 中的应用</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符"><i class="fa fa-check"></i><b>2.4</b> RLIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符的使用"><i class="fa fa-check"></i><b>2.4.1</b> RLIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.4.2" data-path="基本语法.html"><a href="基本语法.html#rlike-高级元字符"><i class="fa fa-check"></i><b>2.4.2</b> RLIKE 高级元字符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="基本语法.html"><a href="基本语法.html#odps-sql-保留字与关键字"><i class="fa fa-check"></i><b>2.5</b> ODPS SQL 保留字与关键字</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符-1"><i class="fa fa-check"></i><b>2.5.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.5.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符-1"><i class="fa fa-check"></i><b>2.5.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.5.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符-1"><i class="fa fa-check"></i><b>2.5.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.5.4" data-path="基本语法.html"><a href="基本语法.html#数据类型"><i class="fa fa-check"></i><b>2.5.4</b> 数据类型</a></li>
+<li class="chapter" data-level="2.5.5" data-path="基本语法.html"><a href="基本语法.html#数据定义语言-ddl"><i class="fa fa-check"></i><b>2.5.5</b> 数据定义语言 (DDL)</a></li>
+<li class="chapter" data-level="2.5.6" data-path="基本语法.html"><a href="基本语法.html#数据操作语言-dml"><i class="fa fa-check"></i><b>2.5.6</b> 数据操作语言 (DML)</a></li>
+<li class="chapter" data-level="2.5.7" data-path="基本语法.html"><a href="基本语法.html#其他关键字"><i class="fa fa-check"></i><b>2.5.7</b> 其他关键字</a></li>
+<li class="chapter" data-level="2.5.8" data-path="基本语法.html"><a href="基本语法.html#集合操作"><i class="fa fa-check"></i><b>2.5.8</b> 集合操作</a></li>
+<li class="chapter" data-level="2.5.9" data-path="基本语法.html"><a href="基本语法.html#窗口函数"><i class="fa fa-check"></i><b>2.5.9</b> 窗口函数</a></li>
+<li class="chapter" data-level="2.5.10" data-path="基本语法.html"><a href="基本语法.html#子查询"><i class="fa fa-check"></i><b>2.5.10</b> 子查询</a></li>
+<li class="chapter" data-level="2.5.11" data-path="基本语法.html"><a href="基本语法.html#连接"><i class="fa fa-check"></i><b>2.5.11</b> 连接</a></li>
+<li class="chapter" data-level="2.5.12" data-path="基本语法.html"><a href="基本语法.html#条件表达式"><i class="fa fa-check"></i><b>2.5.12</b> 条件表达式</a></li>
+<li class="chapter" data-level="2.5.13" data-path="基本语法.html"><a href="基本语法.html#聚合函数"><i class="fa fa-check"></i><b>2.5.13</b> 聚合函数</a></li>
+<li class="chapter" data-level="2.5.14" data-path="基本语法.html"><a href="基本语法.html#数据导入导出"><i class="fa fa-check"></i><b>2.5.14</b> 数据导入导出</a></li>
+<li class="chapter" data-level="2.5.15" data-path="基本语法.html"><a href="基本语法.html#事务控制"><i class="fa fa-check"></i><b>2.5.15</b> 事务控制</a></li>
+<li class="chapter" data-level="2.5.16" data-path="基本语法.html"><a href="基本语法.html#权限管理"><i class="fa fa-check"></i><b>2.5.16</b> 权限管理</a></li>
+<li class="chapter" data-level="2.5.17" data-path="基本语法.html"><a href="基本语法.html#系统管理"><i class="fa fa-check"></i><b>2.5.17</b> 系统管理</a></li>
+<li class="chapter" data-level="2.5.18" data-path="基本语法.html"><a href="基本语法.html#分区管理"><i class="fa fa-check"></i><b>2.5.18</b> 分区管理</a></li>
+<li class="chapter" data-level="2.5.19" data-path="基本语法.html"><a href="基本语法.html#排序和分组"><i class="fa fa-check"></i><b>2.5.19</b> 排序和分组</a></li>
+<li class="chapter" data-level="2.5.20" data-path="基本语法.html"><a href="基本语法.html#约束和索引"><i class="fa fa-check"></i><b>2.5.20</b> 约束和索引</a></li>
+<li class="chapter" data-level="2.5.21" data-path="基本语法.html"><a href="基本语法.html#视图和临时表"><i class="fa fa-check"></i><b>2.5.21</b> 视图和临时表</a></li>
+<li class="chapter" data-level="2.5.22" data-path="基本语法.html"><a href="基本语法.html#函数和过程"><i class="fa fa-check"></i><b>2.5.22</b> 函数和过程</a></li>
+<li class="chapter" data-level="2.5.23" data-path="基本语法.html"><a href="基本语法.html#其他关键字-1"><i class="fa fa-check"></i><b>2.5.23</b> 其他关键字</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="基本语法.html"><a href="基本语法.html#数据类型转换"><i class="fa fa-check"></i><b>2.6</b> 数据类型转换</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html"><i class="fa fa-check"></i><b>3</b> DDL (Data Definition Language)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#表操作"><i class="fa fa-check"></i><b>3.1</b> 表操作</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#创建表create-table"><i class="fa fa-check"></i><b>3.1.1</b> 创建表（Create Table）</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的所有权alter-table-owner"><i class="fa fa-check"></i><b>3.1.2</b> 修改表的所有权（Alter Table Owner）</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的生命周期alter-table-lifecycle"><i class="fa fa-check"></i><b>3.1.3</b> 修改表的生命周期（Alter Table Lifecycle）</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除表drop-table"><i class="fa fa-check"></i><b>3.1.4</b> 删除表（Drop Table）</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#查看表的详细信息describe-table"><i class="fa fa-check"></i><b>3.1.5</b> 查看表的详细信息（Describe Table）</a></li>
+<li class="chapter" data-level="3.1.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的元数据list-table"><i class="fa fa-check"></i><b>3.1.6</b> 获取表的元数据（List Table）</a></li>
+<li class="chapter" data-level="3.1.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的分区信息list-partitions"><i class="fa fa-check"></i><b>3.1.7</b> 获取表的分区信息（List Partitions）</a></li>
+<li class="chapter" data-level="3.1.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的注释"><i class="fa fa-check"></i><b>3.1.8</b> 修改表的注释</a></li>
+<li class="chapter" data-level="3.1.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#重命名表"><i class="fa fa-check"></i><b>3.1.9</b> 重命名表</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#分区和列操作"><i class="fa fa-check"></i><b>3.2</b> 分区和列操作</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#新增分区"><i class="fa fa-check"></i><b>3.2.1</b> 新增分区</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除分区"><i class="fa fa-check"></i><b>3.2.2</b> 删除分区</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改分区"><i class="fa fa-check"></i><b>3.2.3</b> 修改分区</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#合并分区"><i class="fa fa-check"></i><b>3.2.4</b> 合并分区</a></li>
+<li class="chapter" data-level="3.2.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#清空分区数据"><i class="fa fa-check"></i><b>3.2.5</b> 清空分区数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#添加列或注释"><i class="fa fa-check"></i><b>3.2.6</b> 添加列或注释</a></li>
+<li class="chapter" data-level="3.2.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除列"><i class="fa fa-check"></i><b>3.2.7</b> 删除列</a></li>
+<li class="chapter" data-level="3.2.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#更改列数据类型"><i class="fa fa-check"></i><b>3.2.8</b> 更改列数据类型</a></li>
+<li class="chapter" data-level="3.2.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列的顺序"><i class="fa fa-check"></i><b>3.2.9</b> 修改列的顺序</a></li>
+<li class="chapter" data-level="3.2.10" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名"><i class="fa fa-check"></i><b>3.2.10</b> 修改列名</a></li>
+<li class="chapter" data-level="3.2.11" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列注释"><i class="fa fa-check"></i><b>3.2.11</b> 修改列注释</a></li>
+<li class="chapter" data-level="3.2.12" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名及注释"><i class="fa fa-check"></i><b>3.2.12</b> 修改列名及注释</a></li>
+<li class="chapter" data-level="3.2.13" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的列非空属性"><i class="fa fa-check"></i><b>3.2.13</b> 修改表的列非空属性</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期操作"><i class="fa fa-check"></i><b>3.3</b> 生命周期操作</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期概念"><i class="fa fa-check"></i><b>3.3.1</b> 生命周期概念</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#设置生命周期"><i class="fa fa-check"></i><b>3.3.2</b> 设置生命周期</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#禁止或恢复生命周期"><i class="fa fa-check"></i><b>3.3.3</b> 禁止或恢复生命周期</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#注意事项-1"><i class="fa fa-check"></i><b>3.3.4</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作"><i class="fa fa-check"></i><b>3.4</b> 视图操作</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作命令"><i class="fa fa-check"></i><b>3.4.1</b> 视图操作命令</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html"><i class="fa fa-check"></i><b>4</b> DML (Data Manipulation Language)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写数据insert-into-insert-overwrite"><i class="fa fa-check"></i><b>4.1</b> 插入或覆写数据（INSERT INTO | INSERT OVERWRITE）</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件"><i class="fa fa-check"></i><b>4.1.1</b> 前提条件</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍"><i class="fa fa-check"></i><b>4.1.2</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制"><i class="fa fa-check"></i><b>4.1.3</b> 使用限制</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式"><i class="fa fa-check"></i><b>4.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="4.1.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例"><i class="fa fa-check"></i><b>4.1.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写动态分区数据dynamic-partition"><i class="fa fa-check"></i><b>4.2</b> 插入或覆写动态分区数据（DYNAMIC PARTITION）</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入数据到表格"><i class="fa fa-check"></i><b>4.2.1</b> 插入数据到表格</a></li>
+<li class="chapter" data-level="4.2.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-1"><i class="fa fa-check"></i><b>4.2.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新或删除数据update-delete"><i class="fa fa-check"></i><b>4.3</b> 更新或删除数据（UPDATE | DELETE）</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#删除数据delete"><i class="fa fa-check"></i><b>4.3.1</b> 删除数据（DELETE）</a></li>
+<li class="chapter" data-level="4.3.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-2"><i class="fa fa-check"></i><b>4.3.2</b> 使用示例</a></li>
+<li class="chapter" data-level="4.3.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#清空列数据"><i class="fa fa-check"></i><b>4.3.3</b> 清空列数据</a></li>
+<li class="chapter" data-level="4.3.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新数据update"><i class="fa fa-check"></i><b>4.3.4</b> 更新数据（UPDATE）</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#merge-into"><i class="fa fa-check"></i><b>4.4</b> MERGE INTO</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-3"><i class="fa fa-check"></i><b>4.4.1</b> 命令格式</a></li>
+<li class="chapter" data-level="4.4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-4"><i class="fa fa-check"></i><b>4.4.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#多路输出multi-insert"><i class="fa fa-check"></i><b>4.5</b> 多路输出（MULTI INSERT）</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令解释"><i class="fa fa-check"></i><b>4.5.1</b> 命令解释</a></li>
+<li class="chapter" data-level="4.5.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#用法说明"><i class="fa fa-check"></i><b>4.5.2</b> 用法说明</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#values"><i class="fa fa-check"></i><b>4.6</b> VALUES</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例1通过-insert-values-操作向特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.1</b> 示例1：通过 <code>insert … values</code> 操作向特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例2通过-insert-values-操作向非特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.2</b> 示例2：通过 <code>insert … values</code> 操作向非特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例3使用复杂数据类型构造常量通过-insert-操作导入数据"><i class="fa fa-check"></i><b>4.6.3</b> 示例3：使用复杂数据类型构造常量，通过 <code>insert</code> 操作导入数据</a></li>
+<li class="chapter" data-level="4.6.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例4通过-insert-values-操作写入-datetime-或-timestamp-数据类型"><i class="fa fa-check"></i><b>4.6.4</b> 示例4：通过 <code>insert … values</code> 操作写入 DATETIME 或 TIMESTAMP 数据类型</a></li>
+<li class="chapter" data-level="4.6.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例5通过-values-table-操作插入数据"><i class="fa fa-check"></i><b>4.6.5</b> 示例5：通过 <code>values table</code> 操作插入数据</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load"><i class="fa fa-check"></i><b>4.7</b> LOAD</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-1"><i class="fa fa-check"></i><b>4.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.7.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制-1"><i class="fa fa-check"></i><b>4.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="4.7.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件-1"><i class="fa fa-check"></i><b>4.7.3</b> 前提条件</a></li>
+<li class="chapter" data-level="4.7.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load命令示例"><i class="fa fa-check"></i><b>4.7.4</b> LOAD命令示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#cte公用表表达式介绍"><i class="fa fa-check"></i><b>4.8</b> CTE（公用表表达式）介绍</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-2"><i class="fa fa-check"></i><b>4.8.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.8.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-4"><i class="fa fa-check"></i><b>4.8.2</b> 命令格式</a></li>
+<li class="chapter" data-level="4.8.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-5"><i class="fa fa-check"></i><b>4.8.3</b> 使用示例</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dql操作select.html"><a href="dql操作select.html"><i class="fa fa-check"></i><b>5</b> DQL操作（SELECT）</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="dql操作select.html"><a href="dql操作select.html#select语法"><i class="fa fa-check"></i><b>5.1</b> SELECT语法</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-3"><i class="fa fa-check"></i><b>5.1.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.1.2" data-path="dql操作select.html"><a href="dql操作select.html#类型与功能"><i class="fa fa-check"></i><b>5.1.2</b> 类型与功能</a></li>
+<li class="chapter" data-level="5.1.3" data-path="dql操作select.html"><a href="dql操作select.html#说明"><i class="fa fa-check"></i><b>5.1.3</b> 说明</a></li>
+<li class="chapter" data-level="5.1.4" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-5"><i class="fa fa-check"></i><b>5.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="5.1.5" data-path="dql操作select.html"><a href="dql操作select.html#示例数据"><i class="fa fa-check"></i><b>5.1.5</b> 示例数据</a></li>
+<li class="chapter" data-level="5.1.6" data-path="dql操作select.html"><a href="dql操作select.html#with子句cte"><i class="fa fa-check"></i><b>5.1.6</b> WITH子句（cte）</a></li>
+<li class="chapter" data-level="5.1.7" data-path="dql操作select.html"><a href="dql操作select.html#列表达式select_expr"><i class="fa fa-check"></i><b>5.1.7</b> 列表达式（SELECT_expr）</a></li>
+<li class="chapter" data-level="5.1.8" data-path="dql操作select.html"><a href="dql操作select.html#说明-1"><i class="fa fa-check"></i><b>5.1.8</b> 说明</a></li>
+<li class="chapter" data-level="5.1.9" data-path="dql操作select.html"><a href="dql操作select.html#排除列except_expr"><i class="fa fa-check"></i><b>5.1.9</b> 排除列（except_expr）</a></li>
+<li class="chapter" data-level="5.1.10" data-path="dql操作select.html"><a href="dql操作select.html#修改列replace_expr"><i class="fa fa-check"></i><b>5.1.10</b> 修改列（replace_expr）</a></li>
+<li class="chapter" data-level="5.1.11" data-path="dql操作select.html"><a href="dql操作select.html#目标表信息table_reference"><i class="fa fa-check"></i><b>5.1.11</b> 目标表信息（table_reference）</a></li>
+<li class="chapter" data-level="5.1.12" data-path="dql操作select.html"><a href="dql操作select.html#where子句where_condition"><i class="fa fa-check"></i><b>5.1.12</b> WHERE子句（where_condition）</a></li>
+<li class="chapter" data-level="5.1.13" data-path="dql操作select.html"><a href="dql操作select.html#group-by分组查询col_list"><i class="fa fa-check"></i><b>5.1.13</b> GROUP BY分组查询（col_list）</a></li>
+<li class="chapter" data-level="5.1.14" data-path="dql操作select.html"><a href="dql操作select.html#having子句having_condition"><i class="fa fa-check"></i><b>5.1.14</b> HAVING子句（having_condition）</a></li>
+<li class="chapter" data-level="5.1.15" data-path="dql操作select.html"><a href="dql操作select.html#limit限制输出行数number"><i class="fa fa-check"></i><b>5.1.15</b> LIMIT限制输出行数（number）</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="dql操作select.html"><a href="dql操作select.html#select语序"><i class="fa fa-check"></i><b>5.2</b> SELECT语序</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="dql操作select.html"><a href="dql操作select.html#执行语序"><i class="fa fa-check"></i><b>5.2.1</b> 执行语序</a></li>
+<li class="chapter" data-level="5.2.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-1"><i class="fa fa-check"></i><b>5.2.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.2.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-6"><i class="fa fa-check"></i><b>5.2.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="dql操作select.html"><a href="dql操作select.html#子查询subquery"><i class="fa fa-check"></i><b>5.3</b> 子查询（SUBQUERY）</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-4"><i class="fa fa-check"></i><b>5.3.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.3.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-2"><i class="fa fa-check"></i><b>5.3.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.3.3" data-path="dql操作select.html"><a href="dql操作select.html#基础子查询"><i class="fa fa-check"></i><b>5.3.3</b> 基础子查询</a></li>
+<li class="chapter" data-level="5.3.4" data-path="dql操作select.html"><a href="dql操作select.html#in-subquery"><i class="fa fa-check"></i><b>5.3.4</b> IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.5" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-2"><i class="fa fa-check"></i><b>5.3.5</b> 注意事项</a></li>
+<li class="chapter" data-level="5.3.6" data-path="dql操作select.html"><a href="dql操作select.html#not-in-subquery"><i class="fa fa-check"></i><b>5.3.6</b> NOT IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.7" data-path="dql操作select.html"><a href="dql操作select.html#exists-subquery"><i class="fa fa-check"></i><b>5.3.7</b> EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.8" data-path="dql操作select.html"><a href="dql操作select.html#not-exists-subquery"><i class="fa fa-check"></i><b>5.3.8</b> NOT EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.9" data-path="dql操作select.html"><a href="dql操作select.html#scalar-subquery"><i class="fa fa-check"></i><b>5.3.9</b> SCALAR SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.10" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-9"><i class="fa fa-check"></i><b>5.3.10</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dql操作select.html"><a href="dql操作select.html#交集并集和补集操作"><i class="fa fa-check"></i><b>5.4</b> 交集、并集和补集操作</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-5"><i class="fa fa-check"></i><b>5.4.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.4.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-3"><i class="fa fa-check"></i><b>5.4.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.4.3" data-path="dql操作select.html"><a href="dql操作select.html#交集intersect"><i class="fa fa-check"></i><b>5.4.3</b> 交集(Intersect)</a></li>
+<li class="chapter" data-level="5.4.4" data-path="dql操作select.html"><a href="dql操作select.html#并集union"><i class="fa fa-check"></i><b>5.4.4</b> 并集(Union)</a></li>
+<li class="chapter" data-level="5.4.5" data-path="dql操作select.html"><a href="dql操作select.html#补集except"><i class="fa fa-check"></i><b>5.4.5</b> 补集(Except)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="dql操作select.html"><a href="dql操作select.html#join"><i class="fa fa-check"></i><b>5.5</b> Join</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的join操作"><i class="fa fa-check"></i><b>5.5.1</b> MaxCompute支持的Join操作</a></li>
+<li class="chapter" data-level="5.5.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-4"><i class="fa fa-check"></i><b>5.5.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.5.3" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-11"><i class="fa fa-check"></i><b>5.5.3</b> 命令格式</a></li>
+<li class="chapter" data-level="5.5.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-3"><i class="fa fa-check"></i><b>5.5.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.5.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-13"><i class="fa fa-check"></i><b>5.5.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="dql操作select.html"><a href="dql操作select.html#semi-join-半连接"><i class="fa fa-check"></i><b>5.6</b> SEMI join 半连接</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的半连接操作"><i class="fa fa-check"></i><b>5.6.1</b> MaxCompute支持的半连接操作</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-4"><i class="fa fa-check"></i><b>5.6.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.6.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-14"><i class="fa fa-check"></i><b>5.6.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="dql操作select.html"><a href="dql操作select.html#mapjoin-hint"><i class="fa fa-check"></i><b>5.7</b> MAPJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-6"><i class="fa fa-check"></i><b>5.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.7.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-2"><i class="fa fa-check"></i><b>5.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.7.3" data-path="dql操作select.html"><a href="dql操作select.html#使用方法"><i class="fa fa-check"></i><b>5.7.3</b> 使用方法</a></li>
+<li class="chapter" data-level="5.7.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-5"><i class="fa fa-check"></i><b>5.7.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.7.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-15"><i class="fa fa-check"></i><b>5.7.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="dql操作select.html"><a href="dql操作select.html#distributed-mapjoin"><i class="fa fa-check"></i><b>5.8</b> DISTRIBUTED MAPJOIN</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-5"><i class="fa fa-check"></i><b>5.8.1</b> 注意事项</a></li>
+<li class="chapter" data-level="5.8.2" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-1"><i class="fa fa-check"></i><b>5.8.2</b> 使用方法</a></li>
+<li class="chapter" data-level="5.8.3" data-path="dql操作select.html"><a href="dql操作select.html#语法示例"><i class="fa fa-check"></i><b>5.8.3</b> 语法示例</a></li>
+<li class="chapter" data-level="5.8.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-16"><i class="fa fa-check"></i><b>5.8.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="dql操作select.html"><a href="dql操作select.html#skewjoin-hint"><i class="fa fa-check"></i><b>5.9</b> SKEWJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-2"><i class="fa fa-check"></i><b>5.9.1</b> 使用方法</a></li>
+<li class="chapter" data-level="5.9.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-6"><i class="fa fa-check"></i><b>5.9.2</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter"><i class="fa fa-check"></i><b>5.10</b> 动态过滤器（Dynamic Filter）</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter-1"><i class="fa fa-check"></i><b>5.10.1</b> 动态过滤器（Dynamic Filter）</a></li>
+<li class="chapter" data-level="5.10.2" data-path="dql操作select.html"><a href="dql操作select.html#优化思路"><i class="fa fa-check"></i><b>5.10.2</b> 优化思路</a></li>
+<li class="chapter" data-level="5.10.3" data-path="dql操作select.html"><a href="dql操作select.html#应用场景-1"><i class="fa fa-check"></i><b>5.10.3</b> 应用场景</a></li>
+<li class="chapter" data-level="5.10.4" data-path="dql操作select.html"><a href="dql操作select.html#动态范围过滤器或布隆过滤器dynamic-rangebloom-filter"><i class="fa fa-check"></i><b>5.10.4</b> 动态范围过滤器或布隆过滤器（Dynamic Range|Bloom Filter）</a></li>
+<li class="chapter" data-level="5.10.5" data-path="dql操作select.html"><a href="dql操作select.html#动态分区裁剪dynamic-partition-pruning"><i class="fa fa-check"></i><b>5.10.5</b> 动态分区裁剪（Dynamic Partition Pruning）</a></li>
+<li class="chapter" data-level="5.10.6" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-3"><i class="fa fa-check"></i><b>5.10.6</b> 使用方法</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="dql操作select.html"><a href="dql操作select.html#grouping-sets"><i class="fa fa-check"></i><b>5.11</b> grouping sets</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="dql操作select.html"><a href="dql操作select.html#cube-rollup"><i class="fa fa-check"></i><b>5.11.1</b> CUBE | ROLLUP</a></li>
+<li class="chapter" data-level="5.11.2" data-path="dql操作select.html"><a href="dql操作select.html#grouping-grouping_id"><i class="fa fa-check"></i><b>5.11.2</b> GROUPING | GROUPING_ID</a></li>
+<li class="chapter" data-level="5.11.3" data-path="dql操作select.html"><a href="dql操作select.html#grouping__id"><i class="fa fa-check"></i><b>5.11.3</b> GROUPING__ID</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="dql操作select.html"><a href="dql操作select.html#windows-关键字"><i class="fa fa-check"></i><b>5.12</b> Windows 关键字</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-12"><i class="fa fa-check"></i><b>5.12.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.12.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-3"><i class="fa fa-check"></i><b>5.12.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.12.3" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-6"><i class="fa fa-check"></i><b>5.12.3</b> 示例数据</a></li>
+<li class="chapter" data-level="5.12.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-17"><i class="fa fa-check"></i><b>5.12.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="dql操作select.html"><a href="dql操作select.html#tablesample采样"><i class="fa fa-check"></i><b>5.13</b> TABLESAMPLE采样</a>
+<ul>
+<li class="chapter" data-level="5.13.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-13"><i class="fa fa-check"></i><b>5.13.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.13.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-18"><i class="fa fa-check"></i><b>5.13.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.14" data-path="dql操作select.html"><a href="dql操作select.html#qualify"><i class="fa fa-check"></i><b>5.14</b> QUALIFY</a>
+<ul>
+<li class="chapter" data-level="5.14.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-14"><i class="fa fa-check"></i><b>5.14.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.14.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-19"><i class="fa fa-check"></i><b>5.14.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.15" data-path="dql操作select.html"><a href="dql操作select.html#pivotunpivot"><i class="fa fa-check"></i><b>5.15</b> PIVOT、UNPIVOT</a>
+<ul>
+<li class="chapter" data-level="5.15.1" data-path="dql操作select.html"><a href="dql操作select.html#pivot关键字"><i class="fa fa-check"></i><b>5.15.1</b> PIVOT关键字</a></li>
+<li class="chapter" data-level="5.15.2" data-path="dql操作select.html"><a href="dql操作select.html#unpivot关键字"><i class="fa fa-check"></i><b>5.15.2</b> UNPIVOT关键字</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="日期与时间函数.html"><a href="日期与时间函数.html"><i class="fa fa-check"></i><b>6</b> 日期与时间函数</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="日期与时间函数.html"><a href="日期与时间函数.html#函数总结"><i class="fa fa-check"></i><b>6.1</b> 函数总结</a></li>
+<li class="chapter" data-level="6.2" data-path="日期与时间函数.html"><a href="日期与时间函数.html#函数例子"><i class="fa fa-check"></i><b>6.2</b> 函数例子</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="数学函数.html"><a href="数学函数.html"><i class="fa fa-check"></i><b>7</b> 数学函数</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="数学函数.html"><a href="数学函数.html#数学函数总结"><i class="fa fa-check"></i><b>7.1</b> 数学函数总结</a></li>
+<li class="chapter" data-level="7.2" data-path="数学函数.html"><a href="数学函数.html#函数例子-1"><i class="fa fa-check"></i><b>7.2</b> 函数例子</a></li>
+<li class="chapter" data-level="7.3" data-path="数学函数.html"><a href="数学函数.html#参考"><i class="fa fa-check"></i><b>7.3</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="其他函数.html"><a href="其他函数.html"><i class="fa fa-check"></i><b>8</b> 其他函数</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="其他函数.html"><a href="其他函数.html#窗口函数-1"><i class="fa fa-check"></i><b>8.1</b> 窗口函数</a></li>
+<li class="chapter" data-level="8.2" data-path="其他函数.html"><a href="其他函数.html#聚合函数-1"><i class="fa fa-check"></i><b>8.2</b> 聚合函数</a></li>
+<li class="chapter" data-level="8.3" data-path="其他函数.html"><a href="其他函数.html#字符串函数"><i class="fa fa-check"></i><b>8.3</b> 字符串函数</a></li>
+<li class="chapter" data-level="8.4" data-path="其他函数.html"><a href="其他函数.html#复杂类型函数"><i class="fa fa-check"></i><b>8.4</b> 复杂类型函数</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="其他函数.html"><a href="其他函数.html#array函数"><i class="fa fa-check"></i><b>8.4.1</b> ARRAY函数</a></li>
+<li class="chapter" data-level="8.4.2" data-path="其他函数.html"><a href="其他函数.html#map函数"><i class="fa fa-check"></i><b>8.4.2</b> MAP函数</a></li>
+<li class="chapter" data-level="8.4.3" data-path="其他函数.html"><a href="其他函数.html#struct函数"><i class="fa fa-check"></i><b>8.4.3</b> STRUCT函数</a></li>
+<li class="chapter" data-level="8.4.4" data-path="其他函数.html"><a href="其他函数.html#json函数"><i class="fa fa-check"></i><b>8.4.4</b> JSON函数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="其他函数.html"><a href="其他函数.html#其他函数-1"><i class="fa fa-check"></i><b>8.5</b> 其他函数</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/liamamilin" target="blank">ODPS SQL</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ODPS SQL</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dql操作select" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> DQL操作（SELECT）<a href="dql操作select.html#dql操作select" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="select语法" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> SELECT语法<a href="dql操作select.html#select语法" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="功能介绍-3" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> 功能介绍<a href="dql操作select.html#功能介绍-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>SELECT语句用于从表中选取满足指定条件的数据。你可以根据实际场景结合以下功能完成多样化的查询操作。</p>
+<hr />
+</div>
+<div id="类型与功能" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> 类型与功能<a href="dql操作select.html#类型与功能" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>子查询（SUBQUERY）</strong>
+<ul>
+<li>在某个查询的执行结果基础上进一步执行查询操作时，可以通过子查询操作实现。</li>
+</ul></li>
+<li><strong>交集（INTERSECT）、并集（UNION）和补集（EXCEPT）</strong>
+<ul>
+<li>对查询结果数据集执行取交集、并集或补集操作。</li>
+</ul></li>
+<li><strong>JOIN</strong>
+<ul>
+<li>通过join操作连接表并返回符合连接条件和查询条件的数据信息。</li>
+</ul></li>
+<li><strong>SEMI JOIN（半连接）</strong>
+<ul>
+<li>通过右表过滤左表的数据，右表的数据不出现在结果集中。</li>
+</ul></li>
+<li><strong>MAPJOIN HINT</strong>
+<ul>
+<li>对一个大表和一个或多个小表执行join操作时，可以在SELECT语句中显式指定mapjoin Hint提示以提升查询性能。</li>
+</ul></li>
+<li><strong>DISTRIBUTED MAPJOIN</strong>
+<ul>
+<li>distributed mapjoin是mapjoin的升级版，适用于小表join大表的场景。</li>
+</ul></li>
+<li><strong>SKEWJOIN HINT</strong>
+<ul>
+<li>当两张表Join存在热点，导致出现长尾问题时，你可以通过取出热点key，将数据分为热点数据和非热点数据两部分处理，最后合并的方式，提高Join效率。</li>
+</ul></li>
+<li><strong>Lateral View</strong>
+<ul>
+<li>通过Lateral View与UDTF（表生成函数）结合，将单行数据拆成多行数据。</li>
+</ul></li>
+<li><strong>GROUPING SETS</strong>
+<ul>
+<li>对数据进行多维度的聚合分析。</li>
+</ul></li>
+<li><strong>SELECT TRANSFORM</strong>
+<ul>
+<li>SELECT TRANSFORM语法允许你启动一个指定的子进程，将输入数据按照一定的格式通过标准输入至子进程，并且通过解析子进程的标准输出获取输出数据。</li>
+</ul></li>
+<li><strong>Split Size Hint</strong>
+<ul>
+<li>通过修改Split Size来控制并发度数量。</li>
+</ul></li>
+<li><strong>TimeTravel查询与Incremental查询</strong>
+<ul>
+<li>对于Transaction Table2.0类型的表，支持：
+<ul>
+<li>通过TimeTravel查询，可以回溯到源表某个历史时间或者版本进行历史Snapshot查询。</li>
+<li>通过Incremental查询，指定源表某个历史时间区间或者版本区间进行历史增量查询。</li>
+</ul></li>
+</ul></li>
+</ul>
+<hr />
+</div>
+<div id="说明" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> 说明<a href="dql操作select.html#说明" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>目前Transaction Table2.0处于邀测阶段，默认不支持直接使用。如果需要使用该功能，请申请开通后再运行相关命令。详情请参见Transaction Table2.0概述。</p></li>
+<li><p>使用限制：</p>
+<ul>
+<li>SELECT语句屏显最多只能显示10000行结果，同时返回结果要小于10 MB。</li>
+<li>SELECT语句查询分区表时默认禁止全表扫描。</li>
+</ul></li>
+<li><p>全表扫描的开启方法：</p>
+<ul>
+<li>可在SQL语句前加上命令set odps.sql.allow.fullscan=true;进行全表查询。</li>
+<li>若整个项目需要开启全表扫描，项目空间Owner可执行命令setproject odps.sql.allow.fullscan=true;打开开关。</li>
+</ul></li>
+<li><p>查询聚簇表（cluster表）时，版本只对单表扫描分区数小于等于400时进行分桶裁剪优化。未生效时会导致扫描数据增加。</p></li>
+</ul>
+<hr />
+</div>
+<div id="命令格式-5" class="section level3 hasAnchor" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> 命令格式<a href="dql操作select.html#命令格式-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>[with &lt;cte&gt;[, ...] ]
+SELECT [all | distinct] &lt;SELECT_expr&gt;[, &lt;except_expr&gt;][, &lt;replace_expr&gt;] ...
+       from &lt;table_reference&gt;
+       [where &lt;where_condition&gt;]
+       [group by {&lt;col_list&gt;|rollup(&lt;col_list&gt;)}]
+       [having &lt;having_condition&gt;]
+       [window &lt;window_clause&gt;]
+       [order by &lt;order_condition&gt;]
+       [distribute by &lt;distribute_condition&gt; [sort by &lt;sort_condition&gt;]|[ cluster by &lt;cluster_condition&gt;] ]
+       [limit &lt;number&gt;]</code></pre>
+<hr />
+</div>
+<div id="示例数据" class="section level3 hasAnchor" number="5.1.5">
+<h3><span class="header-section-number">5.1.5</span> 示例数据<a href="dql操作select.html#示例数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>为便于理解使用方法，提供源数据及相关示例。</p>
+<ol style="list-style-type: decimal">
+<li>创建表sale_detail，并添加数据。</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="dql操作select.html#cb2-1" tabindex="-1"></a><span class="co">--创建一张分区表sale_detail。</span></span>
+<span id="cb2-2"><a href="dql操作select.html#cb2-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> sale_detail</span>
+<span id="cb2-3"><a href="dql操作select.html#cb2-3" tabindex="-1"></a>(</span>
+<span id="cb2-4"><a href="dql操作select.html#cb2-4" tabindex="-1"></a>shop_name     string,</span>
+<span id="cb2-5"><a href="dql操作select.html#cb2-5" tabindex="-1"></a>customer_id   string,</span>
+<span id="cb2-6"><a href="dql操作select.html#cb2-6" tabindex="-1"></a>total_price   <span class="dt">double</span></span>
+<span id="cb2-7"><a href="dql操作select.html#cb2-7" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="dql操作select.html#cb2-8" tabindex="-1"></a>partitioned <span class="kw">by</span> (sale_date string, region string);</span>
+<span id="cb2-9"><a href="dql操作select.html#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="dql操作select.html#cb2-10" tabindex="-1"></a><span class="co">--向源表增加分区。</span></span>
+<span id="cb2-11"><a href="dql操作select.html#cb2-11" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">add</span> <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span>);</span>
+<span id="cb2-12"><a href="dql操作select.html#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="dql操作select.html#cb2-13" tabindex="-1"></a><span class="co">--向源表追加数据。</span></span>
+<span id="cb2-14"><a href="dql操作select.html#cb2-14" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> sale_detail <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span>) <span class="kw">values</span> (<span class="st">&#39;s1&#39;</span>,<span class="st">&#39;c1&#39;</span>,<span class="fl">100.1</span>),(<span class="st">&#39;s2&#39;</span>,<span class="st">&#39;c2&#39;</span>,<span class="fl">100.2</span>),(<span class="st">&#39;s3&#39;</span>,<span class="st">&#39;c3&#39;</span>,<span class="fl">100.3</span>);</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>查询分区表sale_detail中的数据。</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="dql操作select.html#cb3-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">from</span> sale_detail;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+------------+------------+------------+------------+
+| shop_name  | price      | customer   | sale_date  | region     |
++------------+------------+------------+------------+------------+
+| s1         | 100.1      | c1         | 2013       | china      |
+| s2         | 100.2      | c2         | 2013       | china      |
+| s3         | 100.3      | c3         | 2013       | china      |
++------------+------------+------------+------------+------------+</code></pre>
+<hr />
+</div>
+<div id="with子句cte" class="section level3 hasAnchor" number="5.1.6">
+<h3><span class="header-section-number">5.1.6</span> WITH子句（cte）<a href="dql操作select.html#with子句cte" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>可选。包含一个或多个常用的表达式CTE。CTE充当当前运行环境中的临时表。</p>
+<ul>
+<li>在同一WITH子</li>
+</ul>
+<p>句中的CTE必须具有唯一的名字。
+- 在WITH子句中定义的CTE仅对在同一WITH子句中的其他CTE可以使用。</p>
+<p>示例：</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="dql操作select.html#cb5-1" tabindex="-1"></a><span class="kw">with</span> </span>
+<span id="cb5-2"><a href="dql操作select.html#cb5-2" tabindex="-1"></a>A <span class="kw">as</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">as</span> C),</span>
+<span id="cb5-3"><a href="dql操作select.html#cb5-3" tabindex="-1"></a>B <span class="kw">as</span> (<span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">from</span> A) </span>
+<span id="cb5-4"><a href="dql操作select.html#cb5-4" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">from</span> B;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+---+
+| c |
++---+
+| 1 |
++---+</code></pre>
+<hr />
+</div>
+<div id="列表达式select_expr" class="section level3 hasAnchor" number="5.1.7">
+<h3><span class="header-section-number">5.1.7</span> 列表达式（SELECT_expr）<a href="dql操作select.html#列表达式select_expr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>必填。表示待查询的普通列、分区列或正则表达式。</p>
+<ul>
+<li>用列名指定要读取的列。</li>
+<li>使用星号（*）代表查询所有的列。</li>
+<li>可配合where子句指定过滤条件。</li>
+<li>可使用正则表达式。</li>
+</ul>
+<p>示例：</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="dql操作select.html#cb7-1" tabindex="-1"></a><span class="kw">SELECT</span> shop_name <span class="kw">from</span> sale_detail;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+
+| shop_name  |
++------------+
+| s1         |
+| s2         |
+| s3         |
++------------+</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="dql操作select.html#cb9-1" tabindex="-1"></a><span class="co">--开启全表扫描，仅此Session有效。</span></span>
+<span id="cb9-2"><a href="dql操作select.html#cb9-2" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb9-3"><a href="dql操作select.html#cb9-3" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">from</span> sale_detail;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+-------------+-------------+------------+------------+
+| shop_name  | customer_id | total_price | sale_date  | region     |
++------------+-------------+-------------+------------+------------+
+| s1         | c1          | 100.1       | 2013       | china      |
+| s2         | c2          | 100.2       | 2013       | china      |
+| s3         | c3          | 100.3       | 2013       | china      |
++------------+-------------+-------------+------------+------------+</code></pre>
+<hr />
+</div>
+<div id="说明-1" class="section level3 hasAnchor" number="5.1.8">
+<h3><span class="header-section-number">5.1.8</span> 说明<a href="dql操作select.html#说明-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>在排除多个列时，需保证较长的列名写在前面，以避免错误。</li>
+<li>可使用distinct对查询结果进行去重。</li>
+</ul>
+<hr />
+</div>
+<div id="排除列except_expr" class="section level3 hasAnchor" number="5.1.9">
+<h3><span class="header-section-number">5.1.9</span> 排除列（except_expr）<a href="dql操作select.html#排除列except_expr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>可选。除了指定的列之外，读取表内其他列的数据。格式为<code>except(col1_name, col2_name, ...)</code>。</p>
+<p>当需要读取表内大多数列的数据，但排除少数列时，可以使用<code>SELECT * except(col1_name, col2_name, ...)</code>语句。</p>
+<p>命令示例：</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb11-1"><a href="dql操作select.html#cb11-1" tabindex="-1"></a><span class="co">-- 读取sale_detail表的数据，并排除region列的数据。</span></span>
+<span id="cb11-2"><a href="dql操作select.html#cb11-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">except</span>(region) <span class="kw">FROM</span> sale_detail;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+-----------+-------------+-------------+-----------+
+| shop_name | customer_id | total_price | sale_date |
++-----------+-------------+-------------+-----------+
+| s1        | c1          | 100.1       | 2013      |
+| s2        | c2          | 100.2       | 2013      |
+| s3        | c3          | 100.3       | 2013      |
++-----------+-------------+-------------+-----------+</code></pre>
+</div>
+<div id="修改列replace_expr" class="section level3 hasAnchor" number="5.1.10">
+<h3><span class="header-section-number">5.1.10</span> 修改列（replace_expr）<a href="dql操作select.html#修改列replace_expr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>可选。对表中少数列的数据进行修改，然后读取表内大多数列的数据。格式为<code>replace(exp1 [as] col1_name, exp2 [as] col2_name, ...)</code>。</p>
+<p>当需要读取表内大多数列的数据，但对少数列的数据进行修改时，可以使用<code>SELECT * replace(exp1 as col1_name, exp2 as col2_name, ...)</code>语句。</p>
+<p>命令示例：</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="dql操作select.html#cb13-1" tabindex="-1"></a><span class="co">-- 读取sale_detail表的数据，并修改total_price、region两列的数据。</span></span>
+<span id="cb13-2"><a href="dql操作select.html#cb13-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">replace</span>(total_price<span class="op">+</span><span class="dv">100</span> <span class="kw">as</span> total_price, <span class="st">&#39;shanghai&#39;</span> <span class="kw">as</span> region) <span class="kw">FROM</span> sale_detail;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+-----------+-------------+-------------+-----------+---------+
+| shop_name | customer_id | total_price | sale_date | region  |
++-----------+-------------+-------------+-----------+---------+
+| s1        | c1          | 200.1       | 2013      | shanghai|
+| s2        | c2          | 200.2       | 2013      | shanghai|
+| s3        | c3          | 200.3       | 2013      | shanghai|
++-----------+-------------+-------------+-----------+---------+</code></pre>
+</div>
+<div id="目标表信息table_reference" class="section level3 hasAnchor" number="5.1.11">
+<h3><span class="header-section-number">5.1.11</span> 目标表信息（table_reference）<a href="dql操作select.html#目标表信息table_reference" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>必填。表示查询的目标表信息。目标表可以直接指定目标表名，也可以通过嵌套子查询来指定。</p>
+<ul>
+<li>直接指定目标表名：</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb15-1"><a href="dql操作select.html#cb15-1" tabindex="-1"></a><span class="kw">SELECT</span> customer_id <span class="kw">FROM</span> sale_detail;</span></code></pre></div>
+<ul>
+<li>嵌套子查询：</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb16-1"><a href="dql操作select.html#cb16-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> (<span class="kw">SELECT</span> region, sale_date <span class="kw">FROM</span> sale_detail) t <span class="kw">WHERE</span> region <span class="op">=</span> <span class="st">&#39;china&#39;</span>;</span></code></pre></div>
+</div>
+<div id="where子句where_condition" class="section level3 hasAnchor" number="5.1.12">
+<h3><span class="header-section-number">5.1.12</span> WHERE子句（where_condition）<a href="dql操作select.html#where子句where_condition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>可选。作为过滤条件，可以使用各种关系运算符筛选满足指定条件的数据。常见的关系运算符包括 &gt;、&lt;、=、&gt;=、&lt;=、&lt;、like、rlike、in、not in、between…and。</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb17-1"><a href="dql操作select.html#cb17-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb17-2"><a href="dql操作select.html#cb17-2" tabindex="-1"></a><span class="kw">FROM</span> sale_detail</span>
+<span id="cb17-3"><a href="dql操作select.html#cb17-3" tabindex="-1"></a><span class="kw">WHERE</span> sale_date <span class="op">&gt;=</span> <span class="st">&#39;2008&#39;</span> <span class="kw">AND</span> sale_date <span class="op">&lt;=</span> <span class="st">&#39;2014&#39;</span>;</span></code></pre></div>
+</div>
+<div id="group-by分组查询col_list" class="section level3 hasAnchor" number="5.1.13">
+<h3><span class="header-section-number">5.1.13</span> GROUP BY分组查询（col_list）<a href="dql操作select.html#group-by分组查询col_list" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>可选。通常与聚合函数一起使用，根据指定的列进行分组。在SELECT语句中没有使用聚合函数的列必须出现在GROUP BY中。</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb18-1"><a href="dql操作select.html#cb18-1" tabindex="-1"></a><span class="kw">SELECT</span> region, <span class="fu">SUM</span>(total_price) </span>
+<span id="cb18-2"><a href="dql操作select.html#cb18-2" tabindex="-1"></a><span class="kw">FROM</span> sale_detail </span>
+<span id="cb18-3"><a href="dql操作select.html#cb18-3" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> region;</span></code></pre></div>
+</div>
+<div id="having子句having_condition" class="section level3 hasAnchor" number="5.1.14">
+<h3><span class="header-section-number">5.1.14</span> HAVING子句（having_condition）<a href="dql操作select.html#having子句having_condition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>可选。通常与聚合函数一起使用，实现过滤。</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb19-1"><a href="dql操作select.html#cb19-1" tabindex="-1"></a><span class="co">-- 为直观展示数据呈现效果，向sale_detail表中追加数据。</span></span>
+<span id="cb19-2"><a href="dql操作select.html#cb19-2" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> sale_detail <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2014&#39;</span>, region<span class="op">=</span><span class="st">&#39;shanghai&#39;</span>) <span class="kw">VALUES</span> (<span class="st">&#39;null&#39;</span>,<span class="st">&#39;c5&#39;</span>,<span class="kw">null</span>),(<span class="st">&#39;s6&#39;</span>,<span class="st">&#39;c6&#39;</span>,<span class="fl">100.4</span>),(<span class="st">&#39;s7&#39;</span>,<span class="st">&#39;c7&#39;</span>,<span class="fl">100.5</span>);</span>
+<span id="cb19-3"><a href="dql操作select.html#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="dql操作select.html#cb19-4" tabindex="-1"></a><span class="co">-- 使用HAVING子句配合聚合函数实现过滤。</span></span>
+<span id="cb19-5"><a href="dql操作select.html#cb19-5" tabindex="-1"></a><span class="kw">SELECT</span> region, <span class="fu">SUM</span>(total_price) <span class="kw">FROM</span> sale_detail </span>
+<span id="cb19-6"><a href="dql操作select.html#cb19-6" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> region </span>
+<span id="cb19-7"><a href="dql操作select.html#cb19-7" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">SUM</span>(total_price) <span class="op">&lt;</span> <span class="dv">305</span>;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+------------+
+| region     | _c1        |
++------------+------------+
+| china      | 300.6      |
+| shanghai   | 200.9      |
++------------+------------+
+
+### ORDER BY全局排序（order_condition）
+
+可选。用于对所有数据按照指定普通列、分区列或指定常量进行全局排序。
+
+```sql
+-- 查询表sale_detail的信息，并按照total_price升序排列前2条。
+SELECT * FROM sale_detail ORDER BY total_price LIMIT 2;</code></pre>
+<p>返回结果如下：</p>
+<pre><code>+------------+-------------+-------------+------------+------------+
+| shop_name  | customer_id | total_price | sale_date  | region     |
++------------+-------------+-------------+------------+------------+
+| s1         | c1          | 100.1       | 2013       | china      |
+| s2         | c2          | 100.2       | 2013       | china      |
++------------+-------------+-------------+------------+------------+</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb22-1"><a href="dql操作select.html#cb22-1" tabindex="-1"></a><span class="co">-- 查询表sale_detail的信息，并按照total_price降序排列前2条。</span></span>
+<span id="cb22-2"><a href="dql操作select.html#cb22-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> sale_detail <span class="kw">ORDER</span> <span class="kw">BY</span> total_price <span class="kw">DESC</span> <span class="kw">LIMIT</span> <span class="dv">2</span>;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+-------------+-------------+------------+------------+
+| shop_name  | customer_id | total_price | sale_date  | region     |
++------------+-------------+-------------+------------+------------+
+| s3         | c3          | 100.3       | 2013       | china      |
+| s2         | c2          | 100.2       | 2013       | china      |
++------------+-------------+-------------+------------+------------+</code></pre>
+</div>
+<div id="limit限制输出行数number" class="section level3 hasAnchor" number="5.1.15">
+<h3><span class="header-section-number">5.1.15</span> LIMIT限制输出行数（number）<a href="dql操作select.html#limit限制输出行数number" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>可选。用于限制输出行数。</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="dql操作select.html#cb24-1" tabindex="-1"></a><span class="co">-- 查询表sale_detail中的列region和total_price的值并按照region值进行哈希分片，然后按照total_price对哈希分片结果进行局部升序排序。</span></span>
+<span id="cb24-2"><a href="dql操作select.html#cb24-2" tabindex="-1"></a><span class="kw">SELECT</span> region, total_price <span class="kw">FROM</span> sale_detail DISTRIBUTE <span class="kw">BY</span> region <span class="kw">SORT</span> <span class="kw">BY</span> total_price;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+-------------+
+| region     | total_price |
++------------+-------------+
+| shanghai   | NULL        |
+| china      | 100.1       |
+| china      | 100.2       |
+| china      | 100.3       |
+| shanghai   | 100.4       |
+| shanghai   | 100.5       |
++------------+-------------+</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="dql操作select.html#cb26-1" tabindex="-1"></a><span class="co">-- 查询表sale_detail中的列region和total_price的值并按照region值进行哈希分片，然后按照total_price对哈希分片结果进行局部降序排序。</span></span>
+<span id="cb26-2"><a href="dql操作select.html#cb26-2" tabindex="-1"></a><span class="kw">SELECT</span> region, total_price <span class="kw">FROM</span> sale_detail DISTRIBUTE <span class="kw">BY</span> region <span class="kw">SORT</span> <span class="kw">BY</span> total_price <span class="kw">DESC</span>;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+-------------+
+| region     | total_price |
++------------+-------------+
+| shanghai   | 100.5       |
+| shanghai   | 100.4       |
+| china      | 100.3       |
+| china      | 100.2       |
+| china      | 100.1       |
+| shanghai   | NULL        |
++------------+-------------+</code></pre>
+</div>
+</div>
+<div id="select语序" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> SELECT语序<a href="dql操作select.html#select语序" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="执行语序" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> 执行语序<a href="dql操作select.html#执行语序" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在SELECT语法中，涉及的操作主要包括：</p>
+<ul>
+<li>select</li>
+<li>from</li>
+<li>where</li>
+<li>group by</li>
+<li>having</li>
+<li>window</li>
+<li>qualify</li>
+<li>order by</li>
+<li>distribute by</li>
+<li>sort by</li>
+<li>limit</li>
+</ul>
+<p>基于order by不和distribute by、sort by同时使用，group by也不和distribute by、sort by同时使用的限制，常见select语句的执行顺序如下：</p>
+<ul>
+<li>场景1：</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>from</li>
+<li>where</li>
+<li>group by</li>
+<li>having</li>
+<li>select</li>
+<li>order by</li>
+<li>limit</li>
+</ol>
+<ul>
+<li>场景2：</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>from</li>
+<li>where</li>
+<li>select</li>
+<li>distribute by</li>
+<li>sort by</li>
+</ol>
+<p>为避免混淆，MaxCompute支持以执行顺序书写查询语句，语法结构可改为如下形式：</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="dql操作select.html#cb28-1" tabindex="-1"></a><span class="kw">from</span> <span class="op">&lt;</span>table_reference<span class="op">&gt;</span></span>
+<span id="cb28-2"><a href="dql操作select.html#cb28-2" tabindex="-1"></a>[<span class="kw">where</span> <span class="op">&lt;</span>where_condition<span class="op">&gt;</span>]</span>
+<span id="cb28-3"><a href="dql操作select.html#cb28-3" tabindex="-1"></a>[<span class="kw">group</span> <span class="kw">by</span> <span class="op">&lt;</span>col_list<span class="op">&gt;</span>]</span>
+<span id="cb28-4"><a href="dql操作select.html#cb28-4" tabindex="-1"></a>[<span class="kw">having</span> <span class="op">&lt;</span>having_condition<span class="op">&gt;</span>]</span>
+<span id="cb28-5"><a href="dql操作select.html#cb28-5" tabindex="-1"></a>[window <span class="op">&lt;</span>window_name<span class="op">&gt;</span> <span class="kw">AS</span> (<span class="op">&lt;</span>window_definition<span class="op">&gt;</span>)]</span>
+<span id="cb28-6"><a href="dql操作select.html#cb28-6" tabindex="-1"></a>[qualify <span class="op">&lt;</span>expression<span class="op">&gt;</span>]</span>
+<span id="cb28-7"><a href="dql操作select.html#cb28-7" tabindex="-1"></a><span class="kw">select</span> [<span class="kw">all</span> | <span class="kw">distinct</span>] <span class="op">&lt;</span>select_expr<span class="op">&gt;</span>, <span class="op">&lt;</span>select_expr<span class="op">&gt;</span>, <span class="op">..</span>.</span>
+<span id="cb28-8"><a href="dql操作select.html#cb28-8" tabindex="-1"></a>[<span class="kw">order</span> <span class="kw">by</span> <span class="op">&lt;</span>order_condition<span class="op">&gt;</span>]</span>
+<span id="cb28-9"><a href="dql操作select.html#cb28-9" tabindex="-1"></a>[distribute <span class="kw">by</span> <span class="op">&lt;</span>distribute_condition<span class="op">&gt;</span> [<span class="kw">sort</span> <span class="kw">by</span> <span class="op">&lt;</span>sort_condition<span class="op">&gt;</span>] ]</span>
+<span id="cb28-10"><a href="dql操作select.html#cb28-10" tabindex="-1"></a>[<span class="kw">limit</span> <span class="op">&lt;</span><span class="dt">number</span><span class="op">&gt;</span>]</span></code></pre></div>
+</div>
+<div id="示例数据-1" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> 示例数据<a href="dql操作select.html#示例数据-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>为便于理解，本文为你提供源数据，基于源数据提供相关示例。创建表sale_detail，并添加数据，命令示例如下：</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb29-1"><a href="dql操作select.html#cb29-1" tabindex="-1"></a><span class="co">-- 创建一张分区表sale_detail。</span></span>
+<span id="cb29-2"><a href="dql操作select.html#cb29-2" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> sale_detail</span>
+<span id="cb29-3"><a href="dql操作select.html#cb29-3" tabindex="-1"></a>(</span>
+<span id="cb29-4"><a href="dql操作select.html#cb29-4" tabindex="-1"></a>    shop_name     STRING,</span>
+<span id="cb29-5"><a href="dql操作select.html#cb29-5" tabindex="-1"></a>    customer_id   STRING,</span>
+<span id="cb29-6"><a href="dql操作select.html#cb29-6" tabindex="-1"></a>    total_price   <span class="dt">DOUBLE</span></span>
+<span id="cb29-7"><a href="dql操作select.html#cb29-7" tabindex="-1"></a>)</span>
+<span id="cb29-8"><a href="dql操作select.html#cb29-8" tabindex="-1"></a>PARTITIONED <span class="kw">BY</span> (sale_date STRING, region STRING);</span>
+<span id="cb29-9"><a href="dql操作select.html#cb29-9" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="dql操作select.html#cb29-10" tabindex="-1"></a><span class="co">-- 向源表增加分区。</span></span>
+<span id="cb29-11"><a href="dql操作select.html#cb29-11" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> sale_detail <span class="kw">ADD</span> <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span>) <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2014&#39;</span>, region<span class="op">=</span><span class="st">&#39;shanghai&#39;</span>);</span>
+<span id="cb29-12"><a href="dql操作select.html#cb29-12" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="dql操作select.html#cb29-13" tabindex="-1"></a><span class="co">-- 向源表追加数据。</span></span>
+<span id="cb29-14"><a href="dql操作select.html#cb29-14" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> sale_detail <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span>) <span class="kw">VALUES</span> (<span class="st">&#39;s1&#39;</span>,<span class="st">&#39;c1&#39;</span>,<span class="fl">100.1</span>),(<span class="st">&#39;s2&#39;</span>,<span class="st">&#39;c2&#39;</span>,<span class="fl">100.2</span>),(<span class="st">&#39;s3&#39;</span>,<span class="st">&#39;c3&#39;</span>,<span class="fl">100.3</span>);</span>
+<span id="cb29-15"><a href="dql操作select.html#cb29-15" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> sale_detail <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2014&#39;</span>, region<span class="op">=</span><span class="st">&#39;shanghai&#39;</span>) <span class="kw">VALUES</span> (<span class="st">&#39;null&#39;</span>,<span class="st">&#39;c5&#39;</span>,<span class="kw">null</span>),(<span class="st">&#39;s6&#39;</span>,<span class="st">&#39;c6&#39;</span>,<span class="fl">100.4</span>),(<span class="st">&#39;s7&#39;</span>,<span class="st">&#39;c7&#39;</span>,<span class="fl">100.5</span>);</span></code></pre></div>
+</div>
+<div id="使用示例-6" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> 使用示例<a href="dql操作select.html#使用示例-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>示例1，符合场景1的命令示例如下：</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb30-1"><a href="dql操作select.html#cb30-1" tabindex="-1"></a><span class="co">-- 按照select语法书写。</span></span>
+<span id="cb30-2"><a href="dql操作select.html#cb30-2" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb30-3"><a href="dql操作select.html#cb30-3" tabindex="-1"></a><span class="kw">SELECT</span> region, <span class="fu">MAX</span>(total_price) </span>
+<span id="cb30-4"><a href="dql操作select.html#cb30-4" tabindex="-1"></a><span class="kw">FROM</span> sale_detail </span>
+<span id="cb30-5"><a href="dql操作select.html#cb30-5" tabindex="-1"></a><span class="kw">WHERE</span> total_price <span class="op">&gt;</span> <span class="dv">100</span></span>
+<span id="cb30-6"><a href="dql操作select.html#cb30-6" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> region </span>
+<span id="cb30-7"><a href="dql操作select.html#cb30-7" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">SUM</span>(total_price) <span class="op">&gt;</span> <span class="fl">300.5</span> </span>
+<span id="cb30-8"><a href="dql操作select.html#cb30-8" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> region </span>
+<span id="cb30-9"><a href="dql操作select.html#cb30-9" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span>
+<span id="cb30-10"><a href="dql操作select.html#cb30-10" tabindex="-1"></a><span class="co">-- 按照执行顺序书写。与上一写法等效。</span></span>
+<span id="cb30-11"><a href="dql操作select.html#cb30-11" tabindex="-1"></a><span class="kw">FROM</span> sale_detail </span>
+<span id="cb30-12"><a href="dql操作select.html#cb30-12" tabindex="-1"></a><span class="kw">WHERE</span> total_price <span class="op">&gt;</span> <span class="dv">100</span> </span>
+<span id="cb30-13"><a href="dql操作select.html#cb30-13" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> region </span>
+<span id="cb30-14"><a href="dql操作select.html#cb30-14" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">SUM</span>(total_price) <span class="op">&gt;</span> <span class="fl">300.5</span> </span>
+<span id="cb30-15"><a href="dql操作select.html#cb30-15" tabindex="-1"></a><span class="kw">SELECT</span> region, <span class="fu">MAX</span>(total_price) </span>
+<span id="cb30-16"><a href="dql操作select.html#cb30-16" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> region </span>
+<span id="cb30-17"><a href="dql操作select.html#cb30-17" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+------------+
+| region     | _c1        |
++------------+------------+
+| china      | 100.3      |
++------------+------------+</code></pre>
+<p>该命令的执行逻辑如下：</p>
+<ul>
+<li>从sale_detail表（from sale_detail）中取出满足where total_price &gt; 100条件的数据。</li>
+<li>对于a中得到的结果按照region进行分组（group by region）。</li>
+<li>对于b中得到的结果筛选分组中满足total_price之和大于305的数据（having sum(total_price) &gt; 305）。</li>
+<li>对于c中得到的结果select region, MAX(total_price)。</li>
+<li>对于d中得到的结果按照region进行排序（order by region）。</li>
+<li>对于e中得到的结果仅显示前5条数据（limit 5）。</li>
+</ul>
+<p>示例2，符合场景2的命令示例如下：</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb32-1"><a href="dql操作select.html#cb32-1" tabindex="-1"></a><span class="co">-- 按照select语法书写。</span></span>
+<span id="cb32-2"><a href="dql操作select.html#cb32-2" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb32-3"><a href="dql操作select.html#cb32-3" tabindex="-1"></a><span class="kw">SELECT</span> shop_name, total_price, region</span>
+<span id="cb32-4"><a href="dql操作select.html#cb32-4" tabindex="-1"></a><span class="kw">FROM</span> sale_detail</span>
+<span id="cb32-5"><a href="dql操作select.html#cb32-5" tabindex="-1"></a><span class="kw">WHERE</span> total_price <span class="op">&gt;</span> <span class="fl">100.2</span></span>
+<span id="cb32-6"><a href="dql操作select.html#cb32-6" tabindex="-1"></a>DISTRIBUTE <span class="kw">BY</span> region</span>
+<span id="cb32-7"><a href="dql操作select.html#cb32-7" tabindex="-1"></a><span class="kw">SORT</span> <span class="kw">BY</span> total_price;</span>
+<span id="cb32-8"><a href="dql操作select.html#cb32-8" tabindex="-1"></a><span class="co">-- 按照执行顺序书写。与上一写法等效。</span></span>
+<span id="cb32-9"><a href="dql操作select.html#cb32-9" tabindex="-1"></a><span class="kw">FROM</span> sale_detail </span>
+<span id="cb32-10"><a href="dql操作select.html#cb32-10" tabindex="-1"></a><span class="kw">WHERE</span> total_price <span class="op">&gt;</span> <span class="fl">100.2</span> </span>
+<span id="cb32-11"><a href="dql操作select.html#cb32-11" tabindex="-1"></a><span class="kw">SELECT</span> shop_name, total_price, region </span>
+<span id="cb32-12"><a href="dql操作select.html#cb32-12" tabindex="-1"></a>DISTRIBUTE <span class="kw">BY</span> region </span>
+<span id="cb32-13"><a href="dql操作select.html#cb32-13" tabindex="-1"></a><span class="kw">SORT</span> <span class="kw">BY</span> total_price;</span></code></pre></div>
+<p>返回结果如下：</p>
+<pre><code>+------------+-------------+------------+
+| shop_name  | total_price | region     |
++------------+-------------+------------+
+| s3         | 100.3       | china      |
+| s6         | 100.4       | shanghai   |
+| s7         | 100.5       | shanghai   |
++------------+-------------+------------+</code></pre>
+<p>该命令的执行逻辑如下：</p>
+<ul>
+<li>从sale_detail表（from sale_detail）中取出满足where total_price &gt; 100.2条件的数据。</li>
+<li>对于a中得到的结果select shop_name, total_price, region。</li>
+<li>对于b中得到的结果按照region进行哈希分片（distribute by region）。</li>
+<li>对于c中得到的结果按照total_price进行升序排列（sort by total_price）。</li>
+</ul>
+</div>
+</div>
+<div id="子查询subquery" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> 子查询（SUBQUERY）<a href="dql操作select.html#子查询subquery" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>当你需要在某个查询的执行结果基础上进一步执行查询操作时，例如单独计算聚合值、检查某条记录的存在性、筛选基于另一查询结果的数据、关联更新或删除操作、简化JOIN操作以获取单个值、作为派生表给主查询使用、提供排序或分组的依据以及进行逐行比较，可以通过子查询操作实现。MaxCompute支持的子查询的定义与使用方法如下：</p>
+<div id="功能介绍-4" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> 功能介绍<a href="dql操作select.html#功能介绍-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>子查询指在一个完整的查询语句之中，嵌套若干个不同功能的小查询，从而一起完成复杂查询的一种编写形式。MaxCompute支持的子查询包含如下几种：</p>
+<ul>
+<li><strong>基础子查询：</strong> 在FROM子句中使用子查询，作为一个临时表使用，可用于复杂计算或者在查询中进行数据转换。</li>
+<li><strong>IN SUBQUERY：</strong> 在WHERE子句中使用IN子查询，用于匹配一组由子查询返回的值，适用于从主查询中选择匹配子查询条件的行。</li>
+<li><strong>NOT IN SUBQUERY：</strong> 在WHERE子句中使用NOT IN子查询，用于从一个集合中排除另一个集合，会从主查询结果中移除匹配子查询的结果集的行。</li>
+<li><strong>EXISTS SUBQUERY：</strong> 在主查询中用来判断子查询是否返回了任何结果，适用于检查一个记录是否存在于子查询中，而不关心子查询具体返回了什么。</li>
+<li><strong>NOT EXISTS SUBQUERY：</strong> 与EXISTS子查询相反，当子查询不返回任何结果时，主查询中的记录才会被选择，适用于从主查询中选择在子查询中没有匹配的行。</li>
+<li><strong>SCALAR SUBQUERY：</strong> 返回单个值的子查询，通常用在SELECT列表中，或作为WHERE或HAVING子句中的一个条件值，适用于计算特定的聚合值或者当需要从子查询中提取单个数据点。</li>
+</ul>
+</div>
+<div id="示例数据-2" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> 示例数据<a href="dql操作select.html#示例数据-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>为便于理解，以下是提供的源数据示例：</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb34-1"><a href="dql操作select.html#cb34-1" tabindex="-1"></a><span class="co">-- 创建一张分区表sale_detail。</span></span>
+<span id="cb34-2"><a href="dql操作select.html#cb34-2" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> sale_detail</span>
+<span id="cb34-3"><a href="dql操作select.html#cb34-3" tabindex="-1"></a>(</span>
+<span id="cb34-4"><a href="dql操作select.html#cb34-4" tabindex="-1"></a>    shop_name     STRING,</span>
+<span id="cb34-5"><a href="dql操作select.html#cb34-5" tabindex="-1"></a>    customer_id   STRING,</span>
+<span id="cb34-6"><a href="dql操作select.html#cb34-6" tabindex="-1"></a>    total_price   <span class="dt">DOUBLE</span></span>
+<span id="cb34-7"><a href="dql操作select.html#cb34-7" tabindex="-1"></a>)</span>
+<span id="cb34-8"><a href="dql操作select.html#cb34-8" tabindex="-1"></a>PARTITIONED <span class="kw">BY</span> (sale_date STRING, region STRING);</span>
+<span id="cb34-9"><a href="dql操作select.html#cb34-9" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="dql操作select.html#cb34-10" tabindex="-1"></a><span class="co">-- 向源表增加分区。</span></span>
+<span id="cb34-11"><a href="dql操作select.html#cb34-11" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> sale_detail <span class="kw">ADD</span> <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span>) <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2014&#39;</span>, region<span class="op">=</span><span class="st">&#39;shanghai&#39;</span>);</span>
+<span id="cb34-12"><a href="dql操作select.html#cb34-12" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="dql操作select.html#cb34-13" tabindex="-1"></a><span class="co">-- 向源表追加数据。</span></span>
+<span id="cb34-14"><a href="dql操作select.html#cb34-14" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> sale_detail <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span>) <span class="kw">VALUES</span> (<span class="st">&#39;s1&#39;</span>,<span class="st">&#39;c1&#39;</span>,<span class="fl">100.1</span>),(<span class="st">&#39;s2&#39;</span>,<span class="st">&#39;c2&#39;</span>,<span class="fl">100.2</span>),(<span class="st">&#39;s3&#39;</span>,<span class="st">&#39;c3&#39;</span>,<span class="fl">100.3</span>);</span>
+<span id="cb34-15"><a href="dql操作select.html#cb34-15" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> sale_detail <span class="kw">PARTITION</span> (sale_date<span class="op">=</span><span class="st">&#39;2014&#39;</span>, region<span class="op">=</span><span class="st">&#39;shanghai&#39;</span>) <span class="kw">VALUES</span> (<span class="st">&#39;null&#39;</span>,<span class="st">&#39;c5&#39;</span>,<span class="kw">null</span>),(<span class="st">&#39;s6&#39;</span>,<span class="st">&#39;c6&#39;</span>,<span class="fl">100.4</span>),(<span class="st">&#39;s7&#39;</span>,<span class="st">&#39;c7&#39;</span>,<span class="fl">100.5</span>);</span></code></pre></div>
+</div>
+<div id="基础子查询" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> 基础子查询<a href="dql操作select.html#基础子查询" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>基础子查询是在查询的FROM子句中使用子查询，作为一个临时表使用，可用于复杂计算或者在查询中进行数据转换。</p>
+<div id="命令格式-6" class="section level4 hasAnchor" number="5.3.3.1">
+<h4><span class="header-section-number">5.3.3.1</span> 命令格式<a href="dql操作select.html#命令格式-6" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>格式1:</strong></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb35-1"><a href="dql操作select.html#cb35-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr<span class="op">&gt;</span> <span class="kw">FROM</span> (<span class="op">&lt;</span>select_statement<span class="op">&gt;</span>) [<span class="op">&lt;</span>sq_alias_name<span class="op">&gt;</span>];</span></code></pre></div>
+<p><strong>格式2:</strong></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb36-1"><a href="dql操作select.html#cb36-1" tabindex="-1"></a><span class="kw">SELECT</span> (<span class="op">&lt;</span>select_statement<span class="op">&gt;</span>) <span class="kw">FROM</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span>;</span></code></pre></div>
+<p><strong>参数说明:</strong></p>
+<ul>
+<li><code>&lt;select_expr&gt;</code>: 必填。表示待查询的普通列、分区列或正则表达式。</li>
+<li><code>&lt;select_statement&gt;</code>: 必填。子查询语句。如果子查询语句为格式2，子查询结果必须只有一行。</li>
+<li><code>&lt;sq_alias_name&gt;</code>: 可选。子查询的别名。</li>
+<li><code>&lt;table_name&gt;</code>: 必填。目标表名称。</li>
+</ul>
+</div>
+<div id="使用示例-7" class="section level4 hasAnchor" number="5.3.3.2">
+<h4><span class="header-section-number">5.3.3.2</span> 使用示例<a href="dql操作select.html#使用示例-7" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>示例1：</strong></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb37-1"><a href="dql操作select.html#cb37-1" tabindex="-1"></a><span class="kw">SET</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb37-2"><a href="dql操作select.html#cb37-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> (<span class="kw">SELECT</span> shop_name <span class="kw">FROM</span> sale_detail) a;</span></code></pre></div>
+<p><strong>示例2：</strong></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb38-1"><a href="dql操作select.html#cb38-1" tabindex="-1"></a><span class="kw">SET</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb38-2"><a href="dql操作select.html#cb38-2" tabindex="-1"></a><span class="kw">SELECT</span> (<span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> sale_detail <span class="kw">WHERE</span> shop_name<span class="op">=</span><span class="st">&#39;s1&#39;</span>) <span class="kw">FROM</span> sale_detail;</span></code></pre></div>
+<p><strong>示例3：</strong></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb39-1"><a href="dql操作select.html#cb39-1" tabindex="-1"></a><span class="co">-- 使用子查询进行JOIN操作。</span></span>
+<span id="cb39-2"><a href="dql操作select.html#cb39-2" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> shop <span class="kw">AS</span> <span class="kw">SELECT</span> shop_name, customer_id, total_price <span class="kw">FROM</span> sale_detail;</span>
+<span id="cb39-3"><a href="dql操作select.html#cb39-3" tabindex="-1"></a><span class="kw">SELECT</span> a.shop_name, a.customer_id, a.total_price <span class="kw">FROM</span> (<span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> shop) a <span class="kw">JOIN</span> sale_detail <span class="kw">ON</span> a.shop_name <span class="op">=</span> sale_detail.shop_name;</span></code></pre></div>
+</div>
+</div>
+<div id="in-subquery" class="section level3 hasAnchor" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> IN SUBQUERY<a href="dql操作select.html#in-subquery" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>IN子查询与left semi join用法类似。</p>
+<div id="命令格式-7" class="section level4 hasAnchor" number="5.3.4.1">
+<h4><span class="header-section-number">5.3.4.1</span> 命令格式<a href="dql操作select.html#命令格式-7" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>格式1:</strong></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb40-1"><a href="dql操作select.html#cb40-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr1<span class="op">&gt;</span> <span class="kw">FROM</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span> <span class="kw">WHERE</span> <span class="op">&lt;</span>select_expr2<span class="op">&gt;</span> <span class="kw">IN</span> (<span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr3<span class="op">&gt;</span> <span class="kw">FROM</span> <span class="op">&lt;</span>table_name2<span class="op">&gt;</span>);</span></code></pre></div>
+</div>
+<div id="使用示例-8" class="section level4 hasAnchor" number="5.3.4.2">
+<h4><span class="header-section-number">5.3.4.2</span> 使用示例<a href="dql操作select.html#使用示例-8" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>示例1：</strong></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb41-1"><a href="dql操作select.html#cb41-1" tabindex="-1"></a><span class="kw">SET</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb41-2"><a href="dql操作select.html#cb41-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> sale_detail <span class="kw">WHERE</span> total_price <span class="kw">IN</span> (<span class="kw">SELECT</span> total_price <span class="kw">FROM</span> shop);</span></code></pre></div>
+<p><strong>示例2：</strong></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb42-1"><a href="dql操作select.html#cb42-1" tabindex="-1"></a><span class="kw">SET</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb42-2"><a href="dql操作select.html#cb42-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> sale_detail <span class="kw">WHERE</span> total_price <span class="kw">IN</span> (<span class="kw">SELECT</span> total_price <span class="kw">FROM</span> shop <span class="kw">WHERE</span> customer_id <span class="op">=</span> shop.customer_id);</span></code></pre></div>
+</div>
+</div>
+<div id="注意事项-2" class="section level3 hasAnchor" number="5.3.5">
+<h3><span class="header-section-number">5.3.5</span> 注意事项<a href="dql操作select.html#注意事项-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>使用IN的子查询时，在子查询的返回结果中会自动去除NULL值的记录。</li>
+</ul>
+</div>
+<div id="not-in-subquery" class="section level3 hasAnchor" number="5.3.6">
+<h3><span class="header-section-number">5.3.6</span> NOT IN SUBQUERY<a href="dql操作select.html#not-in-subquery" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>概述：</strong>
+<code>NOT IN SUBQUERY</code> 与 <code>LEFT ANTI JOIN</code> 类似，但有一些区别。如果目标表的指定列中有任意一行为 NULL，则 <code>NOT IN</code> 表达式的值为 NULL，导致 WHERE 条件不成立，因此没有数据返回。这一点与 <code>LEFT ANTI JOIN</code> 不同。</p>
+<p><strong>命令格式：</strong></p>
+<p><strong>格式1：</strong></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb43-1"><a href="dql操作select.html#cb43-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr1<span class="op">&gt;</span></span>
+<span id="cb43-2"><a href="dql操作select.html#cb43-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span></span>
+<span id="cb43-3"><a href="dql操作select.html#cb43-3" tabindex="-1"></a><span class="kw">WHERE</span> <span class="op">&lt;</span>select_expr2<span class="op">&gt;</span> <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr2<span class="op">&gt;</span> <span class="kw">FROM</span> <span class="op">&lt;</span>table_name2<span class="op">&gt;</span>);</span>
+<span id="cb43-4"><a href="dql操作select.html#cb43-4" tabindex="-1"></a><span class="co">-- 等效于 LEFT ANTI JOIN 如下语句。</span></span>
+<span id="cb43-5"><a href="dql操作select.html#cb43-5" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr1<span class="op">&gt;</span></span>
+<span id="cb43-6"><a href="dql操作select.html#cb43-6" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span> <span class="op">&lt;</span>alias_name1<span class="op">&gt;</span></span>
+<span id="cb43-7"><a href="dql操作select.html#cb43-7" tabindex="-1"></a><span class="kw">LEFT</span> ANTI <span class="kw">JOIN</span> <span class="op">&lt;</span>table_name2<span class="op">&gt;</span> <span class="op">&lt;</span>alias_name2<span class="op">&gt;</span> <span class="kw">ON</span> <span class="op">&lt;</span>alias_name1<span class="op">&gt;</span>.<span class="op">&lt;</span>select_expr1<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>alias_name2<span class="op">&gt;</span>.<span class="op">&lt;</span>select_expr2<span class="op">&gt;</span>;</span></code></pre></div>
+<p><strong>说明：</strong>
+如果 <code>select_expr2</code> 是分区列，则 <code>SELECT &lt;select_expr2&gt; FROM &lt;table_name2&gt;</code> 会单独启动作业执行子查询，而不会转化为 <code>ANTI JOIN</code>。执行后的结果会依次与 <code>select_expr2</code> 比较，<code>table_name1</code> 中 <code>select_expr2</code> 值不在返回结果中的分区将不会被读取，保证分区裁剪仍然有效。</p>
+<p><strong>格式2：</strong></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb44-1"><a href="dql操作select.html#cb44-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr1<span class="op">&gt;</span></span>
+<span id="cb44-2"><a href="dql操作select.html#cb44-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span></span>
+<span id="cb44-3"><a href="dql操作select.html#cb44-3" tabindex="-1"></a><span class="kw">WHERE</span> <span class="op">&lt;</span>select_expr2<span class="op">&gt;</span> <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr2<span class="op">&gt;</span> <span class="kw">FROM</span> <span class="op">&lt;</span>table_name2<span class="op">&gt;</span> <span class="kw">WHERE</span> <span class="op">&lt;</span>table_name2_colname<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span>.<span class="op">&lt;</span>colname<span class="op">&gt;</span>);</span></code></pre></div>
+<p><strong>说明：</strong>
+MaxCompute 支持 <code>NOT IN SUBQUERY</code> 不作为 join 条件，例如出现在非 WHERE 语句中，或虽然在 WHERE 语句中，但无法转换为 join 条件场景。此时无法转换为 <code>ANTI JOIN</code>，必须启动一个单独的作业运行子查询，不支持 Correlated 条件。</p>
+<p><strong>格式3：</strong>
+在上述能力的基础上，兼容 PostgreSQL 支持多列的需求。</p>
+<p><strong>注意事项：</strong>
+使用 <code>NOT IN</code> 的子查询时，在子查询的返回结果中会自动去除 NULL 值的记录。</p>
+</div>
+<div id="exists-subquery" class="section level3 hasAnchor" number="5.3.7">
+<h3><span class="header-section-number">5.3.7</span> EXISTS SUBQUERY<a href="dql操作select.html#exists-subquery" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>概述：</strong>
+使用 <code>EXISTS SUBQUERY</code> 时，当子查询中有至少一行数据时，返回 True，否则返回 False。MaxCompute 只支持含有 Correlated 条件的 WHERE 子查询。<code>EXISTS SUBQUERY</code> 实现的方式是转换为 <code>LEFT SEMI JOIN</code>。</p>
+<p><strong>命令格式：</strong></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb45-1"><a href="dql操作select.html#cb45-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr<span class="op">&gt;</span></span>
+<span id="cb45-2"><a href="dql操作select.html#cb45-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span></span>
+<span id="cb45-3"><a href="dql操作select.html#cb45-3" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr<span class="op">&gt;</span> <span class="kw">FROM</span> <span class="op">&lt;</span>table_name2<span class="op">&gt;</span> <span class="kw">WHERE</span> <span class="op">&lt;</span>table_name2_colname<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span>.<span class="op">&lt;</span>colname<span class="op">&gt;</span>);</span></code></pre></div>
+<p><strong>注意事项：</strong>
+使用 <code>EXISTS</code> 的子查询时，在子查询的返回结果中会自动去除 NULL 值的记录。</p>
+</div>
+<div id="not-exists-subquery" class="section level3 hasAnchor" number="5.3.8">
+<h3><span class="header-section-number">5.3.8</span> NOT EXISTS SUBQUERY<a href="dql操作select.html#not-exists-subquery" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>概述：</strong>
+使用 <code>NOT EXISTS SUBQUERY</code> 时，当子查询中无数据时，返回 True，否则返回 False。MaxCompute 只支持含有 Correlated 条件的 WHERE 子查询。<code>NOT EXISTS SUBQUERY</code> 实现的方式是转换为 <code>LEFT ANTI JOIN</code>。</p>
+<p><strong>命令格式：</strong></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb46-1"><a href="dql操作select.html#cb46-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr<span class="op">&gt;</span></span>
+<span id="cb46-2"><a href="dql操作select.html#cb46-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span></span>
+<span id="cb46-3"><a href="dql操作select.html#cb46-3" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr<span class="op">&gt;</span> <span class="kw">FROM</span> <span class="op">&lt;</span>table_name2<span class="op">&gt;</span> <span class="kw">WHERE</span> <span class="op">&lt;</span>table_name2_colname<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span>.<span class="op">&lt;</span>colname<span class="op">&gt;</span>);</span></code></pre></div>
+<p><strong>注意事项：</strong>
+使用 <code>NOT EXISTS</code> 的子查询时，在子查询的返回结果中会自动去除 NULL 值的记录。</p>
+</div>
+<div id="scalar-subquery" class="section level3 hasAnchor" number="5.3.9">
+<h3><span class="header-section-number">5.3.9</span> SCALAR SUBQUERY<a href="dql操作select.html#scalar-subquery" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>概述：</strong>
+当子查询的输出结果为单行单列时，可以作为标量使用，即可以参与标量运算。满足一行一列输出值的子查询可以按照如下命令格式重写。</p>
+<p><strong>命令格式：</strong></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb47-1"><a href="dql操作select.html#cb47-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">&lt;</span>select_expr<span class="op">&gt;</span></span>
+<span id="cb47-2"><a href="dql操作select.html#cb47-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span></span>
+<span id="cb47-3"><a href="dql操作select.html#cb47-3" tabindex="-1"></a><span class="kw">WHERE</span> (<span class="op">&lt;</span><span class="kw">SELECT</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FROM</span> <span class="op">&lt;</span>table_name2<span class="op">&gt;</span> <span class="kw">WHERE</span> <span class="op">&lt;</span>table_name2_colname<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>table_name1<span class="op">&gt;</span>.<span class="op">&lt;</span>colname<span class="op">&gt;&gt;</span>) <span class="op">&lt;</span>标量运算符<span class="op">&gt;</span> <span class="op">&lt;</span>scalar_value<span class="op">&gt;</span>;</span></code></pre></div>
+<p><strong>说明：</strong>
+可以作为标量的子查询必须是在编译阶段就能够确认其返回结果只有一行一列的查询。如果一个子查询只能在实际运行过程中才能判断出它只产生一行数据，则编译器会报错。</p>
+<p><strong>注意事项：</strong>
+Scalar subquery 只能在 WHERE 子句中使用。</p>
+</div>
+<div id="使用示例-9" class="section level3 hasAnchor" number="5.3.10">
+<h3><span class="header-section-number">5.3.10</span> 使用示例<a href="dql操作select.html#使用示例-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>示例1：</strong></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb48-1"><a href="dql操作select.html#cb48-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> shop <span class="kw">WHERE</span> (<span class="kw">SELECT</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FROM</span> sale_detail <span class="kw">WHERE</span> sale_detail.shop_name <span class="op">=</span> shop.shop_name) <span class="op">&gt;=</span> <span class="dv">1</span>;</span></code></pre></div>
+<p><strong>示例2：</strong></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb49-1"><a href="dql操作select.html#cb49-1" tabindex="-1"></a><span class="co">-- SELECT 列为包含多列的 SCALAR SUBQUERY 表达式，只支持等值表达式。</span></span>
+<span id="cb49-2"><a href="dql操作select.html#cb49-2" tabindex="-1"></a><span class="kw">SELECT</span> (<span class="kw">SELECT</span> a, b <span class="kw">FROM</span> t <span class="kw">WHERE</span> c <span class="op">=</span> ts.c) <span class="kw">AS</span> (a, b), a <span class="kw">FROM</span> ts;</span></code></pre></div>
+</div>
+</div>
+<div id="交集并集和补集操作" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> 交集、并集和补集操作<a href="dql操作select.html#交集并集和补集操作" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="功能介绍-5" class="section level3 hasAnchor" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> 功能介绍<a href="dql操作select.html#功能介绍-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在MaxCompute中， 可以执行以下三种操作：</p>
+<ol style="list-style-type: decimal">
+<li><strong>交集(Intersect):</strong> 求两个数据集的交集，即输出两个数据集均包含的记录。</li>
+<li><strong>并集(Union):</strong> 求两个数据集的并集，即将两个数据集合并成一个数据集。</li>
+<li><strong>补集(Except):</strong> 求第二个数据集在第一个数据集中的补集，即输出第一个数据集包含而第二个数据集不包含的记录。</li>
+</ol>
+<ul>
+<li>MaxCompute最多允许同时对256个数据集进行操作，超出256个将报错。</li>
+<li>左右两个数据集的列数必须保持一致。</li>
+</ul>
+</div>
+<div id="注意事项-3" class="section level3 hasAnchor" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> 注意事项<a href="dql操作select.html#注意事项-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>对数据集取交集、并集或补集的注意事项如下：</p>
+<ul>
+<li>对数据集进行操作的结果不一定会按序排列。</li>
+<li>如果数据集的数据类型不一致，系统会进行隐式转换。由于兼容性原因，STRING类型和非STRING类型数据在集合操作中的隐式转换已被禁用。</li>
+</ul>
+</div>
+<div id="交集intersect" class="section level3 hasAnchor" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> 交集(Intersect)<a href="dql操作select.html#交集intersect" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="命令格式-8" class="section level4 hasAnchor" number="5.4.3.1">
+<h4><span class="header-section-number">5.4.3.1</span> 命令格式<a href="dql操作select.html#命令格式-8" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><strong>取交集不去重:</strong> <code>&lt;select_statement1&gt; intersect all &lt;select_statement2&gt;;</code></li>
+<li><strong>取交集并去重:</strong> <code>&lt;select_statement1&gt; intersect [distinct] &lt;select_statement2&gt;;</code></li>
+</ul>
+</div>
+<div id="参数说明" class="section level4 hasAnchor" number="5.4.3.2">
+<h4><span class="header-section-number">5.4.3.2</span> 参数说明<a href="dql操作select.html#参数说明" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><code>select_statement1、select_statement2:</code> 必填。select语句，格式请参见SELECT语法。</li>
+<li><code>distinct:</code> 可选。对两个数据集取交集的结果去重。</li>
+</ul>
+</div>
+<div id="使用示例-10" class="section level4 hasAnchor" number="5.4.3.3">
+<h4><span class="header-section-number">5.4.3.3</span> 使用示例<a href="dql操作select.html#使用示例-10" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ol style="list-style-type: decimal">
+<li><strong>对两个数据集取交集，不去重:</strong></li>
+</ol>
+<div class="sourceCode" id="cb50"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb50-1"><a href="dql操作select.html#cb50-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">5</span>, <span class="dv">6</span>) t(a, b) </span>
+<span id="cb50-2"><a href="dql操作select.html#cb50-2" tabindex="-1"></a><span class="kw">intersect</span> <span class="kw">all</span> </span>
+<span id="cb50-3"><a href="dql操作select.html#cb50-3" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">5</span>, <span class="dv">7</span>) t(a, b);</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>对两个查询结果取交集并去重:</strong></li>
+</ol>
+<div class="sourceCode" id="cb51"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb51-1"><a href="dql操作select.html#cb51-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">5</span>, <span class="dv">6</span>) t(a, b) </span>
+<span id="cb51-2"><a href="dql操作select.html#cb51-2" tabindex="-1"></a><span class="kw">intersect</span> <span class="kw">distinct</span> </span>
+<span id="cb51-3"><a href="dql操作select.html#cb51-3" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">5</span>, <span class="dv">7</span>) t(a, b);</span></code></pre></div>
+</div>
+</div>
+<div id="并集union" class="section level3 hasAnchor" number="5.4.4">
+<h3><span class="header-section-number">5.4.4</span> 并集(Union)<a href="dql操作select.html#并集union" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="命令格式-9" class="section level4 hasAnchor" number="5.4.4.1">
+<h4><span class="header-section-number">5.4.4.1</span> 命令格式<a href="dql操作select.html#命令格式-9" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><strong>取并集不去重:</strong> <code>&lt;select_statement1&gt; union all &lt;select_statement2&gt;;</code></li>
+<li><strong>取并集并去重:</strong> <code>&lt;select_statement1&gt; union [distinct] &lt;select_statement2&gt;;</code></li>
+</ul>
+</div>
+<div id="参数说明-1" class="section level4 hasAnchor" number="5.4.4.2">
+<h4><span class="header-section-number">5.4.4.2</span> 参数说明<a href="dql操作select.html#参数说明-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><code>select_statement1、select_statement2:</code> 必填。select语句，格式请参见SELECT语法。</li>
+<li><code>distinct:</code> 可选。对两个数据集取并集的结果去重。</li>
+</ul>
+</div>
+<div id="使用示例-11" class="section level4 hasAnchor" number="5.4.4.3">
+<h4><span class="header-section-number">5.4.4.3</span> 使用示例<a href="dql操作select.html#使用示例-11" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ol style="list-style-type: decimal">
+<li><strong>对两个数据集取并集，不去重:</strong></li>
+</ol>
+<div class="sourceCode" id="cb52"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb52-1"><a href="dql操作select.html#cb52-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">4</span>) t(a, b) </span>
+<span id="cb52-2"><a href="dql操作select.html#cb52-2" tabindex="-1"></a><span class="kw">union</span> <span class="kw">all</span> </span>
+<span id="cb52-3"><a href="dql操作select.html#cb52-3" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">4</span>) t(a, b);</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>对两个数据集取并集并去重:</strong></li>
+</ol>
+<div class="sourceCode" id="cb53"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb53-1"><a href="dql操作select.html#cb53-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">4</span>) t(a, b)</span>
+<span id="cb53-2"><a href="dql操作select.html#cb53-2" tabindex="-1"></a><span class="kw">union</span> <span class="kw">distinct</span> </span>
+<span id="cb53-3"><a href="dql操作select.html#cb53-3" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">4</span>) t(a, b);</span></code></pre></div>
+</div>
+</div>
+<div id="补集except" class="section level3 hasAnchor" number="5.4.5">
+<h3><span class="header-section-number">5.4.5</span> 补集(Except)<a href="dql操作select.html#补集except" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="命令格式-10" class="section level4 hasAnchor" number="5.4.5.1">
+<h4><span class="header-section-number">5.4.5.1</span> 命令格式<a href="dql操作select.html#命令格式-10" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><strong>取补集不去重:</strong> <code>&lt;select_statement1&gt; except all &lt;select_statement2&gt;;</code> 或 <code>&lt;select_statement1&gt; minus all &lt;select_statement2&gt;;</code></li>
+<li><strong>取补集并去重:</strong> <code>&lt;select_statement1&gt; except [distinct] &lt;select_statement2&gt;;</code> 或 <code>&lt;select_statement1&gt; minus [distinct] &lt;select_statement2&gt;;</code></li>
+</ul>
+</div>
+<div id="参数说明-2" class="section level4 hasAnchor" number="5.4.5.2">
+<h4><span class="header-section-number">5.4.5.2</span> 参数说明<a href="dql操作select.html#参数说明-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><code>select_statement1、select_statement2:</code> 必填。select语句，格式请参见SELECT语法。</li>
+<li><code>distinct:</code> 可选。对取补集的结果去重。</li>
+</ul>
+</div>
+<div id="使用示例-12" class="section level4 hasAnchor" number="5.4.5.3">
+<h4><span class="header-section-number">5.4.5.3</span> 使用示例<a href="dql操作select.html#使用示例-12" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ol style="list-style-type: decimal">
+<li><strong>求数据集的补集，不去重:</strong></li>
+</ol>
+<div class="sourceCode" id="cb54"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb54-1"><a href="dql操作select.html#cb54-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">5</span>, <span class="dv">6</span>), (<span class="dv">7</span>, <span class="dv">8</span>) t(a, b)</span>
+<span id="cb54-2"><a href="dql操作select.html#cb54-2" tabindex="-1"></a><span class="kw">except</span> <span class="kw">all</span> </span>
+<span id="cb54-3"><a href="dql操作select.html#cb54-3" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">5</span>, <span class="dv">6</span>), (<span class="dv">5</span>, <span class="dv">6</span>), (<span class="dv">9</span>, <span class="dv">10</span>) t(a, b);</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>求数据集的补集并去重:</strong></li>
+</ol>
+<div class="sourceCode" id="cb55"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb55-1"><a href="dql操作select.html#cb55-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">5</span>, <span class="dv">6</span>), (<span class="dv">7</span>, <span class="dv">8</span>) t(a, b)</span>
+<span id="cb55-2"><a href="dql操作select.html#cb55-2" tabindex="-1"></a><span class="kw">except</span> <span class="kw">distinct</span> </span>
+<span id="cb55-3"><a href="dql操作select.html#cb55-3" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">5</span>, <span class="dv">6</span>), (<span class="dv">5</span>, <span class="dv">6</span>), (<span class="dv">9</span>, <span class="dv">10</span>) t(a, b);</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="join" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Join<a href="dql操作select.html#join" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="maxcompute支持的join操作" class="section level3 hasAnchor" number="5.5.1">
+<h3><span class="header-section-number">5.5.1</span> MaxCompute支持的Join操作<a href="dql操作select.html#maxcompute支持的join操作" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>左连接（Left Outer Join）</strong>
+<ul>
+<li>可简写为left join。</li>
+<li>返回左表中的所有记录，即使右表中没有与之匹配的记录。</li>
+</ul>
+<strong>说明：</strong>
+<ul>
+<li>通常，左边为大表，右表为小表。</li>
+<li>避免过多使用left join，以免数据膨胀导致作业停滞。</li>
+</ul></li>
+<li><strong>右连接（Right Outer Join）</strong>
+<ul>
+<li>可简写为right join。</li>
+<li>返回右表中的所有记录，即使左表中没有与之匹配的记录。</li>
+</ul></li>
+<li><strong>全连接（Full Outer Join）</strong>
+<ul>
+<li>可简写为full join。</li>
+<li>返回左右表中的所有记录。</li>
+</ul></li>
+<li><strong>内连接（Inner Join）</strong>
+<ul>
+<li>关键字inner可以省略。</li>
+<li>当左右表中至少存在一个匹配行时，inner join返回数据行。</li>
+</ul></li>
+<li><strong>自然连接（Natural Join）</strong>
+<ul>
+<li>参与join的两张表根据字段名称自动决定连接字段。</li>
+<li>支持outer natural join，使用using子句执行join，输出字段中公共字段只出现一次。</li>
+</ul></li>
+<li><strong>隐式连接</strong>
+<ul>
+<li>即不指定join关键字执行连接。</li>
+</ul></li>
+<li><strong>多路连接</strong>
+<ul>
+<li>多路join连接。</li>
+<li>支持通过括号指定join的优先级，括号内的join优先级较高。</li>
+</ul></li>
+</ol>
+<p><strong>说明：</strong>
+- SQL语句中的where过滤条件在join之前执行。
+- odps.task.sql.outerjoin.ppd参数控制outer join on条件中非关联过滤条件是否下推到join输入中。</p>
+</div>
+<div id="注意事项-4" class="section level3 hasAnchor" number="5.5.2">
+<h3><span class="header-section-number">5.5.2</span> 注意事项<a href="dql操作select.html#注意事项-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>使用JOIN时，自动加入JOIN的key is not null的过滤条件，去除关联键为NULL的值所在行。</li>
+<li>MaxCompute不支持cross join，即无on条件的连接。</li>
+<li>只允许出现and连接的等值条件，可以使用mapjoin操作处理不等值连接或or连接多个条件。</li>
+</ul>
+</div>
+<div id="命令格式-11" class="section level3 hasAnchor" number="5.5.3">
+<h3><span class="header-section-number">5.5.3</span> 命令格式<a href="dql操作select.html#命令格式-11" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre class="plaintext"><code>&lt;table_reference&gt; join &lt;table_factor&gt; [&lt;join_condition&gt;]
+| &lt;table_reference&gt; {left outer|right outer|full outer|inner|natural} join &lt;table_reference&gt; &lt;join_condition&gt;</code></pre>
+<ul>
+<li><strong>table_reference：</strong> 待执行join操作的左表查询语句。</li>
+<li><strong>table_factor：</strong> 待执行join操作的右表或表查询语句。</li>
+<li><strong>join_condition：</strong> join连接条件，是一个或多个等式表达式组合。</li>
+</ul>
+</div>
+<div id="示例数据-3" class="section level3 hasAnchor" number="5.5.4">
+<h3><span class="header-section-number">5.5.4</span> 示例数据<a href="dql操作select.html#示例数据-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>为便于理解，提供了源数据，并创建了相关示例表。示例数据如下：</p>
+<ul>
+<li>表 sale_detail</li>
+<li>表 sale_detail_jt</li>
+</ul>
+</div>
+<div id="使用示例-13" class="section level3 hasAnchor" number="5.5.5">
+<h3><span class="header-section-number">5.5.5</span> 使用示例<a href="dql操作select.html#使用示例-13" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>示例1：左连接</strong></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb57-1"><a href="dql操作select.html#cb57-1" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb57-2"><a href="dql操作select.html#cb57-2" tabindex="-1"></a><span class="kw">select</span> a.shop_name <span class="kw">as</span> ashop, b.shop_name <span class="kw">as</span> bshop </span>
+<span id="cb57-3"><a href="dql操作select.html#cb57-3" tabindex="-1"></a><span class="kw">from</span> sale_detail_jt a </span>
+<span id="cb57-4"><a href="dql操作select.html#cb57-4" tabindex="-1"></a><span class="kw">left</span> <span class="kw">outer</span> <span class="kw">join</span> sale_detail b </span>
+<span id="cb57-5"><a href="dql操作select.html#cb57-5" tabindex="-1"></a><span class="kw">on</span> a.shop_name<span class="op">=</span>b.shop_name;</span></code></pre></div>
+<p><strong>示例2：右连接</strong></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb58-1"><a href="dql操作select.html#cb58-1" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb58-2"><a href="dql操作select.html#cb58-2" tabindex="-1"></a><span class="kw">select</span> a.shop_name <span class="kw">as</span> ashop, b.shop_name <span class="kw">as</span> bshop </span>
+<span id="cb58-3"><a href="dql操作select.html#cb58-3" tabindex="-1"></a><span class="kw">from</span> sale_detail_jt a </span>
+<span id="cb58-4"><a href="dql操作select.html#cb58-4" tabindex="-1"></a><span class="kw">right</span> <span class="kw">outer</span> <span class="kw">join</span> sale_detail b </span>
+<span id="cb58-5"><a href="dql操作select.html#cb58-5" tabindex="-1"></a><span class="kw">on</span> a.shop_name<span class="op">=</span>b.shop_name;</span></code></pre></div>
+<p>以上是MaxCompute支持的join操作及相关注意事项、命令格式和示例。</p>
+</div>
+</div>
+<div id="semi-join-半连接" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> SEMI join 半连接<a href="dql操作select.html#semi-join-半连接" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="maxcompute支持的半连接操作" class="section level3 hasAnchor" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> MaxCompute支持的半连接操作<a href="dql操作select.html#maxcompute支持的半连接操作" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>MaxCompute支持半连接操作，包括left semi join和left anti join，通过右表过滤左表的数据，以提高查询性能。</p>
+<ol style="list-style-type: decimal">
+<li><strong>Left Semi Join</strong>
+<ul>
+<li>当join条件成立时，返回左表中的数据。如果左表中满足指定条件的某行数据在右表中出现过，则此行保留在结果集中。</li>
+<li>类似的操作为in subquery。</li>
+</ul></li>
+<li><strong>Left Anti Join</strong>
+<ul>
+<li>当join条件不成立时，返回左表中的数据。如果左表中满足指定条件的某行数据没有在右表中出现过，则此行保留在结果集中。</li>
+<li>类似的操作为not in subquery，但并不完全相同。</li>
+</ul></li>
+</ol>
+</div>
+<div id="示例数据-4" class="section level3 hasAnchor" number="5.6.2">
+<h3><span class="header-section-number">5.6.2</span> 示例数据<a href="dql操作select.html#示例数据-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>为便于理解，提供了源数据，并创建了相关示例表。</p>
+<ul>
+<li>表 sale_detail</li>
+<li>表 sale_detail_sj</li>
+</ul>
+</div>
+<div id="使用示例-14" class="section level3 hasAnchor" number="5.6.3">
+<h3><span class="header-section-number">5.6.3</span> 使用示例<a href="dql操作select.html#使用示例-14" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>示例1：查询满足条件的数据</strong></p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb59-1"><a href="dql操作select.html#cb59-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> </span>
+<span id="cb59-2"><a href="dql操作select.html#cb59-2" tabindex="-1"></a><span class="kw">from</span> sale_detail a </span>
+<span id="cb59-3"><a href="dql操作select.html#cb59-3" tabindex="-1"></a><span class="kw">left</span> semi <span class="kw">join</span> sale_detail_sj b </span>
+<span id="cb59-4"><a href="dql操作select.html#cb59-4" tabindex="-1"></a><span class="kw">on</span> a.total_price<span class="op">=</span>b.total_price;</span></code></pre></div>
+<p><strong>返回结果：</strong></p>
+<pre><code>+------------+-------------+-------------+------------+------------+
+| shop_name  | customer_id | total_price | sale_date  | region     |
++------------+-------------+-------------+------------+------------+
+| s2         | c2          | 100.2       | 2013       | china      |
+| s1         | c1          | 100.1       | 2013       | china      |
++------------+-------------+-------------+------------+------------+</code></pre>
+<p><strong>说明：</strong>
+只返回 sale_detail 中的数据，只要 sale_detail 的 total_price 在 sale_detail_sj 的 total_price 中出现过。</p>
+<p><strong>示例2：查询不满足条件的数据</strong></p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb61-1"><a href="dql操作select.html#cb61-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> </span>
+<span id="cb61-2"><a href="dql操作select.html#cb61-2" tabindex="-1"></a><span class="kw">from</span> sale_detail a </span>
+<span id="cb61-3"><a href="dql操作select.html#cb61-3" tabindex="-1"></a><span class="kw">left</span> anti <span class="kw">join</span> sale_detail_sj b </span>
+<span id="cb61-4"><a href="dql操作select.html#cb61-4" tabindex="-1"></a><span class="kw">on</span> a.total_price<span class="op">=</span>b.total_price;</span></code></pre></div>
+<p><strong>返回结果：</strong></p>
+<pre><code>+------------+-------------+-------------+------------+------------+
+| shop_name  | customer_id | total_price | sale_date  | region     |
++------------+-------------+-------------+------------+------------+
+| s3         | c3          | 100.3       | 2013       | china      |
++------------+-------------+-------------+------------+------------+</code></pre>
+<p><strong>说明：</strong>
+只返回 sale_detail 中的数据，只要 sale_detail 的 total_price 在 sale_detail_sj 的 total_price 中没有出现过。</p>
+<p>以上是MaxCompute支持的半连接操作的功能介绍及示例数据和使用示例。</p>
+</div>
+</div>
+<div id="mapjoin-hint" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> MAPJOIN HINT<a href="dql操作select.html#mapjoin-hint" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>在MaxCompute中，当你对一个大表和一个或多个小表执行join操作时，可以使用MapJoin Hint提示来提升查询性能。MapJoin在Map阶段执行表连接，而不是在Reduce阶段执行，从而缩短数据传输时间，提高系统资源利用率，优化作业的执行效率。</p>
+<div id="功能介绍-6" class="section level3 hasAnchor" number="5.7.1">
+<h3><span class="header-section-number">5.7.1</span> 功能介绍<a href="dql操作select.html#功能介绍-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>MapJoin操作：</strong>
+<ul>
+<li>在Map阶段执行表连接，而不是在Reduce阶段执行。</li>
+<li>将指定的小表加载到程序的内存中，以加快join的执行速度。</li>
+<li>可以在MapJoin中使用不等值连接或or连接多个条件。</li>
+</ul></li>
+</ul>
+</div>
+<div id="使用限制-2" class="section level3 hasAnchor" number="5.7.2">
+<h3><span class="header-section-number">5.7.2</span> 使用限制<a href="dql操作select.html#使用限制-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>MapJoin操作的使用限制包括：
+<ul>
+<li>指定的表仅能为小表，且加载到内存后总内存不得超过512 MB。</li>
+<li>不支持full outer join。</li>
+<li>最多支持指定128张小表。</li>
+</ul></li>
+</ul>
+</div>
+<div id="使用方法" class="section level3 hasAnchor" number="5.7.3">
+<h3><span class="header-section-number">5.7.3</span> 使用方法<a href="dql操作select.html#使用方法" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在select语句中使用MapJoin Hint提示来执行MapJoin操作。注意以下使用方法：</p>
+<ul>
+<li>引用小表或子查询时，需要引用别名。</li>
+<li>mapjoin支持小表为子查询。</li>
+<li>可以使用不等值连接或or连接多个条件。</li>
+<li>在mapjoin中，可以通过不写on语句而通过mapjoin on 1 = 1的形式，实现笛卡尔乘积的计算。</li>
+</ul>
+</div>
+<div id="示例数据-5" class="section level3 hasAnchor" number="5.7.4">
+<h3><span class="header-section-number">5.7.4</span> 示例数据<a href="dql操作select.html#示例数据-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>为便于理解，提供了源数据，并创建了相关示例表。</p>
+<ul>
+<li>表 sale_detail</li>
+<li>表 sale_detail_sj</li>
+</ul>
+</div>
+<div id="使用示例-15" class="section level3 hasAnchor" number="5.7.5">
+<h3><span class="header-section-number">5.7.5</span> 使用示例<a href="dql操作select.html#使用示例-15" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>对表 sale_detail 和 sale_detail_sj 执行 join 操作，并满足指定条件：</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb63-1"><a href="dql操作select.html#cb63-1" tabindex="-1"></a><span class="kw">select</span> <span class="co">/*+ mapjoin(a) */</span></span>
+<span id="cb63-2"><a href="dql操作select.html#cb63-2" tabindex="-1"></a>        a.shop_name,</span>
+<span id="cb63-3"><a href="dql操作select.html#cb63-3" tabindex="-1"></a>        a.total_price,</span>
+<span id="cb63-4"><a href="dql操作select.html#cb63-4" tabindex="-1"></a>        b.total_price</span>
+<span id="cb63-5"><a href="dql操作select.html#cb63-5" tabindex="-1"></a><span class="kw">from</span> sale_detail_sj a <span class="kw">join</span> sale_detail b</span>
+<span id="cb63-6"><a href="dql操作select.html#cb63-6" tabindex="-1"></a><span class="kw">on</span> a.total_price <span class="op">&lt;</span> b.total_price <span class="kw">or</span> a.total_price <span class="op">+</span> b.total_price <span class="op">&lt;</span> <span class="dv">500</span>;</span></code></pre></div>
+<p><strong>返回结果：</strong></p>
+<pre><code>+-----------+-------------+--------------+
+| shop_name | total_price | total_price2 |
++-----------+-------------+--------------+
+| s1        | 100.1       | 100.1        |
+| s2        | 100.2       | 100.1        |
+| s5        | 100.2       | 100.1        |
+| s2        | 100.2       | 100.1        |
+| s1        | 100.1       | 100.2        |
+| s2        | 100.2       | 100.2        |
+| s5        | 100.2       | 100.2        |
+| s2        | 100.2       | 100.2        |
+| s1        | 100.1       | 100.3        |
+| s2        | 100.2       | 100.3        |
+| s5        | 100.2       | 100.3        |
+| s2        | 100.2       | 100.3        |
++-----------+-------------+--------------+</code></pre>
+</div>
+</div>
+<div id="distributed-mapjoin" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> DISTRIBUTED MAPJOIN<a href="dql操作select.html#distributed-mapjoin" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Distributed MapJoin是MapJoin的升级版本，用于大表Join中的表连接操作，其核心目的是减少大表侧的Shuffle和排序。</p>
+<div id="注意事项-5" class="section level3 hasAnchor" number="5.8.1">
+<h3><span class="header-section-number">5.8.1</span> 注意事项<a href="dql操作select.html#注意事项-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Join操作的两侧表的数据量有不同要求：
+<ul>
+<li>大表侧数据量需大于10 TB。</li>
+<li>中表侧数据量需在 1 GB 到 100 GB 范围内。</li>
+</ul></li>
+<li>小表侧的数据需要均匀分布，不能有明显的长尾，以避免单个分片产生过多数据导致内存溢出（OOM）及远程过程调用（RPC）超时问题。</li>
+<li>SQL任务的运行时间应在20分钟以上，才建议使用Distributed MapJoin进行优化。</li>
+<li>由于执行任务时会占用较多资源，避免在较小的配额组中运行。</li>
+</ul>
+</div>
+<div id="使用方法-1" class="section level3 hasAnchor" number="5.8.2">
+<h3><span class="header-section-number">5.8.2</span> 使用方法<a href="dql操作select.html#使用方法-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在select语句中使用Hint提示 <code>/*+distmapjoin(&lt;table_name&gt;(shard_count=&lt;n&gt;,replica_count=&lt;m&gt;))*/</code> 执行Distributed MapJoin。参数说明如下：</p>
+<ul>
+<li><code>table_name</code>：目标表名。</li>
+<li><code>shard_count=&lt;n&gt;</code>：设置小表数据的分片数，决定任务的并发度。</li>
+<li><code>replica_count=&lt;m&gt;</code>：设置小表数据的副本数，用于减少访问压力和提高任务的稳定性。</li>
+</ul>
+</div>
+<div id="语法示例" class="section level3 hasAnchor" number="5.8.3">
+<h3><span class="header-section-number">5.8.3</span> 语法示例<a href="dql操作select.html#语法示例" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb65"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb65-1"><a href="dql操作select.html#cb65-1" tabindex="-1"></a><span class="co">-- 推荐，指定shard_count（replica_count默认为1）</span></span>
+<span id="cb65-2"><a href="dql操作select.html#cb65-2" tabindex="-1"></a><span class="co">/*+distmapjoin(a(shard_count=5))*/</span></span>
+<span id="cb65-3"><a href="dql操作select.html#cb65-3" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="dql操作select.html#cb65-4" tabindex="-1"></a><span class="co">-- 推荐，指定shard_count和replica_count</span></span>
+<span id="cb65-5"><a href="dql操作select.html#cb65-5" tabindex="-1"></a><span class="co">/*+distmapjoin(a(shard_count=5,replica_count=2))*/</span></span>
+<span id="cb65-6"><a href="dql操作select.html#cb65-6" tabindex="-1"></a></span>
+<span id="cb65-7"><a href="dql操作select.html#cb65-7" tabindex="-1"></a><span class="co">-- distmapjoin多个小表</span></span>
+<span id="cb65-8"><a href="dql操作select.html#cb65-8" tabindex="-1"></a><span class="co">/*+distmapjoin(a(shard_count=5,replica_count=2),b(shard_count=5,replica_count=2)) */</span></span>
+<span id="cb65-9"><a href="dql操作select.html#cb65-9" tabindex="-1"></a></span>
+<span id="cb65-10"><a href="dql操作select.html#cb65-10" tabindex="-1"></a><span class="co">-- distmapjoin和mapjoin混用</span></span>
+<span id="cb65-11"><a href="dql操作select.html#cb65-11" tabindex="-1"></a><span class="co">/*+distmapjoin(a(shard_count=5,replica_count=2)),mapjoin(b)*/</span></span></code></pre></div>
+</div>
+<div id="使用示例-16" class="section level3 hasAnchor" number="5.8.4">
+<h3><span class="header-section-number">5.8.4</span> 使用示例<a href="dql操作select.html#使用示例-16" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>为了演示Distributed MapJoin的用法，以下示例以向分区表tmall_dump_lasttable插入数据为例进行说明。</p>
+<p><strong>常规写法：</strong></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb66-1"><a href="dql操作select.html#cb66-1" tabindex="-1"></a><span class="kw">insert</span> OVERWRITE <span class="kw">table</span> tmall_dump_lasttable <span class="kw">partition</span>(ds<span class="op">=</span><span class="st">&#39;20211130&#39;</span>)</span>
+<span id="cb66-2"><a href="dql操作select.html#cb66-2" tabindex="-1"></a><span class="kw">select</span> t1.<span class="op">*</span></span>
+<span id="cb66-3"><a href="dql操作select.html#cb66-3" tabindex="-1"></a><span class="kw">from</span></span>
+<span id="cb66-4"><a href="dql操作select.html#cb66-4" tabindex="-1"></a>(</span>
+<span id="cb66-5"><a href="dql操作select.html#cb66-5" tabindex="-1"></a>    <span class="kw">select</span> nid, doc,<span class="kw">type</span></span>
+<span id="cb66-6"><a href="dql操作select.html#cb66-6" tabindex="-1"></a>    <span class="kw">from</span> search_ods.dump_lasttable <span class="kw">where</span> ds<span class="op">=</span><span class="st">&#39;20211203&#39;</span></span>
+<span id="cb66-7"><a href="dql操作select.html#cb66-7" tabindex="-1"></a>)t1</span>
+<span id="cb66-8"><a href="dql操作select.html#cb66-8" tabindex="-1"></a><span class="kw">join</span></span>
+<span id="cb66-9"><a href="dql操作select.html#cb66-9" tabindex="-1"></a>(</span>
+<span id="cb66-10"><a href="dql操作select.html#cb66-10" tabindex="-1"></a>    <span class="kw">select</span> <span class="kw">distinct</span> item_id</span>
+<span id="cb66-11"><a href="dql操作select.html#cb66-11" tabindex="-1"></a>    <span class="kw">from</span> tbcdm.dim_tb_itm</span>
+<span id="cb66-12"><a href="dql操作select.html#cb66-12" tabindex="-1"></a>    <span class="kw">where</span> ds<span class="op">=</span><span class="st">&#39;20211130&#39;</span></span>
+<span id="cb66-13"><a href="dql操作select.html#cb66-13" tabindex="-1"></a>    <span class="kw">and</span> bc_type<span class="op">=</span><span class="st">&#39;B&#39;</span></span>
+<span id="cb66-14"><a href="dql操作select.html#cb66-14" tabindex="-1"></a>    <span class="kw">and</span> is_online<span class="op">=</span><span class="st">&#39;Y&#39;</span></span>
+<span id="cb66-15"><a href="dql操作select.html#cb66-15" tabindex="-1"></a>)t2</span>
+<span id="cb66-16"><a href="dql操作select.html#cb66-16" tabindex="-1"></a><span class="kw">on</span> t1.nid<span class="op">=</span>t2.item_id;</span></code></pre></div>
+<p><strong>优化后写法：</strong></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb67-1"><a href="dql操作select.html#cb67-1" tabindex="-1"></a><span class="kw">insert</span> OVERWRITE <span class="kw">table</span> tmall_dump_lasttable <span class="kw">partition</span> (ds<span class="op">=</span><span class="st">&#39;20211130&#39;</span>)</span>
+<span id="cb67-2"><a href="dql操作select.html#cb67-2" tabindex="-1"></a><span class="kw">select</span> <span class="co">/*+ distmapjoin(t2(shard_count=35)) */</span> t1.<span class="op">*</span></span>
+<span id="cb67-3"><a href="dql操作select.html#cb67-3" tabindex="-1"></a><span class="kw">from</span></span>
+<span id="cb67-4"><a href="dql操作select.html#cb67-4" tabindex="-1"></a>(</span>
+<span id="cb67-5"><a href="dql操作select.html#cb67-5" tabindex="-1"></a>    <span class="kw">select</span> nid, doc, <span class="kw">type</span></span>
+<span id="cb67-6"><a href="dql操作select.html#cb67-6" tabindex="-1"></a>    <span class="kw">from</span> search_ods.dump_lasttable <span class="kw">where</span> ds<span class="op">=</span><span class="st">&#39;20211203&#39;</span></span>
+<span id="cb67-7"><a href="dql操作select.html#cb67-7" tabindex="-1"></a>)t1</span>
+<span id="cb67-8"><a href="dql操作select.html#cb67-8" tabindex="-1"></a><span class="kw">join</span></span>
+<span id="cb67-9"><a href="dql操作select.html#cb67-9" tabindex="-1"></a>(</span>
+<span id="cb67-10"><a href="dql操作select.html#cb67-10" tabindex="-1"></a>    <span class="kw">select</span> <span class="kw">distinct</span> item_id</span>
+<span id="cb67-11"><a href="dql操作select.html#cb67-11" tabindex="-1"></a>    <span class="kw">from</span> tbcdm.dim_tb_itm</span>
+<span id="cb67-12"><a href="dql操作select.html#cb67-12" tabindex="-1"></a>    <span class="kw">where</span> ds<span class="op">=</span><span class="st">&#39;20211130&#39;</span></span>
+<span id="cb67-13"><a href="dql操作select.html#cb67-13" tabindex="-1"></a>    <span class="kw">and</span> bc_type<span class="op">=</span><span class="st">&#39;B&#39;</span></span>
+<span id="cb67-14"><a href="dql操作select.html#cb67-14" tabindex="-1"></a>    <span class="kw">and</span> is_online<span class="op">=</span><span class="st">&#39;Y&#39;</span></span>
+<span id="cb67-15"><a href="dql操作select.html#cb67-15" tabindex="-1"></a>)t2</span>
+<span id="cb67-16"><a href="dql操作select.html#cb67-16" tabindex="-1"></a><span class="kw">on</span> t1.nid<span class="op">=</span>t2.item_id;</span></code></pre></div>
+</div>
+</div>
+<div id="skewjoin-hint" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> SKEWJOIN HINT<a href="dql操作select.html#skewjoin-hint" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>SkewJoin Hint用于解决表连接中存在热点数据导致的长尾问题，通过分别处理热点数据和非热点数据，并最终合并的方式提高Join效率。</p>
+<div id="使用方法-2" class="section level3 hasAnchor" number="5.9.1">
+<h3><span class="header-section-number">5.9.1</span> 使用方法<a href="dql操作select.html#使用方法-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>你需要在select语句中使用Hint提示 <code>/*+ skewJoin(&lt;table_name&gt;[(&lt;column1_name&gt;[,&lt;column2_name&gt;,...])][((&lt;value11&gt;,&lt;value12&gt;)[,(&lt;value21&gt;,&lt;value22&gt;)...])]*/</code> 才会执行SkewJoin。参数说明如下：</p>
+<ul>
+<li><code>table_name</code>：倾斜表名。</li>
+<li><code>column_name</code>：倾斜列名。</li>
+<li><code>value</code>：倾斜key值。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb68-1"><a href="dql操作select.html#cb68-1" tabindex="-1"></a><span class="co">-- 方法1：Hint表名</span></span>
+<span id="cb68-2"><a href="dql操作select.html#cb68-2" tabindex="-1"></a><span class="kw">select</span> <span class="co">/*+ skewjoin(a) */</span> <span class="op">*</span> <span class="kw">from</span> T0 a <span class="kw">join</span> T1 b <span class="kw">on</span> a.c0 <span class="op">=</span> b.c0 <span class="kw">and</span> a.c1 <span class="op">=</span> b.c1;</span>
+<span id="cb68-3"><a href="dql操作select.html#cb68-3" tabindex="-1"></a></span>
+<span id="cb68-4"><a href="dql操作select.html#cb68-4" tabindex="-1"></a><span class="co">-- 方法2：Hint表名和倾斜列</span></span>
+<span id="cb68-5"><a href="dql操作select.html#cb68-5" tabindex="-1"></a><span class="kw">select</span> <span class="co">/*+ skewjoin(a(c0, c1)) */</span> <span class="op">*</span> <span class="kw">from</span> T0 a <span class="kw">join</span> T1 b <span class="kw">on</span> a.c0 <span class="op">=</span> b.c0 <span class="kw">and</span> a.c1 <span class="op">=</span> b.c1 <span class="kw">and</span> a.c2 <span class="op">=</span> b.c2;</span>
+<span id="cb68-6"><a href="dql操作select.html#cb68-6" tabindex="-1"></a></span>
+<span id="cb68-7"><a href="dql操作select.html#cb68-7" tabindex="-1"></a><span class="co">-- 方法3：指定倾斜key值</span></span>
+<span id="cb68-8"><a href="dql操作select.html#cb68-8" tabindex="-1"></a><span class="kw">select</span> <span class="co">/*+ skewjoin(a(c0, c1)((1, &quot;2&quot;), (3, &quot;4&quot;))) */</span> <span class="op">*</span> <span class="kw">from</span> T0 a <span class="kw">join</span> T1 b <span class="kw">on</span> a.c0 <span class="op">=</span> b.c0 <span class="kw">and</span> a.c1 <span class="op">=</span> b.c1 <span class="kw">and</span> a.c2 <span class="op">=</span> b.c2;</span></code></pre></div>
+</div>
+<div id="注意事项-6" class="section level3 hasAnchor" number="5.9.2">
+<h3><span class="header-section-number">5.9.2</span> 注意事项<a href="dql操作select.html#注意事项-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>SkewJoin Hint支持的Join类型：
+<ul>
+<li>Inner Join：可以对Join两侧表中的任意一侧进行Hint。</li>
+<li>Left Join、Semi Join和Anti Join：只可以Hint左侧表。</li>
+<li>Right Join：只可以Hint右侧表。</li>
+<li>Full Join：不支持Skew Join Hint。</li>
+</ul></li>
+<li>建议只对一定会出现数据倾斜的Join添加Hint，因为Hint会运行一个Aggregate，存在一定代价。</li>
+<li>被Hint的Join的Left Side Join Key的类型需要与Right Side Join Key的类型一致，否则SkewJoin Hint不生效。你可以通过在子查询中将Join key进行Cast从而保持一致。</li>
+<li>加SkewJoin Hint后，优化器会运行一个Aggregate获取前20的热值。你也可以通过设置 <code>set odps.optimizer.skew.join.topk.num = xx;</code> 来自定义获取的热值数量。</li>
+<li>SkewJoin Hint只支持对Join其中一侧进行Hint。</li>
+<li>被Hint的Join一定要有left key = right key，不支持笛卡尔积Join。</li>
+</ul>
+</div>
+</div>
+<div id="动态过滤器dynamic-filter" class="section level2 hasAnchor" number="5.10">
+<h2><span class="header-section-number">5.10</span> 动态过滤器（Dynamic Filter）<a href="dql操作select.html#动态过滤器dynamic-filter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="动态过滤器dynamic-filter-1" class="section level3 hasAnchor" number="5.10.1">
+<h3><span class="header-section-number">5.10.1</span> 动态过滤器（Dynamic Filter）<a href="dql操作select.html#动态过滤器dynamic-filter-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>动态过滤器（Dynamic Filter）是MaxCompute中用于优化JOIN操作的一种机制。它利用JOIN等值连接的特性，在运行时动态生成过滤器，以便在Shuffle或JOIN之前提前过滤数据，从而加速查询运行。动态过滤器可以基于JOIN的等值连接属性进行优化，通过将过滤器下推到底层存储，在源头过滤数据，从而减少资源消耗和提高执行效率。</p>
+</div>
+<div id="优化思路" class="section level3 hasAnchor" number="5.10.2">
+<h3><span class="header-section-number">5.10.2</span> 优化思路<a href="dql操作select.html#优化思路" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>一个典型的包含JOIN的SQL语句如下：</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb69-1"><a href="dql操作select.html#cb69-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> (table1) A <span class="kw">JOIN</span> (table2) B <span class="kw">ON</span> A.a <span class="op">=</span> B.b;</span></code></pre></div>
+<p>MaxCompute可以根据JOIN的特性，在运行时动态生成过滤器，以便在Shuffle或JOIN之前提前过滤数据。这种在作业运行时动态生成过滤器的功能称为动态过滤器（Dynamic Filter）。</p>
+</div>
+<div id="应用场景-1" class="section level3 hasAnchor" number="5.10.3">
+<h3><span class="header-section-number">5.10.3</span> 应用场景<a href="dql操作select.html#应用场景-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>动态过滤器功能适用于维度表和事实表执行JOIN的场景。它可以显著减少JOIN操作中的资源消耗和执行时间，特别是在海量数据场景下。</p>
+</div>
+<div id="动态范围过滤器或布隆过滤器dynamic-rangebloom-filter" class="section level3 hasAnchor" number="5.10.4">
+<h3><span class="header-section-number">5.10.4</span> 动态范围过滤器或布隆过滤器（Dynamic Range|Bloom Filter）<a href="dql操作select.html#动态范围过滤器或布隆过滤器dynamic-rangebloom-filter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>动态过滤器功能通常基于Bloom Filter、Range Filter和Inset等机制，以实现对大表侧数据的动态过滤。这种过滤器的生成和使用，遵循生产者和消费者模式，由动态过滤器的生产者和消费者算子负责生成和使用。</p>
+</div>
+<div id="动态分区裁剪dynamic-partition-pruning" class="section level3 hasAnchor" number="5.10.5">
+<h3><span class="header-section-number">5.10.5</span> 动态分区裁剪（Dynamic Partition Pruning）<a href="dql操作select.html#动态分区裁剪dynamic-partition-pruning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>当JOIN的Key为分区列时，动态过滤器功能也可以通过动态分区裁剪（Dynamic Partition Pruning）来进一步优化。动态分区裁剪功能可以根据表是否是分区表，决定是否采用动态分区裁剪。它可以根据小表侧数据生成过滤器，然后过滤大表侧的分区列表，将需要读取的分区列表聚合，从而裁剪掉不需要扫描的分区。</p>
+</div>
+<div id="使用方法-3" class="section level3 hasAnchor" number="5.10.6">
+<h3><span class="header-section-number">5.10.6</span> 使用方法<a href="dql操作select.html#使用方法-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>你可以通过以下方式打开动态过滤器：</p>
+<ul>
+<li>在Session级别通过开关强制打开动态过滤器：<code>set odps.optimizer.force.dynamic.filter=true;</code></li>
+<li>在Session级别通过开关智能打开动态过滤器：<code>set odps.optimizer.enable.dynamic.filter=true;</code></li>
+<li>在SQL语句中通过HINT方式打开动态过滤器：<code>/*+dynamicfilter(Producer, Consumer1[, Consumer2,...])*/</code></li>
+</ul>
+<p>对于动态分区裁剪功能，你可以在Session级别通过开关打开：<code>set odps.optimizer.dynamic.filter.dpp.enable=true;</code></p>
+</div>
+</div>
+<div id="grouping-sets" class="section level2 hasAnchor" number="5.11">
+<h2><span class="header-section-number">5.11</span> grouping sets<a href="dql操作select.html#grouping-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>功能介绍</strong></p>
+<p><code>GROUPING SETS</code> 是对 <code>GROUP BY</code> 子句的扩展，允许你按照多种组合方式对结果进行分组，而不需要使用多个 <code>SELECT</code> 语句与 <code>UNION ALL</code>。</p>
+<p><strong>相关语法</strong></p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb70-1"><a href="dql操作select.html#cb70-1" tabindex="-1"></a><span class="kw">SELECT</span> column1, column2, aggregate_function(column3)</span>
+<span id="cb70-2"><a href="dql操作select.html#cb70-2" tabindex="-1"></a><span class="kw">FROM</span> table_name</span>
+<span id="cb70-3"><a href="dql操作select.html#cb70-3" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="fu">GROUPING</span> SETS (</span>
+<span id="cb70-4"><a href="dql操作select.html#cb70-4" tabindex="-1"></a>    (column1, column2),</span>
+<span id="cb70-5"><a href="dql操作select.html#cb70-5" tabindex="-1"></a>    (column1),</span>
+<span id="cb70-6"><a href="dql操作select.html#cb70-6" tabindex="-1"></a>    (column2),</span>
+<span id="cb70-7"><a href="dql操作select.html#cb70-7" tabindex="-1"></a>    ()</span>
+<span id="cb70-8"><a href="dql操作select.html#cb70-8" tabindex="-1"></a>);</span></code></pre></div>
+<ul>
+<li><code>GROUP BY GROUPING SETS</code>: 定义了要进行分组的列的组合。</li>
+<li><code>(column1, column2)</code>: 表示按照指定列的组合进行分组。</li>
+<li><code>(column1)</code>, <code>(column2)</code>: 表示按照单独的列进行分组。</li>
+<li><code>()</code>: 表示不进行分组，即全局汇总。</li>
+</ul>
+<p><strong>示例</strong></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb71-1"><a href="dql操作select.html#cb71-1" tabindex="-1"></a><span class="kw">SELECT</span> os, device, city, <span class="fu">COUNT</span>(<span class="op">*</span>) </span>
+<span id="cb71-2"><a href="dql操作select.html#cb71-2" tabindex="-1"></a><span class="kw">FROM</span> requests </span>
+<span id="cb71-3"><a href="dql操作select.html#cb71-3" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="fu">GROUPING</span> SETS (</span>
+<span id="cb71-4"><a href="dql操作select.html#cb71-4" tabindex="-1"></a>    (os, device),</span>
+<span id="cb71-5"><a href="dql操作select.html#cb71-5" tabindex="-1"></a>    (city),</span>
+<span id="cb71-6"><a href="dql操作select.html#cb71-6" tabindex="-1"></a>    ()</span>
+<span id="cb71-7"><a href="dql操作select.html#cb71-7" tabindex="-1"></a>);</span></code></pre></div>
+<p><strong>说明</strong></p>
+<ul>
+<li>分组集中未使用的列会被填充为 <code>NULL</code>。</li>
+<li>通过 <code>GROUPING</code> 可以输出更有实际意义的值，判断某个列是否被用于分组。</li>
+</ul>
+<div id="cube-rollup" class="section level3 hasAnchor" number="5.11.1">
+<h3><span class="header-section-number">5.11.1</span> CUBE | ROLLUP<a href="dql操作select.html#cube-rollup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>功能介绍</strong></p>
+<p><code>CUBE</code> 和 <code>ROLLUP</code> 是对 <code>GROUP BY</code> 子句的扩展，用于按层级聚合数据。</p>
+<p><strong>示例</strong></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb72-1"><a href="dql操作select.html#cb72-1" tabindex="-1"></a><span class="kw">SELECT</span> os, device, city, <span class="fu">COUNT</span>(<span class="op">*</span>)</span>
+<span id="cb72-2"><a href="dql操作select.html#cb72-2" tabindex="-1"></a><span class="kw">FROM</span> requests</span>
+<span id="cb72-3"><a href="dql操作select.html#cb72-3" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">CUBE</span> (os, device, city);</span></code></pre></div>
+<p><strong>说明</strong></p>
+<ul>
+<li><code>CUBE</code> 枚举了指定列的所有可能组合作为 <code>GROUPING SETS</code>。</li>
+<li><code>ROLLUP</code> 则以按层级聚合的方式产生 <code>GROUPING SETS</code>。</li>
+</ul>
+</div>
+<div id="grouping-grouping_id" class="section level3 hasAnchor" number="5.11.2">
+<h3><span class="header-section-number">5.11.2</span> GROUPING | GROUPING_ID<a href="dql操作select.html#grouping-grouping_id" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>功能介绍</strong></p>
+<ul>
+<li><code>GROUPING</code>：判断某个列是否被用于分组。</li>
+<li><code>GROUPING_ID</code>：接受列名作为参数，结果是将参数列的 <code>GROUPING</code> 结果按位组成整数。</li>
+</ul>
+<p><strong>示例</strong></p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb73-1"><a href="dql操作select.html#cb73-1" tabindex="-1"></a><span class="kw">SELECT</span> os, device, city, <span class="fu">COUNT</span>(<span class="op">*</span>), </span>
+<span id="cb73-2"><a href="dql操作select.html#cb73-2" tabindex="-1"></a>       <span class="fu">GROUPING</span>(os) <span class="kw">AS</span> ga, <span class="fu">GROUPING</span>(device) <span class="kw">AS</span> gb, <span class="fu">GROUPING</span>(city) <span class="kw">AS</span> gc, <span class="fu">GROUPING_ID</span>(os, device, city) <span class="kw">AS</span> groupingid </span>
+<span id="cb73-3"><a href="dql操作select.html#cb73-3" tabindex="-1"></a><span class="kw">FROM</span> requests </span>
+<span id="cb73-4"><a href="dql操作select.html#cb73-4" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">CUBE</span>(os, device, city);</span></code></pre></div>
+</div>
+<div id="grouping__id" class="section level3 hasAnchor" number="5.11.3">
+<h3><span class="header-section-number">5.11.3</span> GROUPING__ID<a href="dql操作select.html#grouping__id" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>功能介绍</strong></p>
+<p><code>GROUPING__ID</code> 不带参数，用于兼容 Hive 查询。</p>
+<p><strong>示例</strong></p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb74-1"><a href="dql操作select.html#cb74-1" tabindex="-1"></a><span class="kw">SELECT</span> a, b, c, <span class="fu">COUNT</span>(<span class="op">*</span>), GROUPING__ID </span>
+<span id="cb74-2"><a href="dql操作select.html#cb74-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>) <span class="kw">AS</span> t(a, b, c) </span>
+<span id="cb74-3"><a href="dql操作select.html#cb74-3" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> a, b, c <span class="fu">GROUPING</span> SETS ((a, b, c), (a));</span></code></pre></div>
+<p>这些示例展示了 <code>GROUPING SETS</code>、<code>CUBE</code>、<code>ROLLUP</code>、<code>GROUPING</code> 和 <code>GROUPING_ID</code> 的使用方法，以及如何在 MaxCompute SQL 中进行多维度的聚合分析。</p>
+</div>
+</div>
+<div id="windows-关键字" class="section level2 hasAnchor" number="5.12">
+<h2><span class="header-section-number">5.12</span> Windows 关键字<a href="dql操作select.html#windows-关键字" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>WINDOW关键字允许你自定义窗口，为窗口函数指定一个特定的名称，以提高查询的可读性和灵活性。</p>
+<div id="命令格式-12" class="section level3 hasAnchor" number="5.12.1">
+<h3><span class="header-section-number">5.12.1</span> 命令格式<a href="dql操作select.html#命令格式-12" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb75"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb75-1"><a href="dql操作select.html#cb75-1" tabindex="-1"></a>WINDOW <span class="op">&lt;</span>window_name<span class="op">&gt;</span> <span class="kw">AS</span> (<span class="op">&lt;</span>window_definition<span class="op">&gt;</span>),</span>
+<span id="cb75-2"><a href="dql操作select.html#cb75-2" tabindex="-1"></a>       <span class="op">&lt;</span>window_name<span class="op">&gt;</span> <span class="kw">AS</span> (<span class="op">&lt;</span>window_definition<span class="op">&gt;</span>),</span>
+<span id="cb75-3"><a href="dql操作select.html#cb75-3" tabindex="-1"></a>       <span class="op">..</span>.</span></code></pre></div>
+<ul>
+<li><code>window_name</code>：必填项，指定自定义的窗口函数名称。</li>
+<li><code>window_definition</code>：必填项，定义被命名窗口函数的窗口。窗口函数的详细介绍请参考窗口函数文档。</li>
+</ul>
+</div>
+<div id="使用限制-3" class="section level3 hasAnchor" number="5.12.2">
+<h3><span class="header-section-number">5.12.2</span> 使用限制<a href="dql操作select.html#使用限制-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>一个named window也可以用来定义另一个named window，这样两个named window的含义相同。但未定义named window不允许用来定义另一个named window。</li>
+<li>在同一个作用域中，不允许一个named window被多次定义。</li>
+</ul>
+</div>
+<div id="示例数据-6" class="section level3 hasAnchor" number="5.12.3">
+<h3><span class="header-section-number">5.12.3</span> 示例数据<a href="dql操作select.html#示例数据-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>以下是一个示例表 <code>emp</code> 的数据：</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb76-1"><a href="dql操作select.html#cb76-1" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> emp (</span>
+<span id="cb76-2"><a href="dql操作select.html#cb76-2" tabindex="-1"></a>   empno BIGINT,</span>
+<span id="cb76-3"><a href="dql操作select.html#cb76-3" tabindex="-1"></a>   ename STRING,</span>
+<span id="cb76-4"><a href="dql操作select.html#cb76-4" tabindex="-1"></a>   job STRING,</span>
+<span id="cb76-5"><a href="dql操作select.html#cb76-5" tabindex="-1"></a>   mgr BIGINT,</span>
+<span id="cb76-6"><a href="dql操作select.html#cb76-6" tabindex="-1"></a>   hiredate DATETIME,</span>
+<span id="cb76-7"><a href="dql操作select.html#cb76-7" tabindex="-1"></a>   sal BIGINT,</span>
+<span id="cb76-8"><a href="dql操作select.html#cb76-8" tabindex="-1"></a>   comm BIGINT,</span>
+<span id="cb76-9"><a href="dql操作select.html#cb76-9" tabindex="-1"></a>   deptno BIGINT</span>
+<span id="cb76-10"><a href="dql操作select.html#cb76-10" tabindex="-1"></a>);</span>
+<span id="cb76-11"><a href="dql操作select.html#cb76-11" tabindex="-1"></a></span>
+<span id="cb76-12"><a href="dql操作select.html#cb76-12" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> emp;</span></code></pre></div>
+</div>
+<div id="使用示例-17" class="section level3 hasAnchor" number="5.12.4">
+<h3><span class="header-section-number">5.12.4</span> 使用示例<a href="dql操作select.html#使用示例-17" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="示例1定义一个named-window" class="section level4 hasAnchor" number="5.12.4.1">
+<h4><span class="header-section-number">5.12.4.1</span> 示例1：定义一个named window<a href="dql操作select.html#示例1定义一个named-window" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb77"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb77-1"><a href="dql操作select.html#cb77-1" tabindex="-1"></a><span class="co">-- 没有使用 WINDOW 关键字</span></span>
+<span id="cb77-2"><a href="dql操作select.html#cb77-2" tabindex="-1"></a><span class="kw">SELECT</span> deptno,</span>
+<span id="cb77-3"><a href="dql操作select.html#cb77-3" tabindex="-1"></a>       ename,</span>
+<span id="cb77-4"><a href="dql操作select.html#cb77-4" tabindex="-1"></a>       sal,</span>
+<span id="cb77-5"><a href="dql操作select.html#cb77-5" tabindex="-1"></a>       <span class="fu">row_number</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> deptno <span class="kw">ORDER</span> <span class="kw">BY</span> sal <span class="kw">DESC</span>) <span class="kw">AS</span> nums</span>
+<span id="cb77-6"><a href="dql操作select.html#cb77-6" tabindex="-1"></a><span class="kw">FROM</span> emp;</span>
+<span id="cb77-7"><a href="dql操作select.html#cb77-7" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="dql操作select.html#cb77-8" tabindex="-1"></a><span class="co">-- 使用 WINDOW 关键字</span></span>
+<span id="cb77-9"><a href="dql操作select.html#cb77-9" tabindex="-1"></a><span class="kw">SELECT</span> deptno,</span>
+<span id="cb77-10"><a href="dql操作select.html#cb77-10" tabindex="-1"></a>       ename,</span>
+<span id="cb77-11"><a href="dql操作select.html#cb77-11" tabindex="-1"></a>       sal,</span>
+<span id="cb77-12"><a href="dql操作select.html#cb77-12" tabindex="-1"></a>       <span class="fu">row_number</span>() <span class="kw">OVER</span> w1 <span class="kw">AS</span> nums</span>
+<span id="cb77-13"><a href="dql操作select.html#cb77-13" tabindex="-1"></a><span class="kw">FROM</span> emp</span>
+<span id="cb77-14"><a href="dql操作select.html#cb77-14" tabindex="-1"></a>WINDOW w1 <span class="kw">AS</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> deptno <span class="kw">ORDER</span> <span class="kw">BY</span> sal <span class="kw">DESC</span>);</span></code></pre></div>
+</div>
+<div id="示例2同时定义多个named-window" class="section level4 hasAnchor" number="5.12.4.2">
+<h4><span class="header-section-number">5.12.4.2</span> 示例2：同时定义多个named window<a href="dql操作select.html#示例2同时定义多个named-window" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb78"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb78-1"><a href="dql操作select.html#cb78-1" tabindex="-1"></a><span class="kw">SELECT</span> deptno,</span>
+<span id="cb78-2"><a href="dql操作select.html#cb78-2" tabindex="-1"></a>       ename,</span>
+<span id="cb78-3"><a href="dql操作select.html#cb78-3" tabindex="-1"></a>       <span class="fu">MAX</span>(sal) <span class="kw">OVER</span> w2 <span class="kw">AS</span> max_sal,</span>
+<span id="cb78-4"><a href="dql操作select.html#cb78-4" tabindex="-1"></a>       <span class="fu">row_number</span>() <span class="kw">OVER</span> w1 <span class="kw">AS</span> nums</span>
+<span id="cb78-5"><a href="dql操作select.html#cb78-5" tabindex="-1"></a><span class="kw">FROM</span> emp</span>
+<span id="cb78-6"><a href="dql操作select.html#cb78-6" tabindex="-1"></a>WINDOW w1 <span class="kw">AS</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> deptno <span class="kw">ORDER</span> <span class="kw">BY</span> sal <span class="kw">DESC</span>),</span>
+<span id="cb78-7"><a href="dql操作select.html#cb78-7" tabindex="-1"></a>       w2 <span class="kw">AS</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> deptno);</span></code></pre></div>
+</div>
+<div id="示例3在全局定义named-window" class="section level4 hasAnchor" number="5.12.4.3">
+<h4><span class="header-section-number">5.12.4.3</span> 示例3：在全局定义named window<a href="dql操作select.html#示例3在全局定义named-window" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb79"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb79-1"><a href="dql操作select.html#cb79-1" tabindex="-1"></a>WINDOW w1 <span class="kw">AS</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> deptno <span class="kw">ORDER</span> <span class="kw">BY</span> sal <span class="kw">DESC</span>);</span>
+<span id="cb79-2"><a href="dql操作select.html#cb79-2" tabindex="-1"></a><span class="kw">INSERT</span> OVERWRITE <span class="kw">TABLE</span> table1 <span class="kw">SELECT</span> <span class="fu">row_number</span>() <span class="kw">OVER</span> w1 <span class="kw">AS</span> nums <span class="kw">FROM</span> table2;</span>
+<span id="cb79-3"><a href="dql操作select.html#cb79-3" tabindex="-1"></a><span class="kw">INSERT</span> OVERWRITE <span class="kw">TABLE</span> table3 <span class="kw">SELECT</span> <span class="fu">MAX</span>(column1) <span class="kw">OVER</span> w1 <span class="kw">AS</span> nums <span class="kw">FROM</span> table4;</span></code></pre></div>
+</div>
+<div id="示例4一个named-window用来定义另一个named-window" class="section level4 hasAnchor" number="5.12.4.4">
+<h4><span class="header-section-number">5.12.4.4</span> 示例4：一个named window用来定义另一个named window<a href="dql操作select.html#示例4一个named-window用来定义另一个named-window" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb80"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb80-1"><a href="dql操作select.html#cb80-1" tabindex="-1"></a><span class="kw">SELECT</span> deptno,</span>
+<span id="cb80-2"><a href="dql操作select.html#cb80-2" tabindex="-1"></a>       ename,</span>
+<span id="cb80-3"><a href="dql操作select.html#cb80-3" tabindex="-1"></a>       <span class="fu">MAX</span>(sal) <span class="kw">OVER</span> w2 <span class="kw">AS</span> max_sal,</span>
+<span id="cb80-4"><a href="dql操作select.html#cb80-4" tabindex="-1"></a>       <span class="fu">row_number</span>() <span class="kw">OVER</span> w1 <span class="kw">AS</span> nums</span>
+<span id="cb80-5"><a href="dql操作select.html#cb80-5" tabindex="-1"></a><span class="kw">FROM</span> emp</span>
+<span id="cb80-6"><a href="dql操作select.html#cb80-6" tabindex="-1"></a>WINDOW w1 <span class="kw">AS</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> deptno <span class="kw">ORDER</span> <span class="kw">BY</span> sal <span class="kw">DESC</span>),</span>
+<span id="cb80-7"><a href="dql操作select.html#cb80-7" tabindex="-1"></a>       w2 <span class="kw">AS</span> w1;</span></code></pre></div>
+</div>
+<div id="示例5错误示例" class="section level4 hasAnchor" number="5.12.4.5">
+<h4><span class="header-section-number">5.12.4.5</span> 示例5（错误示例）<a href="dql操作select.html#示例5错误示例" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb81"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb81-1"><a href="dql操作select.html#cb81-1" tabindex="-1"></a><span class="co">-- 错误示例，W1 和 W2 均未被定义</span></span>
+<span id="cb81-2"><a href="dql操作select.html#cb81-2" tabindex="-1"></a><span class="kw">SELECT</span> deptno,</span>
+<span id="cb81-3"><a href="dql操作select.html#cb81-3" tabindex="-1"></a>       ename,</span>
+<span id="cb81-4"><a href="dql操作select.html#cb81-4" tabindex="-1"></a>       <span class="fu">row_number</span>() <span class="kw">OVER</span> w1 <span class="kw">AS</span> nums</span>
+<span id="cb81-5"><a href="dql操作select.html#cb81-5" tabindex="-1"></a><span class="kw">FROM</span> emp</span>
+<span id="cb81-6"><a href="dql操作select.html#cb81-6" tabindex="-1"></a>WINDOW w1 <span class="kw">AS</span> w2;</span></code></pre></div>
+</div>
+<div id="示例6错误示例" class="section level4 hasAnchor" number="5.12.4.6">
+<h4><span class="header-section-number">5.12.4.6</span> 示例6（错误示例）<a href="dql操作select.html#示例6错误示例" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb82"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb82-1"><a href="dql操作select.html#cb82-1" tabindex="-1"></a><span class="co">-- 错误示例，W1 被重复定义</span></span>
+<span id="cb82-2"><a href="dql操作select.html#cb82-2" tabindex="-1"></a><span class="kw">SELECT</span> deptno,</span>
+<span id="cb82-3"><a href="dql操作select.html#cb82-3" tabindex="-1"></a>       ename,</span>
+<span id="cb82-4"><a href="dql操作select.html#cb82-4" tabindex="-1"></a>       <span class="fu">row_number</span>() <span class="kw">OVER</span> w1 <span class="kw">AS</span> nums</span>
+<span id="cb82-5"><a href="dql操作select.html#cb82-5" tabindex="-1"></a><span class="kw">FROM</span> emp</span>
+<span id="cb82-6"><a href="dql操作select.html#cb82-6" tabindex="-1"></a>WINDOW w1 <span class="kw">AS</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> deptno <span class="kw">ORDER</span> <span class="kw">BY</span> sal <span class="kw">DESC</span>),</span>
+<span id="cb82-7"><a href="dql操作select.html#cb82-7" tabindex="-1"></a>       w1 <span class="kw">AS</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> ename <span class="kw">ORDER</span> <span class="kw">BY</span> sal <span class="kw">DESC</span>);</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="tablesample采样" class="section level2 hasAnchor" number="5.13">
+<h2><span class="header-section-number">5.13</span> TABLESAMPLE采样<a href="dql操作select.html#tablesample采样" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>MaxCompute支持使用TABLESAMPLE功能对表数据进行采样，包括分桶采样、指定采样百分比采样和随机返回指定记录数采样。以下是命令语法和示例用法：</p>
+<div id="命令格式-13" class="section level3 hasAnchor" number="5.13.1">
+<h3><span class="header-section-number">5.13.1</span> 命令格式<a href="dql操作select.html#命令格式-13" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="分桶采样" class="section level4 hasAnchor" number="5.13.1.1">
+<h4><span class="header-section-number">5.13.1.1</span> 1. 分桶采样<a href="dql操作select.html#分桶采样" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb83"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb83-1"><a href="dql操作select.html#cb83-1" tabindex="-1"></a>TABLESAMPLE (BUCKET <span class="op">&lt;</span>x<span class="op">&gt;</span> <span class="kw">OUT</span> <span class="kw">OF</span> <span class="op">&lt;</span>y<span class="op">&gt;</span> [<span class="kw">ON</span> <span class="op">&lt;</span>col_name<span class="op">&gt;</span> | rand()])</span></code></pre></div>
+<p>参数说明：
+- <code>x</code>，<code>y</code>：将源表中的数据划分为<code>y</code>个桶，取其中的第<code>x</code>个桶，桶从1开始编号。
+- <code>col_name</code>：分桶列名即要进行采样的列名。当表不是聚簇表时，<code>col_name</code>与<code>rand()</code>函数必须二选一。在<code>ON</code>语句中最多支持指定10个列。</p>
+</div>
+<div id="指定采样百分比采样" class="section level4 hasAnchor" number="5.13.1.2">
+<h4><span class="header-section-number">5.13.1.2</span> 2. 指定采样百分比采样<a href="dql操作select.html#指定采样百分比采样" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb84"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb84-1"><a href="dql操作select.html#cb84-1" tabindex="-1"></a>TABLESAMPLE (<span class="op">&lt;</span>n<span class="op">&gt;</span> <span class="kw">PERCENT</span>)</span></code></pre></div>
+<p>其中<code>n</code>为采样百分比，取其中<code>n%</code>的数据，即采样返回的数据记录个数和源表中总记录个数之比大概是<code>n%</code>，非精确值。</p>
+</div>
+<div id="随机返回指定记录数采样" class="section level4 hasAnchor" number="5.13.1.3">
+<h4><span class="header-section-number">5.13.1.3</span> 3. 随机返回指定记录数采样<a href="dql操作select.html#随机返回指定记录数采样" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb85"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb85-1"><a href="dql操作select.html#cb85-1" tabindex="-1"></a>TABLESAMPLE (<span class="op">&lt;</span>m<span class="op">&gt;</span> <span class="kw">ROWS</span>)</span></code></pre></div>
+<p>其中<code>m</code>为指定随机返回的记录数。如果源表中的总记录个数小于<code>m</code>，则返回源表中的全部记录。<code>m</code>最大值为10000。</p>
+</div>
+</div>
+<div id="使用示例-18" class="section level3 hasAnchor" number="5.13.2">
+<h3><span class="header-section-number">5.13.2</span> 使用示例<a href="dql操作select.html#使用示例-18" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="示例1根据列的值分桶进行采样" class="section level4 hasAnchor" number="5.13.2.1">
+<h4><span class="header-section-number">5.13.2.1</span> 示例1：根据列的值分桶进行采样<a href="dql操作select.html#示例1根据列的值分桶进行采样" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb86"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb86-1"><a href="dql操作select.html#cb86-1" tabindex="-1"></a><span class="co">-- 对 BIGDATA_PUBLIC_DATASET.life_service.phoneno_basic_info_2020 进行采样</span></span>
+<span id="cb86-2"><a href="dql操作select.html#cb86-2" tabindex="-1"></a><span class="kw">SELECT</span> isp_code,</span>
+<span id="cb86-3"><a href="dql操作select.html#cb86-3" tabindex="-1"></a>       phoneno,</span>
+<span id="cb86-4"><a href="dql操作select.html#cb86-4" tabindex="-1"></a>       province</span>
+<span id="cb86-5"><a href="dql操作select.html#cb86-5" tabindex="-1"></a><span class="kw">FROM</span> BIGDATA_PUBLIC_DATASET.life_service.phoneno_basic_info_2020 </span>
+<span id="cb86-6"><a href="dql操作select.html#cb86-6" tabindex="-1"></a>TABLESAMPLE (BUCKET <span class="dv">1</span> <span class="kw">OUT</span> <span class="kw">OF</span> <span class="dv">1000000</span> <span class="kw">ON</span> isp_code, phoneno, province) s;</span></code></pre></div>
+</div>
+<div id="示例2使用-rand-函数对输入的数据随机分桶进行采样" class="section level4 hasAnchor" number="5.13.2.2">
+<h4><span class="header-section-number">5.13.2.2</span> 示例2：使用 <code>RAND()</code> 函数，对输入的数据随机分桶进行采样<a href="dql操作select.html#示例2使用-rand-函数对输入的数据随机分桶进行采样" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb87"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb87-1"><a href="dql操作select.html#cb87-1" tabindex="-1"></a><span class="co">-- 对 BIGDATA_PUBLIC_DATASET.life_service.phoneno_basic_info_2020 进行采样</span></span>
+<span id="cb87-2"><a href="dql操作select.html#cb87-2" tabindex="-1"></a><span class="kw">SELECT</span> isp_code,</span>
+<span id="cb87-3"><a href="dql操作select.html#cb87-3" tabindex="-1"></a>       phoneno,</span>
+<span id="cb87-4"><a href="dql操作select.html#cb87-4" tabindex="-1"></a>       province</span>
+<span id="cb87-5"><a href="dql操作select.html#cb87-5" tabindex="-1"></a><span class="kw">FROM</span> BIGDATA_PUBLIC_DATASET.life_service.phoneno_basic_info_2020</span>
+<span id="cb87-6"><a href="dql操作select.html#cb87-6" tabindex="-1"></a>TABLESAMPLE (BUCKET <span class="dv">3</span> <span class="kw">OUT</span> <span class="kw">OF</span> <span class="dv">500000</span> <span class="kw">ON</span> RAND()) s;</span></code></pre></div>
+</div>
+<div id="示例3对聚簇表进行采样省略-on-条件" class="section level4 hasAnchor" number="5.13.2.3">
+<h4><span class="header-section-number">5.13.2.3</span> 示例3：对聚簇表进行采样，省略 <code>ON</code> 条件<a href="dql操作select.html#示例3对聚簇表进行采样省略-on-条件" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb88"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb88-1"><a href="dql操作select.html#cb88-1" tabindex="-1"></a><span class="kw">SELECT</span> a, b</span>
+<span id="cb88-2"><a href="dql操作select.html#cb88-2" tabindex="-1"></a><span class="kw">FROM</span> tblsample_test TABLESAMPLE (BUCKET <span class="dv">1</span> <span class="kw">OUT</span> <span class="kw">OF</span> <span class="dv">2</span>) <span class="kw">AS</span> ts;</span></code></pre></div>
+</div>
+<div id="示例4指定采样百分比采样" class="section level4 hasAnchor" number="5.13.2.4">
+<h4><span class="header-section-number">5.13.2.4</span> 示例4：指定采样百分比采样<a href="dql操作select.html#示例4指定采样百分比采样" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb89"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb89-1"><a href="dql操作select.html#cb89-1" tabindex="-1"></a><span class="co">-- 取 tblsample_test 50% 的数据</span></span>
+<span id="cb89-2"><a href="dql操作select.html#cb89-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> tblsample_test TABLESAMPLE (<span class="dv">50</span> <span class="kw">PERCENT</span>) s;</span></code></pre></div>
+</div>
+<div id="示例5随机返回指定记录数采样" class="section level4 hasAnchor" number="5.13.2.5">
+<h4><span class="header-section-number">5.13.2.5</span> 示例5：随机返回指定记录数采样<a href="dql操作select.html#示例5随机返回指定记录数采样" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb90"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb90-1"><a href="dql操作select.html#cb90-1" tabindex="-1"></a><span class="co">-- 对 tblsample_test 表进行采样，随机返回 2 条记录</span></span>
+<span id="cb90-2"><a href="dql操作select.html#cb90-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> tblsample_test TABLESAMPLE (<span class="dv">2</span> <span class="kw">ROWS</span>);</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="qualify" class="section level2 hasAnchor" number="5.14">
+<h2><span class="header-section-number">5.14</span> QUALIFY<a href="dql操作select.html#qualify" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>MaxCompute支持使用QUALIFY语法对窗口（Window）函数的结果进行过滤，类似于HAVING语法用于处理经过聚合函数和GROUP BY后的数据。以下是QUALIFY语法的命令格式和使用示例：</p>
+<div id="命令格式-14" class="section level3 hasAnchor" number="5.14.1">
+<h3><span class="header-section-number">5.14.1</span> 命令格式<a href="dql操作select.html#命令格式-14" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb91"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb91-1"><a href="dql操作select.html#cb91-1" tabindex="-1"></a>QUALIFY <span class="op">&lt;</span>expression<span class="op">&gt;</span></span></code></pre></div>
+<p>其中，<code>expression</code>为过滤条件表达式。</p>
+</div>
+<div id="使用示例-19" class="section level3 hasAnchor" number="5.14.2">
+<h3><span class="header-section-number">5.14.2</span> 使用示例<a href="dql操作select.html#使用示例-19" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>通过使用QUALIFY语法，可以简化原有语法的写法。</p>
+<div id="示例1改造前后对比" class="section level4 hasAnchor" number="5.14.2.1">
+<h4><span class="header-section-number">5.14.2.1</span> 示例1：改造前后对比<a href="dql操作select.html#示例1改造前后对比" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>改造前的SQL命令及结果：</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb92-1"><a href="dql操作select.html#cb92-1" tabindex="-1"></a><span class="kw">SELECT</span> col1, col2</span>
+<span id="cb92-2"><a href="dql操作select.html#cb92-2" tabindex="-1"></a><span class="kw">FROM</span></span>
+<span id="cb92-3"><a href="dql操作select.html#cb92-3" tabindex="-1"></a>(</span>
+<span id="cb92-4"><a href="dql操作select.html#cb92-4" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb92-5"><a href="dql操作select.html#cb92-5" tabindex="-1"></a>t.a <span class="kw">as</span> col1,</span>
+<span id="cb92-6"><a href="dql操作select.html#cb92-6" tabindex="-1"></a><span class="fu">sum</span>(t.a) <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> t.b) <span class="kw">as</span> col2</span>
+<span id="cb92-7"><a href="dql操作select.html#cb92-7" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>),(<span class="dv">2</span>,<span class="dv">3</span>) t(a, b)</span>
+<span id="cb92-8"><a href="dql操作select.html#cb92-8" tabindex="-1"></a>)</span>
+<span id="cb92-9"><a href="dql操作select.html#cb92-9" tabindex="-1"></a><span class="kw">WHERE</span> col2 <span class="op">&gt;</span> <span class="dv">1</span>;</span></code></pre></div>
+<p>改写后的SQL命令及结果：</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb93-1"><a href="dql操作select.html#cb93-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb93-2"><a href="dql操作select.html#cb93-2" tabindex="-1"></a>t.a <span class="kw">as</span> col1, </span>
+<span id="cb93-3"><a href="dql操作select.html#cb93-3" tabindex="-1"></a><span class="fu">sum</span>(t.a) <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> t.b) <span class="kw">as</span> col2 </span>
+<span id="cb93-4"><a href="dql操作select.html#cb93-4" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>),(<span class="dv">2</span>,<span class="dv">3</span>) t(a, b) </span>
+<span id="cb93-5"><a href="dql操作select.html#cb93-5" tabindex="-1"></a>QUALIFY col2 <span class="op">&gt;</span> <span class="dv">1</span>;</span></code></pre></div>
+</div>
+<div id="示例2直接对window函数进行过滤" class="section level4 hasAnchor" number="5.14.2.2">
+<h4><span class="header-section-number">5.14.2.2</span> 示例2：直接对Window函数进行过滤<a href="dql操作select.html#示例2直接对window函数进行过滤" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb94"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb94-1"><a href="dql操作select.html#cb94-1" tabindex="-1"></a><span class="kw">SELECT</span> t.a <span class="kw">as</span> col1,</span>
+<span id="cb94-2"><a href="dql操作select.html#cb94-2" tabindex="-1"></a><span class="fu">sum</span>(t.a) <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> t.b) <span class="kw">as</span> col2</span>
+<span id="cb94-3"><a href="dql操作select.html#cb94-3" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>),(<span class="dv">2</span>,<span class="dv">3</span>) t(a, b)</span>
+<span id="cb94-4"><a href="dql操作select.html#cb94-4" tabindex="-1"></a>QUALIFY <span class="fu">sum</span>(t.a) <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> t.b) <span class="op">&gt;</span> <span class="dv">1</span>;</span></code></pre></div>
+</div>
+<div id="示例3使用复杂条件" class="section level4 hasAnchor" number="5.14.2.3">
+<h4><span class="header-section-number">5.14.2.3</span> 示例3：使用复杂条件<a href="dql操作select.html#示例3使用复杂条件" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb95"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb95-1"><a href="dql操作select.html#cb95-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb95-2"><a href="dql操作select.html#cb95-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>),(<span class="dv">2</span>,<span class="dv">3</span>) t(a, b) </span>
+<span id="cb95-3"><a href="dql操作select.html#cb95-3" tabindex="-1"></a>QUALIFY <span class="fu">sum</span>(t.a) <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> t.b) <span class="kw">IN</span> (<span class="kw">SELECT</span> a <span class="kw">FROM</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span>);</span></code></pre></div>
+</div>
+<div id="示例4结合wheregroup-byhaving和qualify的使用" class="section level4 hasAnchor" number="5.14.2.4">
+<h4><span class="header-section-number">5.14.2.4</span> 示例4：结合WHERE、GROUP BY、HAVING和QUALIFY的使用<a href="dql操作select.html#示例4结合wheregroup-byhaving和qualify的使用" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb96"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb96-1"><a href="dql操作select.html#cb96-1" tabindex="-1"></a><span class="kw">SELECT</span> a, b, <span class="fu">max</span>(c) </span>
+<span id="cb96-2"><a href="dql操作select.html#cb96-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>),(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>),(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>),(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">7</span>),(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">8</span>) t(a, b, c) </span>
+<span id="cb96-3"><a href="dql操作select.html#cb96-3" tabindex="-1"></a><span class="kw">WHERE</span> a <span class="op">&lt;</span> <span class="dv">3</span> </span>
+<span id="cb96-4"><a href="dql操作select.html#cb96-4" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> a, b </span>
+<span id="cb96-5"><a href="dql操作select.html#cb96-5" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">max</span>(c) <span class="op">&gt;</span> <span class="dv">5</span> </span>
+<span id="cb96-6"><a href="dql操作select.html#cb96-6" tabindex="-1"></a>QUALIFY <span class="fu">sum</span>(b) <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> a) <span class="op">&gt;</span> <span class="dv">3</span>;</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="pivotunpivot" class="section level2 hasAnchor" number="5.15">
+<h2><span class="header-section-number">5.15</span> PIVOT、UNPIVOT<a href="dql操作select.html#pivotunpivot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="pivot关键字" class="section level3 hasAnchor" number="5.15.1">
+<h3><span class="header-section-number">5.15.1</span> PIVOT关键字<a href="dql操作select.html#pivot关键字" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>功能简介</strong></p>
+<p>PIVOT关键字允许根据指定的聚合函数将行转换为列，并且可以与其他关键字如JOIN一同使用。</p>
+<p><strong>命令格式</strong></p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb97-1"><a href="dql操作select.html#cb97-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>. </span>
+<span id="cb97-2"><a href="dql操作select.html#cb97-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">..</span>. </span>
+<span id="cb97-3"><a href="dql操作select.html#cb97-3" tabindex="-1"></a>PIVOT ( </span>
+<span id="cb97-4"><a href="dql操作select.html#cb97-4" tabindex="-1"></a>    <span class="op">&lt;</span>聚合函数<span class="op">&gt;</span> [<span class="kw">AS</span> <span class="op">&lt;</span>别名<span class="op">&gt;</span>] [, <span class="op">&lt;</span>聚合函数<span class="op">&gt;</span> [<span class="kw">AS</span> <span class="op">&lt;</span>别名<span class="op">&gt;</span>]] <span class="op">..</span>. </span>
+<span id="cb97-5"><a href="dql操作select.html#cb97-5" tabindex="-1"></a>    <span class="cf">FOR</span> (<span class="op">&lt;</span>列<span class="op">&gt;</span> [, <span class="op">&lt;</span>列<span class="op">&gt;</span>] <span class="op">..</span>.) </span>
+<span id="cb97-6"><a href="dql操作select.html#cb97-6" tabindex="-1"></a>    <span class="kw">IN</span> ( </span>
+<span id="cb97-7"><a href="dql操作select.html#cb97-7" tabindex="-1"></a>        (<span class="op">&lt;</span>值<span class="op">&gt;</span> [, <span class="op">&lt;</span>值<span class="op">&gt;</span>] <span class="op">..</span>.) <span class="kw">AS</span> <span class="op">&lt;</span>新列<span class="op">&gt;</span> </span>
+<span id="cb97-8"><a href="dql操作select.html#cb97-8" tabindex="-1"></a>        [, (<span class="op">&lt;</span>值<span class="op">&gt;</span> [, <span class="op">&lt;</span>值<span class="op">&gt;</span>] <span class="op">..</span>.) <span class="kw">AS</span> <span class="op">&lt;</span>新列<span class="op">&gt;</span>] </span>
+<span id="cb97-9"><a href="dql操作select.html#cb97-9" tabindex="-1"></a>       ) </span>
+<span id="cb97-10"><a href="dql操作select.html#cb97-10" tabindex="-1"></a>    ) </span>
+<span id="cb97-11"><a href="dql操作select.html#cb97-11" tabindex="-1"></a>[<span class="op">..</span>.] </span></code></pre></div>
+<p><strong>使用限制</strong></p>
+<ul>
+<li>聚合函数参数不能嵌套其他函数。</li>
+<li>别名必须是列名称，不能是任何表达式。</li>
+<li>转换为列的行值必须是源表中的列名称。</li>
+</ul>
+<p><strong>使用示例</strong></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb98-1"><a href="dql操作select.html#cb98-1" tabindex="-1"></a><span class="co">-- 示例查询每个季节的销售情况</span></span>
+<span id="cb98-2"><a href="dql操作select.html#cb98-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb98-3"><a href="dql操作select.html#cb98-3" tabindex="-1"></a><span class="kw">FROM</span> (<span class="kw">SELECT</span> season, tran_amt <span class="kw">FROM</span> mf_cop_sales) </span>
+<span id="cb98-4"><a href="dql操作select.html#cb98-4" tabindex="-1"></a>PIVOT (<span class="fu">SUM</span>(tran_amt) <span class="cf">FOR</span> season <span class="kw">IN</span> (<span class="st">&#39;Q1&#39;</span> <span class="kw">AS</span> spring, <span class="st">&#39;Q2&#39;</span> <span class="kw">AS</span> summer, <span class="st">&#39;Q3&#39;</span> <span class="kw">AS</span> autumn, <span class="st">&#39;Q4&#39;</span> <span class="kw">AS</span> winter));</span></code></pre></div>
+</div>
+<div id="unpivot关键字" class="section level3 hasAnchor" number="5.15.2">
+<h3><span class="header-section-number">5.15.2</span> UNPIVOT关键字<a href="dql操作select.html#unpivot关键字" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>功能简介</strong></p>
+<p>UNPIVOT关键字允许根据指定的列将列转换为行，并且可以与其他关键字如JOIN一同使用。</p>
+<p><strong>命令格式</strong></p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb99-1"><a href="dql操作select.html#cb99-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">..</span>.</span>
+<span id="cb99-2"><a href="dql操作select.html#cb99-2" tabindex="-1"></a><span class="kw">FROM</span> <span class="op">..</span>.</span>
+<span id="cb99-3"><a href="dql操作select.html#cb99-3" tabindex="-1"></a>UNPIVOT (</span>
+<span id="cb99-4"><a href="dql操作select.html#cb99-4" tabindex="-1"></a>  <span class="op">&lt;</span>值新列<span class="op">&gt;</span> [, <span class="op">&lt;</span>值新列<span class="op">&gt;</span>] <span class="op">..</span>.</span>
+<span id="cb99-5"><a href="dql操作select.html#cb99-5" tabindex="-1"></a>  <span class="cf">FOR</span> (<span class="op">&lt;</span>名称新列<span class="op">&gt;</span> [, <span class="op">&lt;</span>名称新列<span class="op">&gt;</span>] <span class="op">..</span>.)</span>
+<span id="cb99-6"><a href="dql操作select.html#cb99-6" tabindex="-1"></a>  <span class="kw">IN</span> (</span>
+<span id="cb99-7"><a href="dql操作select.html#cb99-7" tabindex="-1"></a>      (<span class="op">&lt;</span>列<span class="op">&gt;</span> [, <span class="op">&lt;</span>列<span class="op">&gt;</span>] <span class="op">..</span>.) [<span class="kw">AS</span> (<span class="op">&lt;</span>列值<span class="op">&gt;</span> [, <span class="op">&lt;</span>列值<span class="op">&gt;</span>] <span class="op">..</span>.)]</span>
+<span id="cb99-8"><a href="dql操作select.html#cb99-8" tabindex="-1"></a>      [, (<span class="op">&lt;</span>列<span class="op">&gt;</span> [, <span class="op">&lt;</span>列<span class="op">&gt;</span>] <span class="op">..</span>.) [<span class="kw">AS</span> (<span class="op">&lt;</span>列值<span class="op">&gt;</span> [, <span class="op">&lt;</span>列值<span class="op">&gt;</span>] <span class="op">..</span>.)]]</span>
+<span id="cb99-9"><a href="dql操作select.html#cb99-9" tabindex="-1"></a>      <span class="op">..</span>.</span>
+<span id="cb99-10"><a href="dql操作select.html#cb99-10" tabindex="-1"></a>    )</span>
+<span id="cb99-11"><a href="dql操作select.html#cb99-11" tabindex="-1"></a>)</span>
+<span id="cb99-12"><a href="dql操作select.html#cb99-12" tabindex="-1"></a>[<span class="op">..</span>.]</span></code></pre></div>
+<p><strong>使用限制</strong></p>
+<ul>
+<li>新生成的列和列名称必须是列名称，不能包含任何表达式。</li>
+<li>列名称必须是上游表的列名。</li>
+</ul>
+<p><strong>使用示例</strong></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb100-1"><a href="dql操作select.html#cb100-1" tabindex="-1"></a><span class="co">-- 示例查询各商店销售额，并以新列名展示</span></span>
+<span id="cb100-2"><a href="dql操作select.html#cb100-2" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb100-3"><a href="dql操作select.html#cb100-3" tabindex="-1"></a><span class="kw">FROM</span> mf_shops </span>
+<span id="cb100-4"><a href="dql操作select.html#cb100-4" tabindex="-1"></a>UNPIVOT (sales <span class="cf">FOR</span> shop <span class="kw">IN</span> (shop1, shop2, shop3, shop4));</span>
+<span id="cb100-5"><a href="dql操作select.html#cb100-5" tabindex="-1"></a></span>
+<span id="cb100-6"><a href="dql操作select.html#cb100-6" tabindex="-1"></a><span class="co">-- 示例合并各个商店的销售额，并使用新列名展示</span></span>
+<span id="cb100-7"><a href="dql操作select.html#cb100-7" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb100-8"><a href="dql操作select.html#cb100-8" tabindex="-1"></a><span class="kw">FROM</span> mf_shops </span>
+<span id="cb100-9"><a href="dql操作select.html#cb100-9" tabindex="-1"></a>UNPIVOT ((sales1, sales2) <span class="cf">FOR</span> (shop_name, location) <span class="kw">IN</span> ((shop1, shop2) <span class="kw">AS</span> (<span class="st">&#39;east_shop&#39;</span>, <span class="st">&#39;east&#39;</span>), (shop3, shop4) <span class="kw">AS</span> (<span class="st">&#39;west_shop&#39;</span>, <span class="st">&#39;west&#39;</span>)));</span></code></pre></div>
+<p>以上是关于PIVOT和UNPIVOT关键字的介绍和示例。</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dml-data-manipulation-language.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="日期与时间函数.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-citations.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

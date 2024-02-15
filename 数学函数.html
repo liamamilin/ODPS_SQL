@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 数学函数 | ODPS SQL</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 数学函数 | ODPS SQL" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 数学函数 | ODPS SQL" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="米霖" />
+
+
+<meta name="date" content="2024-01-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="日期与时间函数.html"/>
+<link rel="next" href="其他函数.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ODPS SQL</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#odps-sql-的特点"><i class="fa fa-check"></i><b>1.1</b> ODPS SQL 的特点</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#应用场景"><i class="fa fa-check"></i><b>1.2</b> 应用场景</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#odps-sql-与其他-sql-的比较"><i class="fa fa-check"></i><b>1.3</b> ODPS SQL 与其他 SQL 的比较</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="基本语法.html"><a href="基本语法.html"><i class="fa fa-check"></i><b>2</b> 基本语法</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="基本语法.html"><a href="基本语法.html#运算符"><i class="fa fa-check"></i><b>2.1</b> 运算符</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符"><i class="fa fa-check"></i><b>2.1.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.1.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符"><i class="fa fa-check"></i><b>2.1.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.1.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符"><i class="fa fa-check"></i><b>2.1.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.1.4" data-path="基本语法.html"><a href="基本语法.html#位运算符"><i class="fa fa-check"></i><b>2.1.4</b> 位运算符</a></li>
+<li class="chapter" data-level="2.1.5" data-path="基本语法.html"><a href="基本语法.html#其他运算符"><i class="fa fa-check"></i><b>2.1.5</b> 其他运算符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符"><i class="fa fa-check"></i><b>2.2</b> 转义字符</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="基本语法.html"><a href="基本语法.html#转义字符列表"><i class="fa fa-check"></i><b>2.2.1</b> 转义字符列表</a></li>
+<li class="chapter" data-level="2.2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符的重要性"><i class="fa fa-check"></i><b>2.2.2</b> 转义字符的重要性</a></li>
+<li class="chapter" data-level="2.2.3" data-path="基本语法.html"><a href="基本语法.html#注意事项"><i class="fa fa-check"></i><b>2.2.3</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="基本语法.html"><a href="基本语法.html#like-匹配符"><i class="fa fa-check"></i><b>2.3</b> LIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="基本语法.html"><a href="基本语法.html#like-匹配符的使用"><i class="fa fa-check"></i><b>2.3.1</b> LIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.3.2" data-path="基本语法.html"><a href="基本语法.html#示例"><i class="fa fa-check"></i><b>2.3.2</b> 示例</a></li>
+<li class="chapter" data-level="2.3.3" data-path="基本语法.html"><a href="基本语法.html#like-的高级用法"><i class="fa fa-check"></i><b>2.3.3</b> LIKE 的高级用法</a></li>
+<li class="chapter" data-level="2.3.4" data-path="基本语法.html"><a href="基本语法.html#使用-like-时的注意事项"><i class="fa fa-check"></i><b>2.3.4</b> 使用 LIKE 时的注意事项</a></li>
+<li class="chapter" data-level="2.3.5" data-path="基本语法.html"><a href="基本语法.html#转义字符在-like-中的应用"><i class="fa fa-check"></i><b>2.3.5</b> 转义字符在 LIKE 中的应用</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符"><i class="fa fa-check"></i><b>2.4</b> RLIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符的使用"><i class="fa fa-check"></i><b>2.4.1</b> RLIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.4.2" data-path="基本语法.html"><a href="基本语法.html#rlike-高级元字符"><i class="fa fa-check"></i><b>2.4.2</b> RLIKE 高级元字符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="基本语法.html"><a href="基本语法.html#odps-sql-保留字与关键字"><i class="fa fa-check"></i><b>2.5</b> ODPS SQL 保留字与关键字</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符-1"><i class="fa fa-check"></i><b>2.5.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.5.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符-1"><i class="fa fa-check"></i><b>2.5.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.5.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符-1"><i class="fa fa-check"></i><b>2.5.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.5.4" data-path="基本语法.html"><a href="基本语法.html#数据类型"><i class="fa fa-check"></i><b>2.5.4</b> 数据类型</a></li>
+<li class="chapter" data-level="2.5.5" data-path="基本语法.html"><a href="基本语法.html#数据定义语言-ddl"><i class="fa fa-check"></i><b>2.5.5</b> 数据定义语言 (DDL)</a></li>
+<li class="chapter" data-level="2.5.6" data-path="基本语法.html"><a href="基本语法.html#数据操作语言-dml"><i class="fa fa-check"></i><b>2.5.6</b> 数据操作语言 (DML)</a></li>
+<li class="chapter" data-level="2.5.7" data-path="基本语法.html"><a href="基本语法.html#其他关键字"><i class="fa fa-check"></i><b>2.5.7</b> 其他关键字</a></li>
+<li class="chapter" data-level="2.5.8" data-path="基本语法.html"><a href="基本语法.html#集合操作"><i class="fa fa-check"></i><b>2.5.8</b> 集合操作</a></li>
+<li class="chapter" data-level="2.5.9" data-path="基本语法.html"><a href="基本语法.html#窗口函数"><i class="fa fa-check"></i><b>2.5.9</b> 窗口函数</a></li>
+<li class="chapter" data-level="2.5.10" data-path="基本语法.html"><a href="基本语法.html#子查询"><i class="fa fa-check"></i><b>2.5.10</b> 子查询</a></li>
+<li class="chapter" data-level="2.5.11" data-path="基本语法.html"><a href="基本语法.html#连接"><i class="fa fa-check"></i><b>2.5.11</b> 连接</a></li>
+<li class="chapter" data-level="2.5.12" data-path="基本语法.html"><a href="基本语法.html#条件表达式"><i class="fa fa-check"></i><b>2.5.12</b> 条件表达式</a></li>
+<li class="chapter" data-level="2.5.13" data-path="基本语法.html"><a href="基本语法.html#聚合函数"><i class="fa fa-check"></i><b>2.5.13</b> 聚合函数</a></li>
+<li class="chapter" data-level="2.5.14" data-path="基本语法.html"><a href="基本语法.html#数据导入导出"><i class="fa fa-check"></i><b>2.5.14</b> 数据导入导出</a></li>
+<li class="chapter" data-level="2.5.15" data-path="基本语法.html"><a href="基本语法.html#事务控制"><i class="fa fa-check"></i><b>2.5.15</b> 事务控制</a></li>
+<li class="chapter" data-level="2.5.16" data-path="基本语法.html"><a href="基本语法.html#权限管理"><i class="fa fa-check"></i><b>2.5.16</b> 权限管理</a></li>
+<li class="chapter" data-level="2.5.17" data-path="基本语法.html"><a href="基本语法.html#系统管理"><i class="fa fa-check"></i><b>2.5.17</b> 系统管理</a></li>
+<li class="chapter" data-level="2.5.18" data-path="基本语法.html"><a href="基本语法.html#分区管理"><i class="fa fa-check"></i><b>2.5.18</b> 分区管理</a></li>
+<li class="chapter" data-level="2.5.19" data-path="基本语法.html"><a href="基本语法.html#排序和分组"><i class="fa fa-check"></i><b>2.5.19</b> 排序和分组</a></li>
+<li class="chapter" data-level="2.5.20" data-path="基本语法.html"><a href="基本语法.html#约束和索引"><i class="fa fa-check"></i><b>2.5.20</b> 约束和索引</a></li>
+<li class="chapter" data-level="2.5.21" data-path="基本语法.html"><a href="基本语法.html#视图和临时表"><i class="fa fa-check"></i><b>2.5.21</b> 视图和临时表</a></li>
+<li class="chapter" data-level="2.5.22" data-path="基本语法.html"><a href="基本语法.html#函数和过程"><i class="fa fa-check"></i><b>2.5.22</b> 函数和过程</a></li>
+<li class="chapter" data-level="2.5.23" data-path="基本语法.html"><a href="基本语法.html#其他关键字-1"><i class="fa fa-check"></i><b>2.5.23</b> 其他关键字</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="基本语法.html"><a href="基本语法.html#数据类型转换"><i class="fa fa-check"></i><b>2.6</b> 数据类型转换</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html"><i class="fa fa-check"></i><b>3</b> DDL (Data Definition Language)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#表操作"><i class="fa fa-check"></i><b>3.1</b> 表操作</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#创建表create-table"><i class="fa fa-check"></i><b>3.1.1</b> 创建表（Create Table）</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的所有权alter-table-owner"><i class="fa fa-check"></i><b>3.1.2</b> 修改表的所有权（Alter Table Owner）</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的生命周期alter-table-lifecycle"><i class="fa fa-check"></i><b>3.1.3</b> 修改表的生命周期（Alter Table Lifecycle）</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除表drop-table"><i class="fa fa-check"></i><b>3.1.4</b> 删除表（Drop Table）</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#查看表的详细信息describe-table"><i class="fa fa-check"></i><b>3.1.5</b> 查看表的详细信息（Describe Table）</a></li>
+<li class="chapter" data-level="3.1.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的元数据list-table"><i class="fa fa-check"></i><b>3.1.6</b> 获取表的元数据（List Table）</a></li>
+<li class="chapter" data-level="3.1.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的分区信息list-partitions"><i class="fa fa-check"></i><b>3.1.7</b> 获取表的分区信息（List Partitions）</a></li>
+<li class="chapter" data-level="3.1.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的注释"><i class="fa fa-check"></i><b>3.1.8</b> 修改表的注释</a></li>
+<li class="chapter" data-level="3.1.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#重命名表"><i class="fa fa-check"></i><b>3.1.9</b> 重命名表</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#分区和列操作"><i class="fa fa-check"></i><b>3.2</b> 分区和列操作</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#新增分区"><i class="fa fa-check"></i><b>3.2.1</b> 新增分区</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除分区"><i class="fa fa-check"></i><b>3.2.2</b> 删除分区</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改分区"><i class="fa fa-check"></i><b>3.2.3</b> 修改分区</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#合并分区"><i class="fa fa-check"></i><b>3.2.4</b> 合并分区</a></li>
+<li class="chapter" data-level="3.2.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#清空分区数据"><i class="fa fa-check"></i><b>3.2.5</b> 清空分区数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#添加列或注释"><i class="fa fa-check"></i><b>3.2.6</b> 添加列或注释</a></li>
+<li class="chapter" data-level="3.2.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除列"><i class="fa fa-check"></i><b>3.2.7</b> 删除列</a></li>
+<li class="chapter" data-level="3.2.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#更改列数据类型"><i class="fa fa-check"></i><b>3.2.8</b> 更改列数据类型</a></li>
+<li class="chapter" data-level="3.2.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列的顺序"><i class="fa fa-check"></i><b>3.2.9</b> 修改列的顺序</a></li>
+<li class="chapter" data-level="3.2.10" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名"><i class="fa fa-check"></i><b>3.2.10</b> 修改列名</a></li>
+<li class="chapter" data-level="3.2.11" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列注释"><i class="fa fa-check"></i><b>3.2.11</b> 修改列注释</a></li>
+<li class="chapter" data-level="3.2.12" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名及注释"><i class="fa fa-check"></i><b>3.2.12</b> 修改列名及注释</a></li>
+<li class="chapter" data-level="3.2.13" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的列非空属性"><i class="fa fa-check"></i><b>3.2.13</b> 修改表的列非空属性</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期操作"><i class="fa fa-check"></i><b>3.3</b> 生命周期操作</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期概念"><i class="fa fa-check"></i><b>3.3.1</b> 生命周期概念</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#设置生命周期"><i class="fa fa-check"></i><b>3.3.2</b> 设置生命周期</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#禁止或恢复生命周期"><i class="fa fa-check"></i><b>3.3.3</b> 禁止或恢复生命周期</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#注意事项-1"><i class="fa fa-check"></i><b>3.3.4</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作"><i class="fa fa-check"></i><b>3.4</b> 视图操作</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作命令"><i class="fa fa-check"></i><b>3.4.1</b> 视图操作命令</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html"><i class="fa fa-check"></i><b>4</b> DML (Data Manipulation Language)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写数据insert-into-insert-overwrite"><i class="fa fa-check"></i><b>4.1</b> 插入或覆写数据（INSERT INTO | INSERT OVERWRITE）</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件"><i class="fa fa-check"></i><b>4.1.1</b> 前提条件</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍"><i class="fa fa-check"></i><b>4.1.2</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制"><i class="fa fa-check"></i><b>4.1.3</b> 使用限制</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式"><i class="fa fa-check"></i><b>4.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="4.1.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例"><i class="fa fa-check"></i><b>4.1.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写动态分区数据dynamic-partition"><i class="fa fa-check"></i><b>4.2</b> 插入或覆写动态分区数据（DYNAMIC PARTITION）</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入数据到表格"><i class="fa fa-check"></i><b>4.2.1</b> 插入数据到表格</a></li>
+<li class="chapter" data-level="4.2.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-1"><i class="fa fa-check"></i><b>4.2.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新或删除数据update-delete"><i class="fa fa-check"></i><b>4.3</b> 更新或删除数据（UPDATE | DELETE）</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#删除数据delete"><i class="fa fa-check"></i><b>4.3.1</b> 删除数据（DELETE）</a></li>
+<li class="chapter" data-level="4.3.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-2"><i class="fa fa-check"></i><b>4.3.2</b> 使用示例</a></li>
+<li class="chapter" data-level="4.3.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#清空列数据"><i class="fa fa-check"></i><b>4.3.3</b> 清空列数据</a></li>
+<li class="chapter" data-level="4.3.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新数据update"><i class="fa fa-check"></i><b>4.3.4</b> 更新数据（UPDATE）</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#merge-into"><i class="fa fa-check"></i><b>4.4</b> MERGE INTO</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-3"><i class="fa fa-check"></i><b>4.4.1</b> 命令格式</a></li>
+<li class="chapter" data-level="4.4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-4"><i class="fa fa-check"></i><b>4.4.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#多路输出multi-insert"><i class="fa fa-check"></i><b>4.5</b> 多路输出（MULTI INSERT）</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令解释"><i class="fa fa-check"></i><b>4.5.1</b> 命令解释</a></li>
+<li class="chapter" data-level="4.5.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#用法说明"><i class="fa fa-check"></i><b>4.5.2</b> 用法说明</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#values"><i class="fa fa-check"></i><b>4.6</b> VALUES</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例1通过-insert-values-操作向特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.1</b> 示例1：通过 <code>insert … values</code> 操作向特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例2通过-insert-values-操作向非特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.2</b> 示例2：通过 <code>insert … values</code> 操作向非特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例3使用复杂数据类型构造常量通过-insert-操作导入数据"><i class="fa fa-check"></i><b>4.6.3</b> 示例3：使用复杂数据类型构造常量，通过 <code>insert</code> 操作导入数据</a></li>
+<li class="chapter" data-level="4.6.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例4通过-insert-values-操作写入-datetime-或-timestamp-数据类型"><i class="fa fa-check"></i><b>4.6.4</b> 示例4：通过 <code>insert … values</code> 操作写入 DATETIME 或 TIMESTAMP 数据类型</a></li>
+<li class="chapter" data-level="4.6.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例5通过-values-table-操作插入数据"><i class="fa fa-check"></i><b>4.6.5</b> 示例5：通过 <code>values table</code> 操作插入数据</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load"><i class="fa fa-check"></i><b>4.7</b> LOAD</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-1"><i class="fa fa-check"></i><b>4.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.7.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制-1"><i class="fa fa-check"></i><b>4.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="4.7.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件-1"><i class="fa fa-check"></i><b>4.7.3</b> 前提条件</a></li>
+<li class="chapter" data-level="4.7.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load命令示例"><i class="fa fa-check"></i><b>4.7.4</b> LOAD命令示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#cte公用表表达式介绍"><i class="fa fa-check"></i><b>4.8</b> CTE（公用表表达式）介绍</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-2"><i class="fa fa-check"></i><b>4.8.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.8.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-4"><i class="fa fa-check"></i><b>4.8.2</b> 命令格式</a></li>
+<li class="chapter" data-level="4.8.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-5"><i class="fa fa-check"></i><b>4.8.3</b> 使用示例</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dql操作select.html"><a href="dql操作select.html"><i class="fa fa-check"></i><b>5</b> DQL操作（SELECT）</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="dql操作select.html"><a href="dql操作select.html#select语法"><i class="fa fa-check"></i><b>5.1</b> SELECT语法</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-3"><i class="fa fa-check"></i><b>5.1.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.1.2" data-path="dql操作select.html"><a href="dql操作select.html#类型与功能"><i class="fa fa-check"></i><b>5.1.2</b> 类型与功能</a></li>
+<li class="chapter" data-level="5.1.3" data-path="dql操作select.html"><a href="dql操作select.html#说明"><i class="fa fa-check"></i><b>5.1.3</b> 说明</a></li>
+<li class="chapter" data-level="5.1.4" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-5"><i class="fa fa-check"></i><b>5.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="5.1.5" data-path="dql操作select.html"><a href="dql操作select.html#示例数据"><i class="fa fa-check"></i><b>5.1.5</b> 示例数据</a></li>
+<li class="chapter" data-level="5.1.6" data-path="dql操作select.html"><a href="dql操作select.html#with子句cte"><i class="fa fa-check"></i><b>5.1.6</b> WITH子句（cte）</a></li>
+<li class="chapter" data-level="5.1.7" data-path="dql操作select.html"><a href="dql操作select.html#列表达式select_expr"><i class="fa fa-check"></i><b>5.1.7</b> 列表达式（SELECT_expr）</a></li>
+<li class="chapter" data-level="5.1.8" data-path="dql操作select.html"><a href="dql操作select.html#说明-1"><i class="fa fa-check"></i><b>5.1.8</b> 说明</a></li>
+<li class="chapter" data-level="5.1.9" data-path="dql操作select.html"><a href="dql操作select.html#排除列except_expr"><i class="fa fa-check"></i><b>5.1.9</b> 排除列（except_expr）</a></li>
+<li class="chapter" data-level="5.1.10" data-path="dql操作select.html"><a href="dql操作select.html#修改列replace_expr"><i class="fa fa-check"></i><b>5.1.10</b> 修改列（replace_expr）</a></li>
+<li class="chapter" data-level="5.1.11" data-path="dql操作select.html"><a href="dql操作select.html#目标表信息table_reference"><i class="fa fa-check"></i><b>5.1.11</b> 目标表信息（table_reference）</a></li>
+<li class="chapter" data-level="5.1.12" data-path="dql操作select.html"><a href="dql操作select.html#where子句where_condition"><i class="fa fa-check"></i><b>5.1.12</b> WHERE子句（where_condition）</a></li>
+<li class="chapter" data-level="5.1.13" data-path="dql操作select.html"><a href="dql操作select.html#group-by分组查询col_list"><i class="fa fa-check"></i><b>5.1.13</b> GROUP BY分组查询（col_list）</a></li>
+<li class="chapter" data-level="5.1.14" data-path="dql操作select.html"><a href="dql操作select.html#having子句having_condition"><i class="fa fa-check"></i><b>5.1.14</b> HAVING子句（having_condition）</a></li>
+<li class="chapter" data-level="5.1.15" data-path="dql操作select.html"><a href="dql操作select.html#order-by全局排序order_condition"><i class="fa fa-check"></i><b>5.1.15</b> ORDER BY全局排序（order_condition）</a></li>
+<li class="chapter" data-level="5.1.16" data-path="dql操作select.html"><a href="dql操作select.html#limit限制输出行数number"><i class="fa fa-check"></i><b>5.1.16</b> LIMIT限制输出行数（number）</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="dql操作select.html"><a href="dql操作select.html#select语序"><i class="fa fa-check"></i><b>5.2</b> SELECT语序</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="dql操作select.html"><a href="dql操作select.html#执行语序"><i class="fa fa-check"></i><b>5.2.1</b> 执行语序</a></li>
+<li class="chapter" data-level="5.2.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-1"><i class="fa fa-check"></i><b>5.2.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.2.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-6"><i class="fa fa-check"></i><b>5.2.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="dql操作select.html"><a href="dql操作select.html#子查询subquery"><i class="fa fa-check"></i><b>5.3</b> 子查询（SUBQUERY）</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-4"><i class="fa fa-check"></i><b>5.3.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.3.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-2"><i class="fa fa-check"></i><b>5.3.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.3.3" data-path="dql操作select.html"><a href="dql操作select.html#基础子查询"><i class="fa fa-check"></i><b>5.3.3</b> 基础子查询</a></li>
+<li class="chapter" data-level="5.3.4" data-path="dql操作select.html"><a href="dql操作select.html#in-subquery"><i class="fa fa-check"></i><b>5.3.4</b> IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.5" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-2"><i class="fa fa-check"></i><b>5.3.5</b> 注意事项</a></li>
+<li class="chapter" data-level="5.3.6" data-path="dql操作select.html"><a href="dql操作select.html#not-in-subquery"><i class="fa fa-check"></i><b>5.3.6</b> NOT IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.7" data-path="dql操作select.html"><a href="dql操作select.html#exists-subquery"><i class="fa fa-check"></i><b>5.3.7</b> EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.8" data-path="dql操作select.html"><a href="dql操作select.html#not-exists-subquery"><i class="fa fa-check"></i><b>5.3.8</b> NOT EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.9" data-path="dql操作select.html"><a href="dql操作select.html#scalar-subquery"><i class="fa fa-check"></i><b>5.3.9</b> SCALAR SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.10" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-9"><i class="fa fa-check"></i><b>5.3.10</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dql操作select.html"><a href="dql操作select.html#交集并集和补集操作"><i class="fa fa-check"></i><b>5.4</b> 交集、并集和补集操作</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-5"><i class="fa fa-check"></i><b>5.4.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.4.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-3"><i class="fa fa-check"></i><b>5.4.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.4.3" data-path="dql操作select.html"><a href="dql操作select.html#交集intersect"><i class="fa fa-check"></i><b>5.4.3</b> 交集(Intersect)</a></li>
+<li class="chapter" data-level="5.4.4" data-path="dql操作select.html"><a href="dql操作select.html#并集union"><i class="fa fa-check"></i><b>5.4.4</b> 并集(Union)</a></li>
+<li class="chapter" data-level="5.4.5" data-path="dql操作select.html"><a href="dql操作select.html#补集except"><i class="fa fa-check"></i><b>5.4.5</b> 补集(Except)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="dql操作select.html"><a href="dql操作select.html#join"><i class="fa fa-check"></i><b>5.5</b> Join</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的join操作"><i class="fa fa-check"></i><b>5.5.1</b> MaxCompute支持的Join操作</a></li>
+<li class="chapter" data-level="5.5.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-4"><i class="fa fa-check"></i><b>5.5.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.5.3" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-11"><i class="fa fa-check"></i><b>5.5.3</b> 命令格式</a></li>
+<li class="chapter" data-level="5.5.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-3"><i class="fa fa-check"></i><b>5.5.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.5.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-13"><i class="fa fa-check"></i><b>5.5.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="dql操作select.html"><a href="dql操作select.html#semi-join-半连接"><i class="fa fa-check"></i><b>5.6</b> SEMI join 半连接</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的半连接操作"><i class="fa fa-check"></i><b>5.6.1</b> MaxCompute支持的半连接操作</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-4"><i class="fa fa-check"></i><b>5.6.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.6.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-14"><i class="fa fa-check"></i><b>5.6.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="dql操作select.html"><a href="dql操作select.html#mapjoin-hint"><i class="fa fa-check"></i><b>5.7</b> MAPJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-6"><i class="fa fa-check"></i><b>5.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.7.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-2"><i class="fa fa-check"></i><b>5.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.7.3" data-path="dql操作select.html"><a href="dql操作select.html#使用方法"><i class="fa fa-check"></i><b>5.7.3</b> 使用方法</a></li>
+<li class="chapter" data-level="5.7.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-5"><i class="fa fa-check"></i><b>5.7.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.7.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-15"><i class="fa fa-check"></i><b>5.7.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="dql操作select.html"><a href="dql操作select.html#distributed-mapjoin"><i class="fa fa-check"></i><b>5.8</b> DISTRIBUTED MAPJOIN</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-5"><i class="fa fa-check"></i><b>5.8.1</b> 注意事项</a></li>
+<li class="chapter" data-level="5.8.2" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-1"><i class="fa fa-check"></i><b>5.8.2</b> 使用方法</a></li>
+<li class="chapter" data-level="5.8.3" data-path="dql操作select.html"><a href="dql操作select.html#语法示例"><i class="fa fa-check"></i><b>5.8.3</b> 语法示例</a></li>
+<li class="chapter" data-level="5.8.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-16"><i class="fa fa-check"></i><b>5.8.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="dql操作select.html"><a href="dql操作select.html#skewjoin-hint"><i class="fa fa-check"></i><b>5.9</b> SKEWJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-2"><i class="fa fa-check"></i><b>5.9.1</b> 使用方法</a></li>
+<li class="chapter" data-level="5.9.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-6"><i class="fa fa-check"></i><b>5.9.2</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter"><i class="fa fa-check"></i><b>5.10</b> 动态过滤器（Dynamic Filter）</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter-1"><i class="fa fa-check"></i><b>5.10.1</b> 动态过滤器（Dynamic Filter）</a></li>
+<li class="chapter" data-level="5.10.2" data-path="dql操作select.html"><a href="dql操作select.html#优化思路"><i class="fa fa-check"></i><b>5.10.2</b> 优化思路</a></li>
+<li class="chapter" data-level="5.10.3" data-path="dql操作select.html"><a href="dql操作select.html#应用场景-1"><i class="fa fa-check"></i><b>5.10.3</b> 应用场景</a></li>
+<li class="chapter" data-level="5.10.4" data-path="dql操作select.html"><a href="dql操作select.html#动态范围过滤器或布隆过滤器dynamic-rangebloom-filter"><i class="fa fa-check"></i><b>5.10.4</b> 动态范围过滤器或布隆过滤器（Dynamic Range|Bloom Filter）</a></li>
+<li class="chapter" data-level="5.10.5" data-path="dql操作select.html"><a href="dql操作select.html#动态分区裁剪dynamic-partition-pruning"><i class="fa fa-check"></i><b>5.10.5</b> 动态分区裁剪（Dynamic Partition Pruning）</a></li>
+<li class="chapter" data-level="5.10.6" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-3"><i class="fa fa-check"></i><b>5.10.6</b> 使用方法</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="dql操作select.html"><a href="dql操作select.html#grouping-sets"><i class="fa fa-check"></i><b>5.11</b> grouping sets</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="dql操作select.html"><a href="dql操作select.html#cube-rollup"><i class="fa fa-check"></i><b>5.11.1</b> CUBE | ROLLUP</a></li>
+<li class="chapter" data-level="5.11.2" data-path="dql操作select.html"><a href="dql操作select.html#grouping-grouping_id"><i class="fa fa-check"></i><b>5.11.2</b> GROUPING | GROUPING_ID</a></li>
+<li class="chapter" data-level="5.11.3" data-path="dql操作select.html"><a href="dql操作select.html#grouping__id"><i class="fa fa-check"></i><b>5.11.3</b> GROUPING__ID</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="dql操作select.html"><a href="dql操作select.html#windows-关键字"><i class="fa fa-check"></i><b>5.12</b> Windows 关键字</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-12"><i class="fa fa-check"></i><b>5.12.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.12.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-3"><i class="fa fa-check"></i><b>5.12.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.12.3" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-6"><i class="fa fa-check"></i><b>5.12.3</b> 示例数据</a></li>
+<li class="chapter" data-level="5.12.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-17"><i class="fa fa-check"></i><b>5.12.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="dql操作select.html"><a href="dql操作select.html#tablesample采样"><i class="fa fa-check"></i><b>5.13</b> TABLESAMPLE采样</a>
+<ul>
+<li class="chapter" data-level="5.13.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-13"><i class="fa fa-check"></i><b>5.13.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.13.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-18"><i class="fa fa-check"></i><b>5.13.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.14" data-path="dql操作select.html"><a href="dql操作select.html#qualify"><i class="fa fa-check"></i><b>5.14</b> QUALIFY</a>
+<ul>
+<li class="chapter" data-level="5.14.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-14"><i class="fa fa-check"></i><b>5.14.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.14.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-19"><i class="fa fa-check"></i><b>5.14.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.15" data-path="dql操作select.html"><a href="dql操作select.html#pivotunpivot"><i class="fa fa-check"></i><b>5.15</b> PIVOT、UNPIVOT</a>
+<ul>
+<li class="chapter" data-level="5.15.1" data-path="dql操作select.html"><a href="dql操作select.html#pivot关键字"><i class="fa fa-check"></i><b>5.15.1</b> PIVOT关键字</a></li>
+<li class="chapter" data-level="5.15.2" data-path="dql操作select.html"><a href="dql操作select.html#unpivot关键字"><i class="fa fa-check"></i><b>5.15.2</b> UNPIVOT关键字</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="日期与时间函数.html"><a href="日期与时间函数.html"><i class="fa fa-check"></i><b>6</b> 日期与时间函数</a></li>
+<li class="chapter" data-level="7" data-path="数学函数.html"><a href="数学函数.html"><i class="fa fa-check"></i><b>7</b> 数学函数</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="数学函数.html"><a href="数学函数.html#数学函数总结"><i class="fa fa-check"></i><b>7.1</b> 数学函数总结</a></li>
+<li class="chapter" data-level="7.2" data-path="数学函数.html"><a href="数学函数.html#函数例子"><i class="fa fa-check"></i><b>7.2</b> 函数例子</a></li>
+<li class="chapter" data-level="7.3" data-path="数学函数.html"><a href="数学函数.html#参考"><i class="fa fa-check"></i><b>7.3</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="其他函数.html"><a href="其他函数.html"><i class="fa fa-check"></i><b>8</b> 其他函数</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="其他函数.html"><a href="其他函数.html#窗口函数-1"><i class="fa fa-check"></i><b>8.1</b> 窗口函数</a></li>
+<li class="chapter" data-level="8.2" data-path="其他函数.html"><a href="其他函数.html#聚合函数-1"><i class="fa fa-check"></i><b>8.2</b> 聚合函数</a></li>
+<li class="chapter" data-level="8.3" data-path="其他函数.html"><a href="其他函数.html#字符串函数"><i class="fa fa-check"></i><b>8.3</b> 字符串函数</a></li>
+<li class="chapter" data-level="8.4" data-path="其他函数.html"><a href="其他函数.html#复杂类型函数"><i class="fa fa-check"></i><b>8.4</b> 复杂类型函数</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="其他函数.html"><a href="其他函数.html#array函数"><i class="fa fa-check"></i><b>8.4.1</b> ARRAY函数</a></li>
+<li class="chapter" data-level="8.4.2" data-path="其他函数.html"><a href="其他函数.html#map函数"><i class="fa fa-check"></i><b>8.4.2</b> MAP函数</a></li>
+<li class="chapter" data-level="8.4.3" data-path="其他函数.html"><a href="其他函数.html#struct函数"><i class="fa fa-check"></i><b>8.4.3</b> STRUCT函数</a></li>
+<li class="chapter" data-level="8.4.4" data-path="其他函数.html"><a href="其他函数.html#json函数"><i class="fa fa-check"></i><b>8.4.4</b> JSON函数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="其他函数.html"><a href="其他函数.html#其他函数-1"><i class="fa fa-check"></i><b>8.5</b> 其他函数</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/liamamilin" target="blank">ODPS SQL</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ODPS SQL</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="数学函数" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> 数学函数<a href="数学函数.html#数学函数" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="数学函数总结" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> 数学函数总结<a href="数学函数.html#数学函数总结" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ABS</td>
+<td>计算绝对值。</td>
+</tr>
+<tr class="even">
+<td>ACOS</td>
+<td>计算反余弦值。</td>
+</tr>
+<tr class="odd">
+<td>ATAN2</td>
+<td>计算expr1/expr2的反正切值。</td>
+</tr>
+<tr class="even">
+<td>ASIN</td>
+<td>计算反正弦值。</td>
+</tr>
+<tr class="odd">
+<td>ATAN</td>
+<td>计算反正切值。</td>
+</tr>
+<tr class="even">
+<td>BIN</td>
+<td>计算二进制代码值。</td>
+</tr>
+<tr class="odd">
+<td>CBRT</td>
+<td>计算立方根值。</td>
+</tr>
+<tr class="even">
+<td>CEIL</td>
+<td>计算向上取整值。</td>
+</tr>
+<tr class="odd">
+<td>CONV</td>
+<td>计算进制转换值。</td>
+</tr>
+<tr class="even">
+<td>CORR</td>
+<td>计算皮尔逊系数。</td>
+</tr>
+<tr class="odd">
+<td>COS</td>
+<td>计算余弦值。</td>
+</tr>
+<tr class="even">
+<td>COSH</td>
+<td>计算双曲余弦值。</td>
+</tr>
+<tr class="odd">
+<td>COT</td>
+<td>计算余切值。</td>
+</tr>
+<tr class="even">
+<td>DEGREES</td>
+<td>将弧度转换为角度。</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>返回e的值。</td>
+</tr>
+<tr class="even">
+<td>EXP</td>
+<td>计算指数值。</td>
+</tr>
+<tr class="odd">
+<td>FACTORIAL</td>
+<td>计算阶乘值。</td>
+</tr>
+<tr class="even">
+<td>FILTER</td>
+<td>过滤ARRAY数组中的元素。</td>
+</tr>
+<tr class="odd">
+<td>FLOOR</td>
+<td>计算向下取整值。</td>
+</tr>
+<tr class="even">
+<td>FORMAT_NUMBER</td>
+<td>将数字转化为指定格式的字符串。</td>
+</tr>
+<tr class="odd">
+<td>HEX</td>
+<td>返回整数或字符串的十六进制格式。</td>
+</tr>
+<tr class="even">
+<td>ISNAN</td>
+<td>判断表达式的值是否为NaN。</td>
+</tr>
+<tr class="odd">
+<td>LN</td>
+<td>计算自然对数。</td>
+</tr>
+<tr class="even">
+<td>LOG</td>
+<td>计算log对数值。</td>
+</tr>
+<tr class="odd">
+<td>LOG10</td>
+<td>计算以10为底的对数。</td>
+</tr>
+<tr class="even">
+<td>LOG2</td>
+<td>计算以2为底的对数。</td>
+</tr>
+<tr class="odd">
+<td>NEGATIVE</td>
+<td>返回表达式的负值。</td>
+</tr>
+<tr class="even">
+<td>PI</td>
+<td>返回π的值。</td>
+</tr>
+<tr class="odd">
+<td>POSITIVE</td>
+<td>返回表达式的值。</td>
+</tr>
+<tr class="even">
+<td>POW</td>
+<td>计算幂值。</td>
+</tr>
+<tr class="odd">
+<td>RADIANS</td>
+<td>将角度转换为弧度。</td>
+</tr>
+<tr class="even">
+<td>RAND</td>
+<td>返回随机数。</td>
+</tr>
+<tr class="odd">
+<td>ROUND</td>
+<td>返回四舍五入到指定小数点位置的值。</td>
+</tr>
+<tr class="even">
+<td>SHIFTLEFT</td>
+<td>计算按位左移值。</td>
+</tr>
+<tr class="odd">
+<td>SHIFTRIGHT</td>
+<td>计算按位右移值。</td>
+</tr>
+<tr class="even">
+<td>SHIFTRIGHTUNSIGNED</td>
+<td>计算无符号按位右移值。</td>
+</tr>
+<tr class="odd">
+<td>SIGN</td>
+<td>返回输入参数的符号。</td>
+</tr>
+<tr class="even">
+<td>SIN</td>
+<td>计算正弦值。</td>
+</tr>
+<tr class="odd">
+<td>SINH</td>
+<td>计算双曲正弦值。</td>
+</tr>
+<tr class="even">
+<td>SQRT</td>
+<td>计算平方根。</td>
+</tr>
+<tr class="odd">
+<td>TAN</td>
+<td>计算正切值。</td>
+</tr>
+<tr class="even">
+<td>TANH</td>
+<td>计算双曲正切值。</td>
+</tr>
+<tr class="odd">
+<td>TRUNC</td>
+<td>返回截取到指定小数点位置的值。</td>
+</tr>
+<tr class="even">
+<td>UNHEX</td>
+<td>返回十六进制字符串所代表的字符串。</td>
+</tr>
+<tr class="odd">
+<td>WIDTH_BUCKET</td>
+<td>返回指定字段值落入的分组编号。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="函数例子" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> 函数例子<a href="数学函数.html#函数例子" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>以下是一些MaxCompute SQL支持的数学函数的示例：</p>
+<ul>
+<li><p><strong>ABS</strong>：计算绝对值。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="数学函数.html#cb1-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">ABS</span>(<span class="op">-</span><span class="dv">10</span>); <span class="co">-- 返回 10</span></span></code></pre></div></li>
+<li><p><strong>ACOS</strong>：计算反余弦值。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="数学函数.html#cb2-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">ACOS</span>(<span class="fl">0.5</span>); <span class="co">-- 返回 1.0471975511965979</span></span></code></pre></div></li>
+<li><p><strong>ATAN2</strong>：计算expr1/expr2的反正切值。</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="数学函数.html#cb3-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">ATAN2</span>(<span class="dv">1</span>, <span class="dv">1</span>); <span class="co">-- 返回 0.7853981633974483</span></span></code></pre></div></li>
+<li><p><strong>CEIL</strong>：计算向上取整值。</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="数学函数.html#cb4-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CEIL</span>(<span class="fl">3.14</span>); <span class="co">-- 返回 4</span></span></code></pre></div></li>
+<li><p><strong>COS</strong>：计算余弦值。</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="数学函数.html#cb5-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COS</span>(<span class="dv">0</span>); <span class="co">-- 返回 1</span></span></code></pre></div></li>
+<li><p><strong>EXP</strong>：计算指数值。</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="数学函数.html#cb6-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">EXP</span>(<span class="dv">1</span>); <span class="co">-- 返回 2.718281828459045</span></span></code></pre></div></li>
+<li><p><strong>LOG</strong>：计算log对数值。</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="数学函数.html#cb7-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">LOG</span>(<span class="dv">10</span>); <span class="co">-- 返回 2.302585092994046</span></span></code></pre></div></li>
+<li><p><strong>POW</strong>：计算幂值。</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="数学函数.html#cb8-1" tabindex="-1"></a><span class="kw">SELECT</span> POW(<span class="dv">2</span>, <span class="dv">3</span>); <span class="co">-- 返回 8</span></span></code></pre></div></li>
+<li><p><strong>RAND</strong>：返回随机数。</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="数学函数.html#cb9-1" tabindex="-1"></a><span class="kw">SELECT</span> RAND(); <span class="co">-- 返回随机数值</span></span></code></pre></div></li>
+<li><p><strong>SIN</strong>：计算正弦值。</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb10-1"><a href="数学函数.html#cb10-1" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">SIN</span>(<span class="dv">0</span>); <span class="co">-- 返回 0</span></span></code></pre></div></li>
+</ul>
+</div>
+<div id="参考" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> 参考<a href="数学函数.html#参考" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://help.aliyun.com/zh/maxcompute/user-guide/mathematical-functions?spm=a2c4g.11186623.0.0.4a4332ecF7Y0XD" class="uri">https://help.aliyun.com/zh/maxcompute/user-guide/mathematical-functions?spm=a2c4g.11186623.0.0.4a4332ecF7Y0XD</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="日期与时间函数.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="其他函数.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-share.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 DML (Data Manipulation Language) | ODPS SQL</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 DML (Data Manipulation Language) | ODPS SQL" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 DML (Data Manipulation Language) | ODPS SQL" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="米霖" />
+
+
+<meta name="date" content="2024-01-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ddl-data-definition-language.html"/>
+<link rel="next" href="dql操作select.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ODPS SQL</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#odps-sql-的特点"><i class="fa fa-check"></i><b>1.1</b> ODPS SQL 的特点</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#应用场景"><i class="fa fa-check"></i><b>1.2</b> 应用场景</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#odps-sql-与其他-sql-的比较"><i class="fa fa-check"></i><b>1.3</b> ODPS SQL 与其他 SQL 的比较</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="基本语法.html"><a href="基本语法.html"><i class="fa fa-check"></i><b>2</b> 基本语法</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="基本语法.html"><a href="基本语法.html#运算符"><i class="fa fa-check"></i><b>2.1</b> 运算符</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符"><i class="fa fa-check"></i><b>2.1.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.1.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符"><i class="fa fa-check"></i><b>2.1.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.1.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符"><i class="fa fa-check"></i><b>2.1.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.1.4" data-path="基本语法.html"><a href="基本语法.html#位运算符"><i class="fa fa-check"></i><b>2.1.4</b> 位运算符</a></li>
+<li class="chapter" data-level="2.1.5" data-path="基本语法.html"><a href="基本语法.html#其他运算符"><i class="fa fa-check"></i><b>2.1.5</b> 其他运算符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符"><i class="fa fa-check"></i><b>2.2</b> 转义字符</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="基本语法.html"><a href="基本语法.html#转义字符列表"><i class="fa fa-check"></i><b>2.2.1</b> 转义字符列表</a></li>
+<li class="chapter" data-level="2.2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符的重要性"><i class="fa fa-check"></i><b>2.2.2</b> 转义字符的重要性</a></li>
+<li class="chapter" data-level="2.2.3" data-path="基本语法.html"><a href="基本语法.html#注意事项"><i class="fa fa-check"></i><b>2.2.3</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="基本语法.html"><a href="基本语法.html#like-匹配符"><i class="fa fa-check"></i><b>2.3</b> LIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="基本语法.html"><a href="基本语法.html#like-匹配符的使用"><i class="fa fa-check"></i><b>2.3.1</b> LIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.3.2" data-path="基本语法.html"><a href="基本语法.html#示例"><i class="fa fa-check"></i><b>2.3.2</b> 示例</a></li>
+<li class="chapter" data-level="2.3.3" data-path="基本语法.html"><a href="基本语法.html#like-的高级用法"><i class="fa fa-check"></i><b>2.3.3</b> LIKE 的高级用法</a></li>
+<li class="chapter" data-level="2.3.4" data-path="基本语法.html"><a href="基本语法.html#使用-like-时的注意事项"><i class="fa fa-check"></i><b>2.3.4</b> 使用 LIKE 时的注意事项</a></li>
+<li class="chapter" data-level="2.3.5" data-path="基本语法.html"><a href="基本语法.html#转义字符在-like-中的应用"><i class="fa fa-check"></i><b>2.3.5</b> 转义字符在 LIKE 中的应用</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符"><i class="fa fa-check"></i><b>2.4</b> RLIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符的使用"><i class="fa fa-check"></i><b>2.4.1</b> RLIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.4.2" data-path="基本语法.html"><a href="基本语法.html#rlike-高级元字符"><i class="fa fa-check"></i><b>2.4.2</b> RLIKE 高级元字符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="基本语法.html"><a href="基本语法.html#odps-sql-保留字与关键字"><i class="fa fa-check"></i><b>2.5</b> ODPS SQL 保留字与关键字</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符-1"><i class="fa fa-check"></i><b>2.5.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.5.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符-1"><i class="fa fa-check"></i><b>2.5.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.5.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符-1"><i class="fa fa-check"></i><b>2.5.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.5.4" data-path="基本语法.html"><a href="基本语法.html#数据类型"><i class="fa fa-check"></i><b>2.5.4</b> 数据类型</a></li>
+<li class="chapter" data-level="2.5.5" data-path="基本语法.html"><a href="基本语法.html#数据定义语言-ddl"><i class="fa fa-check"></i><b>2.5.5</b> 数据定义语言 (DDL)</a></li>
+<li class="chapter" data-level="2.5.6" data-path="基本语法.html"><a href="基本语法.html#数据操作语言-dml"><i class="fa fa-check"></i><b>2.5.6</b> 数据操作语言 (DML)</a></li>
+<li class="chapter" data-level="2.5.7" data-path="基本语法.html"><a href="基本语法.html#其他关键字"><i class="fa fa-check"></i><b>2.5.7</b> 其他关键字</a></li>
+<li class="chapter" data-level="2.5.8" data-path="基本语法.html"><a href="基本语法.html#集合操作"><i class="fa fa-check"></i><b>2.5.8</b> 集合操作</a></li>
+<li class="chapter" data-level="2.5.9" data-path="基本语法.html"><a href="基本语法.html#窗口函数"><i class="fa fa-check"></i><b>2.5.9</b> 窗口函数</a></li>
+<li class="chapter" data-level="2.5.10" data-path="基本语法.html"><a href="基本语法.html#子查询"><i class="fa fa-check"></i><b>2.5.10</b> 子查询</a></li>
+<li class="chapter" data-level="2.5.11" data-path="基本语法.html"><a href="基本语法.html#连接"><i class="fa fa-check"></i><b>2.5.11</b> 连接</a></li>
+<li class="chapter" data-level="2.5.12" data-path="基本语法.html"><a href="基本语法.html#条件表达式"><i class="fa fa-check"></i><b>2.5.12</b> 条件表达式</a></li>
+<li class="chapter" data-level="2.5.13" data-path="基本语法.html"><a href="基本语法.html#聚合函数"><i class="fa fa-check"></i><b>2.5.13</b> 聚合函数</a></li>
+<li class="chapter" data-level="2.5.14" data-path="基本语法.html"><a href="基本语法.html#数据导入导出"><i class="fa fa-check"></i><b>2.5.14</b> 数据导入导出</a></li>
+<li class="chapter" data-level="2.5.15" data-path="基本语法.html"><a href="基本语法.html#事务控制"><i class="fa fa-check"></i><b>2.5.15</b> 事务控制</a></li>
+<li class="chapter" data-level="2.5.16" data-path="基本语法.html"><a href="基本语法.html#权限管理"><i class="fa fa-check"></i><b>2.5.16</b> 权限管理</a></li>
+<li class="chapter" data-level="2.5.17" data-path="基本语法.html"><a href="基本语法.html#系统管理"><i class="fa fa-check"></i><b>2.5.17</b> 系统管理</a></li>
+<li class="chapter" data-level="2.5.18" data-path="基本语法.html"><a href="基本语法.html#分区管理"><i class="fa fa-check"></i><b>2.5.18</b> 分区管理</a></li>
+<li class="chapter" data-level="2.5.19" data-path="基本语法.html"><a href="基本语法.html#排序和分组"><i class="fa fa-check"></i><b>2.5.19</b> 排序和分组</a></li>
+<li class="chapter" data-level="2.5.20" data-path="基本语法.html"><a href="基本语法.html#约束和索引"><i class="fa fa-check"></i><b>2.5.20</b> 约束和索引</a></li>
+<li class="chapter" data-level="2.5.21" data-path="基本语法.html"><a href="基本语法.html#视图和临时表"><i class="fa fa-check"></i><b>2.5.21</b> 视图和临时表</a></li>
+<li class="chapter" data-level="2.5.22" data-path="基本语法.html"><a href="基本语法.html#函数和过程"><i class="fa fa-check"></i><b>2.5.22</b> 函数和过程</a></li>
+<li class="chapter" data-level="2.5.23" data-path="基本语法.html"><a href="基本语法.html#其他关键字-1"><i class="fa fa-check"></i><b>2.5.23</b> 其他关键字</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="基本语法.html"><a href="基本语法.html#数据类型转换"><i class="fa fa-check"></i><b>2.6</b> 数据类型转换</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html"><i class="fa fa-check"></i><b>3</b> DDL (Data Definition Language)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#表操作"><i class="fa fa-check"></i><b>3.1</b> 表操作</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#创建表create-table"><i class="fa fa-check"></i><b>3.1.1</b> 创建表（Create Table）</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的所有权alter-table-owner"><i class="fa fa-check"></i><b>3.1.2</b> 修改表的所有权（Alter Table Owner）</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的生命周期alter-table-lifecycle"><i class="fa fa-check"></i><b>3.1.3</b> 修改表的生命周期（Alter Table Lifecycle）</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除表drop-table"><i class="fa fa-check"></i><b>3.1.4</b> 删除表（Drop Table）</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#查看表的详细信息describe-table"><i class="fa fa-check"></i><b>3.1.5</b> 查看表的详细信息（Describe Table）</a></li>
+<li class="chapter" data-level="3.1.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的元数据list-table"><i class="fa fa-check"></i><b>3.1.6</b> 获取表的元数据（List Table）</a></li>
+<li class="chapter" data-level="3.1.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的分区信息list-partitions"><i class="fa fa-check"></i><b>3.1.7</b> 获取表的分区信息（List Partitions）</a></li>
+<li class="chapter" data-level="3.1.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的注释"><i class="fa fa-check"></i><b>3.1.8</b> 修改表的注释</a></li>
+<li class="chapter" data-level="3.1.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#重命名表"><i class="fa fa-check"></i><b>3.1.9</b> 重命名表</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#分区和列操作"><i class="fa fa-check"></i><b>3.2</b> 分区和列操作</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#新增分区"><i class="fa fa-check"></i><b>3.2.1</b> 新增分区</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除分区"><i class="fa fa-check"></i><b>3.2.2</b> 删除分区</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改分区"><i class="fa fa-check"></i><b>3.2.3</b> 修改分区</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#合并分区"><i class="fa fa-check"></i><b>3.2.4</b> 合并分区</a></li>
+<li class="chapter" data-level="3.2.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#清空分区数据"><i class="fa fa-check"></i><b>3.2.5</b> 清空分区数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#添加列或注释"><i class="fa fa-check"></i><b>3.2.6</b> 添加列或注释</a></li>
+<li class="chapter" data-level="3.2.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除列"><i class="fa fa-check"></i><b>3.2.7</b> 删除列</a></li>
+<li class="chapter" data-level="3.2.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#更改列数据类型"><i class="fa fa-check"></i><b>3.2.8</b> 更改列数据类型</a></li>
+<li class="chapter" data-level="3.2.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列的顺序"><i class="fa fa-check"></i><b>3.2.9</b> 修改列的顺序</a></li>
+<li class="chapter" data-level="3.2.10" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名"><i class="fa fa-check"></i><b>3.2.10</b> 修改列名</a></li>
+<li class="chapter" data-level="3.2.11" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列注释"><i class="fa fa-check"></i><b>3.2.11</b> 修改列注释</a></li>
+<li class="chapter" data-level="3.2.12" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名及注释"><i class="fa fa-check"></i><b>3.2.12</b> 修改列名及注释</a></li>
+<li class="chapter" data-level="3.2.13" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的列非空属性"><i class="fa fa-check"></i><b>3.2.13</b> 修改表的列非空属性</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期操作"><i class="fa fa-check"></i><b>3.3</b> 生命周期操作</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期概念"><i class="fa fa-check"></i><b>3.3.1</b> 生命周期概念</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#设置生命周期"><i class="fa fa-check"></i><b>3.3.2</b> 设置生命周期</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#禁止或恢复生命周期"><i class="fa fa-check"></i><b>3.3.3</b> 禁止或恢复生命周期</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#注意事项-1"><i class="fa fa-check"></i><b>3.3.4</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作"><i class="fa fa-check"></i><b>3.4</b> 视图操作</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作命令"><i class="fa fa-check"></i><b>3.4.1</b> 视图操作命令</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html"><i class="fa fa-check"></i><b>4</b> DML (Data Manipulation Language)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写数据insert-into-insert-overwrite"><i class="fa fa-check"></i><b>4.1</b> 插入或覆写数据（INSERT INTO | INSERT OVERWRITE）</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件"><i class="fa fa-check"></i><b>4.1.1</b> 前提条件</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍"><i class="fa fa-check"></i><b>4.1.2</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制"><i class="fa fa-check"></i><b>4.1.3</b> 使用限制</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式"><i class="fa fa-check"></i><b>4.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="4.1.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例"><i class="fa fa-check"></i><b>4.1.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写动态分区数据dynamic-partition"><i class="fa fa-check"></i><b>4.2</b> 插入或覆写动态分区数据（DYNAMIC PARTITION）</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入数据到表格"><i class="fa fa-check"></i><b>4.2.1</b> 插入数据到表格</a></li>
+<li class="chapter" data-level="4.2.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-1"><i class="fa fa-check"></i><b>4.2.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新或删除数据update-delete"><i class="fa fa-check"></i><b>4.3</b> 更新或删除数据（UPDATE | DELETE）</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#删除数据delete"><i class="fa fa-check"></i><b>4.3.1</b> 删除数据（DELETE）</a></li>
+<li class="chapter" data-level="4.3.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-2"><i class="fa fa-check"></i><b>4.3.2</b> 使用示例</a></li>
+<li class="chapter" data-level="4.3.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#清空列数据"><i class="fa fa-check"></i><b>4.3.3</b> 清空列数据</a></li>
+<li class="chapter" data-level="4.3.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新数据update"><i class="fa fa-check"></i><b>4.3.4</b> 更新数据（UPDATE）</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#merge-into"><i class="fa fa-check"></i><b>4.4</b> MERGE INTO</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-3"><i class="fa fa-check"></i><b>4.4.1</b> 命令格式</a></li>
+<li class="chapter" data-level="4.4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-4"><i class="fa fa-check"></i><b>4.4.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#多路输出multi-insert"><i class="fa fa-check"></i><b>4.5</b> 多路输出（MULTI INSERT）</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令解释"><i class="fa fa-check"></i><b>4.5.1</b> 命令解释</a></li>
+<li class="chapter" data-level="4.5.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#用法说明"><i class="fa fa-check"></i><b>4.5.2</b> 用法说明</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#values"><i class="fa fa-check"></i><b>4.6</b> VALUES</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例1通过-insert-values-操作向特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.1</b> 示例1：通过 <code>insert … values</code> 操作向特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例2通过-insert-values-操作向非特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.2</b> 示例2：通过 <code>insert … values</code> 操作向非特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例3使用复杂数据类型构造常量通过-insert-操作导入数据"><i class="fa fa-check"></i><b>4.6.3</b> 示例3：使用复杂数据类型构造常量，通过 <code>insert</code> 操作导入数据</a></li>
+<li class="chapter" data-level="4.6.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例4通过-insert-values-操作写入-datetime-或-timestamp-数据类型"><i class="fa fa-check"></i><b>4.6.4</b> 示例4：通过 <code>insert … values</code> 操作写入 DATETIME 或 TIMESTAMP 数据类型</a></li>
+<li class="chapter" data-level="4.6.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例5通过-values-table-操作插入数据"><i class="fa fa-check"></i><b>4.6.5</b> 示例5：通过 <code>values table</code> 操作插入数据</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load"><i class="fa fa-check"></i><b>4.7</b> LOAD</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-1"><i class="fa fa-check"></i><b>4.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.7.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制-1"><i class="fa fa-check"></i><b>4.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="4.7.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件-1"><i class="fa fa-check"></i><b>4.7.3</b> 前提条件</a></li>
+<li class="chapter" data-level="4.7.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load命令示例"><i class="fa fa-check"></i><b>4.7.4</b> LOAD命令示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#cte公用表表达式介绍"><i class="fa fa-check"></i><b>4.8</b> CTE（公用表表达式）介绍</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-2"><i class="fa fa-check"></i><b>4.8.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.8.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-4"><i class="fa fa-check"></i><b>4.8.2</b> 命令格式</a></li>
+<li class="chapter" data-level="4.8.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-5"><i class="fa fa-check"></i><b>4.8.3</b> 使用示例</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dql操作select.html"><a href="dql操作select.html"><i class="fa fa-check"></i><b>5</b> DQL操作（SELECT）</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="dql操作select.html"><a href="dql操作select.html#select语法"><i class="fa fa-check"></i><b>5.1</b> SELECT语法</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-3"><i class="fa fa-check"></i><b>5.1.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.1.2" data-path="dql操作select.html"><a href="dql操作select.html#类型与功能"><i class="fa fa-check"></i><b>5.1.2</b> 类型与功能</a></li>
+<li class="chapter" data-level="5.1.3" data-path="dql操作select.html"><a href="dql操作select.html#说明"><i class="fa fa-check"></i><b>5.1.3</b> 说明</a></li>
+<li class="chapter" data-level="5.1.4" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-5"><i class="fa fa-check"></i><b>5.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="5.1.5" data-path="dql操作select.html"><a href="dql操作select.html#示例数据"><i class="fa fa-check"></i><b>5.1.5</b> 示例数据</a></li>
+<li class="chapter" data-level="5.1.6" data-path="dql操作select.html"><a href="dql操作select.html#with子句cte"><i class="fa fa-check"></i><b>5.1.6</b> WITH子句（cte）</a></li>
+<li class="chapter" data-level="5.1.7" data-path="dql操作select.html"><a href="dql操作select.html#列表达式select_expr"><i class="fa fa-check"></i><b>5.1.7</b> 列表达式（SELECT_expr）</a></li>
+<li class="chapter" data-level="5.1.8" data-path="dql操作select.html"><a href="dql操作select.html#说明-1"><i class="fa fa-check"></i><b>5.1.8</b> 说明</a></li>
+<li class="chapter" data-level="5.1.9" data-path="dql操作select.html"><a href="dql操作select.html#排除列except_expr"><i class="fa fa-check"></i><b>5.1.9</b> 排除列（except_expr）</a></li>
+<li class="chapter" data-level="5.1.10" data-path="dql操作select.html"><a href="dql操作select.html#修改列replace_expr"><i class="fa fa-check"></i><b>5.1.10</b> 修改列（replace_expr）</a></li>
+<li class="chapter" data-level="5.1.11" data-path="dql操作select.html"><a href="dql操作select.html#目标表信息table_reference"><i class="fa fa-check"></i><b>5.1.11</b> 目标表信息（table_reference）</a></li>
+<li class="chapter" data-level="5.1.12" data-path="dql操作select.html"><a href="dql操作select.html#where子句where_condition"><i class="fa fa-check"></i><b>5.1.12</b> WHERE子句（where_condition）</a></li>
+<li class="chapter" data-level="5.1.13" data-path="dql操作select.html"><a href="dql操作select.html#group-by分组查询col_list"><i class="fa fa-check"></i><b>5.1.13</b> GROUP BY分组查询（col_list）</a></li>
+<li class="chapter" data-level="5.1.14" data-path="dql操作select.html"><a href="dql操作select.html#having子句having_condition"><i class="fa fa-check"></i><b>5.1.14</b> HAVING子句（having_condition）</a></li>
+<li class="chapter" data-level="5.1.15" data-path="dql操作select.html"><a href="dql操作select.html#order-by全局排序order_condition"><i class="fa fa-check"></i><b>5.1.15</b> ORDER BY全局排序（order_condition）</a></li>
+<li class="chapter" data-level="5.1.16" data-path="dql操作select.html"><a href="dql操作select.html#limit限制输出行数number"><i class="fa fa-check"></i><b>5.1.16</b> LIMIT限制输出行数（number）</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="dql操作select.html"><a href="dql操作select.html#select语序"><i class="fa fa-check"></i><b>5.2</b> SELECT语序</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="dql操作select.html"><a href="dql操作select.html#执行语序"><i class="fa fa-check"></i><b>5.2.1</b> 执行语序</a></li>
+<li class="chapter" data-level="5.2.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-1"><i class="fa fa-check"></i><b>5.2.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.2.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-6"><i class="fa fa-check"></i><b>5.2.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="dql操作select.html"><a href="dql操作select.html#子查询subquery"><i class="fa fa-check"></i><b>5.3</b> 子查询（SUBQUERY）</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-4"><i class="fa fa-check"></i><b>5.3.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.3.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-2"><i class="fa fa-check"></i><b>5.3.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.3.3" data-path="dql操作select.html"><a href="dql操作select.html#基础子查询"><i class="fa fa-check"></i><b>5.3.3</b> 基础子查询</a></li>
+<li class="chapter" data-level="5.3.4" data-path="dql操作select.html"><a href="dql操作select.html#in-subquery"><i class="fa fa-check"></i><b>5.3.4</b> IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.5" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-2"><i class="fa fa-check"></i><b>5.3.5</b> 注意事项</a></li>
+<li class="chapter" data-level="5.3.6" data-path="dql操作select.html"><a href="dql操作select.html#not-in-subquery"><i class="fa fa-check"></i><b>5.3.6</b> NOT IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.7" data-path="dql操作select.html"><a href="dql操作select.html#exists-subquery"><i class="fa fa-check"></i><b>5.3.7</b> EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.8" data-path="dql操作select.html"><a href="dql操作select.html#not-exists-subquery"><i class="fa fa-check"></i><b>5.3.8</b> NOT EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.9" data-path="dql操作select.html"><a href="dql操作select.html#scalar-subquery"><i class="fa fa-check"></i><b>5.3.9</b> SCALAR SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.10" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-9"><i class="fa fa-check"></i><b>5.3.10</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dql操作select.html"><a href="dql操作select.html#交集并集和补集操作"><i class="fa fa-check"></i><b>5.4</b> 交集、并集和补集操作</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-5"><i class="fa fa-check"></i><b>5.4.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.4.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-3"><i class="fa fa-check"></i><b>5.4.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.4.3" data-path="dql操作select.html"><a href="dql操作select.html#交集intersect"><i class="fa fa-check"></i><b>5.4.3</b> 交集(Intersect)</a></li>
+<li class="chapter" data-level="5.4.4" data-path="dql操作select.html"><a href="dql操作select.html#并集union"><i class="fa fa-check"></i><b>5.4.4</b> 并集(Union)</a></li>
+<li class="chapter" data-level="5.4.5" data-path="dql操作select.html"><a href="dql操作select.html#补集except"><i class="fa fa-check"></i><b>5.4.5</b> 补集(Except)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="dql操作select.html"><a href="dql操作select.html#join"><i class="fa fa-check"></i><b>5.5</b> Join</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的join操作"><i class="fa fa-check"></i><b>5.5.1</b> MaxCompute支持的Join操作</a></li>
+<li class="chapter" data-level="5.5.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-4"><i class="fa fa-check"></i><b>5.5.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.5.3" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-11"><i class="fa fa-check"></i><b>5.5.3</b> 命令格式</a></li>
+<li class="chapter" data-level="5.5.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-3"><i class="fa fa-check"></i><b>5.5.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.5.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-13"><i class="fa fa-check"></i><b>5.5.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="dql操作select.html"><a href="dql操作select.html#semi-join-半连接"><i class="fa fa-check"></i><b>5.6</b> SEMI join 半连接</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的半连接操作"><i class="fa fa-check"></i><b>5.6.1</b> MaxCompute支持的半连接操作</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-4"><i class="fa fa-check"></i><b>5.6.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.6.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-14"><i class="fa fa-check"></i><b>5.6.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="dql操作select.html"><a href="dql操作select.html#mapjoin-hint"><i class="fa fa-check"></i><b>5.7</b> MAPJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-6"><i class="fa fa-check"></i><b>5.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.7.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-2"><i class="fa fa-check"></i><b>5.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.7.3" data-path="dql操作select.html"><a href="dql操作select.html#使用方法"><i class="fa fa-check"></i><b>5.7.3</b> 使用方法</a></li>
+<li class="chapter" data-level="5.7.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-5"><i class="fa fa-check"></i><b>5.7.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.7.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-15"><i class="fa fa-check"></i><b>5.7.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="dql操作select.html"><a href="dql操作select.html#distributed-mapjoin"><i class="fa fa-check"></i><b>5.8</b> DISTRIBUTED MAPJOIN</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-5"><i class="fa fa-check"></i><b>5.8.1</b> 注意事项</a></li>
+<li class="chapter" data-level="5.8.2" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-1"><i class="fa fa-check"></i><b>5.8.2</b> 使用方法</a></li>
+<li class="chapter" data-level="5.8.3" data-path="dql操作select.html"><a href="dql操作select.html#语法示例"><i class="fa fa-check"></i><b>5.8.3</b> 语法示例</a></li>
+<li class="chapter" data-level="5.8.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-16"><i class="fa fa-check"></i><b>5.8.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="dql操作select.html"><a href="dql操作select.html#skewjoin-hint"><i class="fa fa-check"></i><b>5.9</b> SKEWJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-2"><i class="fa fa-check"></i><b>5.9.1</b> 使用方法</a></li>
+<li class="chapter" data-level="5.9.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-6"><i class="fa fa-check"></i><b>5.9.2</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter"><i class="fa fa-check"></i><b>5.10</b> 动态过滤器（Dynamic Filter）</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter-1"><i class="fa fa-check"></i><b>5.10.1</b> 动态过滤器（Dynamic Filter）</a></li>
+<li class="chapter" data-level="5.10.2" data-path="dql操作select.html"><a href="dql操作select.html#优化思路"><i class="fa fa-check"></i><b>5.10.2</b> 优化思路</a></li>
+<li class="chapter" data-level="5.10.3" data-path="dql操作select.html"><a href="dql操作select.html#应用场景-1"><i class="fa fa-check"></i><b>5.10.3</b> 应用场景</a></li>
+<li class="chapter" data-level="5.10.4" data-path="dql操作select.html"><a href="dql操作select.html#动态范围过滤器或布隆过滤器dynamic-rangebloom-filter"><i class="fa fa-check"></i><b>5.10.4</b> 动态范围过滤器或布隆过滤器（Dynamic Range|Bloom Filter）</a></li>
+<li class="chapter" data-level="5.10.5" data-path="dql操作select.html"><a href="dql操作select.html#动态分区裁剪dynamic-partition-pruning"><i class="fa fa-check"></i><b>5.10.5</b> 动态分区裁剪（Dynamic Partition Pruning）</a></li>
+<li class="chapter" data-level="5.10.6" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-3"><i class="fa fa-check"></i><b>5.10.6</b> 使用方法</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="dql操作select.html"><a href="dql操作select.html#grouping-sets"><i class="fa fa-check"></i><b>5.11</b> grouping sets</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="dql操作select.html"><a href="dql操作select.html#cube-rollup"><i class="fa fa-check"></i><b>5.11.1</b> CUBE | ROLLUP</a></li>
+<li class="chapter" data-level="5.11.2" data-path="dql操作select.html"><a href="dql操作select.html#grouping-grouping_id"><i class="fa fa-check"></i><b>5.11.2</b> GROUPING | GROUPING_ID</a></li>
+<li class="chapter" data-level="5.11.3" data-path="dql操作select.html"><a href="dql操作select.html#grouping__id"><i class="fa fa-check"></i><b>5.11.3</b> GROUPING__ID</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="dql操作select.html"><a href="dql操作select.html#windows-关键字"><i class="fa fa-check"></i><b>5.12</b> Windows 关键字</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-12"><i class="fa fa-check"></i><b>5.12.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.12.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-3"><i class="fa fa-check"></i><b>5.12.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.12.3" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-6"><i class="fa fa-check"></i><b>5.12.3</b> 示例数据</a></li>
+<li class="chapter" data-level="5.12.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-17"><i class="fa fa-check"></i><b>5.12.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="dql操作select.html"><a href="dql操作select.html#tablesample采样"><i class="fa fa-check"></i><b>5.13</b> TABLESAMPLE采样</a>
+<ul>
+<li class="chapter" data-level="5.13.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-13"><i class="fa fa-check"></i><b>5.13.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.13.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-18"><i class="fa fa-check"></i><b>5.13.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.14" data-path="dql操作select.html"><a href="dql操作select.html#qualify"><i class="fa fa-check"></i><b>5.14</b> QUALIFY</a>
+<ul>
+<li class="chapter" data-level="5.14.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-14"><i class="fa fa-check"></i><b>5.14.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.14.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-19"><i class="fa fa-check"></i><b>5.14.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.15" data-path="dql操作select.html"><a href="dql操作select.html#pivotunpivot"><i class="fa fa-check"></i><b>5.15</b> PIVOT、UNPIVOT</a>
+<ul>
+<li class="chapter" data-level="5.15.1" data-path="dql操作select.html"><a href="dql操作select.html#pivot关键字"><i class="fa fa-check"></i><b>5.15.1</b> PIVOT关键字</a></li>
+<li class="chapter" data-level="5.15.2" data-path="dql操作select.html"><a href="dql操作select.html#unpivot关键字"><i class="fa fa-check"></i><b>5.15.2</b> UNPIVOT关键字</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="日期与时间函数.html"><a href="日期与时间函数.html"><i class="fa fa-check"></i><b>6</b> 日期与时间函数</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="日期与时间函数.html"><a href="日期与时间函数.html#函数总结"><i class="fa fa-check"></i><b>6.1</b> 函数总结</a></li>
+<li class="chapter" data-level="6.2" data-path="日期与时间函数.html"><a href="日期与时间函数.html#函数例子"><i class="fa fa-check"></i><b>6.2</b> 函数例子</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="数学函数.html"><a href="数学函数.html"><i class="fa fa-check"></i><b>7</b> 数学函数</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="数学函数.html"><a href="数学函数.html#数学函数总结"><i class="fa fa-check"></i><b>7.1</b> 数学函数总结</a></li>
+<li class="chapter" data-level="7.2" data-path="数学函数.html"><a href="数学函数.html#函数例子-1"><i class="fa fa-check"></i><b>7.2</b> 函数例子</a></li>
+<li class="chapter" data-level="7.3" data-path="数学函数.html"><a href="数学函数.html#参考"><i class="fa fa-check"></i><b>7.3</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="其他函数.html"><a href="其他函数.html"><i class="fa fa-check"></i><b>8</b> 其他函数</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="其他函数.html"><a href="其他函数.html#窗口函数-1"><i class="fa fa-check"></i><b>8.1</b> 窗口函数</a></li>
+<li class="chapter" data-level="8.2" data-path="其他函数.html"><a href="其他函数.html#聚合函数-1"><i class="fa fa-check"></i><b>8.2</b> 聚合函数</a></li>
+<li class="chapter" data-level="8.3" data-path="其他函数.html"><a href="其他函数.html#字符串函数"><i class="fa fa-check"></i><b>8.3</b> 字符串函数</a></li>
+<li class="chapter" data-level="8.4" data-path="其他函数.html"><a href="其他函数.html#复杂类型函数"><i class="fa fa-check"></i><b>8.4</b> 复杂类型函数</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="其他函数.html"><a href="其他函数.html#array函数"><i class="fa fa-check"></i><b>8.4.1</b> ARRAY函数</a></li>
+<li class="chapter" data-level="8.4.2" data-path="其他函数.html"><a href="其他函数.html#map函数"><i class="fa fa-check"></i><b>8.4.2</b> MAP函数</a></li>
+<li class="chapter" data-level="8.4.3" data-path="其他函数.html"><a href="其他函数.html#struct函数"><i class="fa fa-check"></i><b>8.4.3</b> STRUCT函数</a></li>
+<li class="chapter" data-level="8.4.4" data-path="其他函数.html"><a href="其他函数.html#json函数"><i class="fa fa-check"></i><b>8.4.4</b> JSON函数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="其他函数.html"><a href="其他函数.html#其他函数-1"><i class="fa fa-check"></i><b>8.5</b> 其他函数</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/liamamilin" target="blank">ODPS SQL</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ODPS SQL</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dml-data-manipulation-language" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> DML (Data Manipulation Language)<a href="dml-data-manipulation-language.html#dml-data-manipulation-language" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="插入或覆写数据insert-into-insert-overwrite" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> 插入或覆写数据（INSERT INTO | INSERT OVERWRITE）<a href="dml-data-manipulation-language.html#插入或覆写数据insert-into-insert-overwrite" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>以下内容是关于MaxCompute SQL中<code>insert into</code>和<code>insert overwrite</code>操作的整理，包括前提条件、功能介绍、使用限制以及命令格式和使用示例。</p>
+<div id="前提条件" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> 前提条件<a href="dml-data-manipulation-language.html#前提条件" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>执行<code>insert into</code>和<code>insert overwrite</code>操作前需要具备目标表的修改权限（Alter）及源表的元信息读取权限（Describe）。</li>
+</ul>
+</div>
+<div id="功能介绍" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> 功能介绍<a href="dml-data-manipulation-language.html#功能介绍" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><code>insert into</code>：直接向表或静态分区中插入数据。</li>
+<li><code>insert overwrite</code>：先清空表或静态分区中的原有数据，再向表或静态分区中插入数据。</li>
+</ul>
+</div>
+<div id="使用限制" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> 使用限制<a href="dml-data-manipulation-language.html#使用限制" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><code>insert into</code>不支持向聚簇表中追加数据。</li>
+<li><code>insert overwrite</code>不支持指定插入列，只能使用<code>insert into</code>。</li>
+<li>不要同时对一个表执行<code>insert into</code>或<code>insert overwrite</code>操作。</li>
+<li>对于Transaction Table2.0类型的表有特定限制。</li>
+</ul>
+</div>
+<div id="命令格式" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> 命令格式<a href="dml-data-manipulation-language.html#命令格式" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="dml-data-manipulation-language.html#cb1-1" tabindex="-1"></a><span class="kw">insert</span> {<span class="kw">into</span>|overwrite} <span class="kw">table</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> [<span class="kw">partition</span> (<span class="op">&lt;</span>pt_spec<span class="op">&gt;</span>)] [(<span class="op">&lt;</span>col_name<span class="op">&gt;</span> [,<span class="op">&lt;</span>col_name<span class="op">&gt;</span> <span class="op">..</span>.])]</span>
+<span id="cb1-2"><a href="dml-data-manipulation-language.html#cb1-2" tabindex="-1"></a><span class="op">&lt;</span>select_statement<span class="op">&gt;</span></span>
+<span id="cb1-3"><a href="dml-data-manipulation-language.html#cb1-3" tabindex="-1"></a><span class="kw">from</span> <span class="op">&lt;</span>from_statement<span class="op">&gt;</span></span>
+<span id="cb1-4"><a href="dml-data-manipulation-language.html#cb1-4" tabindex="-1"></a>[zorder <span class="kw">by</span> <span class="op">&lt;</span>zcol_name<span class="op">&gt;</span> [, <span class="op">&lt;</span>zcol_name<span class="op">&gt;</span> <span class="op">..</span>.]];</span></code></pre></div>
+<ul>
+<li><code>table_name</code>：必填。需要插入数据的目标表名称。</li>
+<li><code>pt_spec</code>：可选。需要插入数据的分区信息。</li>
+<li><code>col_name</code>：可选。需要插入数据的目标表的列名称。</li>
+<li><code>select_statement</code>：必填。select子句，从源表中查询需要插入目标表的数据。</li>
+<li><code>from_statement</code>：必填。from子句，表示数据来源。</li>
+<li><code>zorder by</code>：可选。向表或分区写入数据时，支持根据指定的一列或多列进行排序。</li>
+</ul>
+</div>
+<div id="使用示例" class="section level3 hasAnchor" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> 使用示例<a href="dml-data-manipulation-language.html#使用示例" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="普通表" class="section level4 hasAnchor" number="4.1.5.1">
+<h4><span class="header-section-number">4.1.5.1</span> 普通表<a href="dml-data-manipulation-language.html#普通表" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p><strong>示例1</strong>：执行<code>insert into</code>命令向非分区表<code>websites</code>中追加数据。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="dml-data-manipulation-language.html#cb2-1" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> websites (<span class="kw">id</span>, name, url) <span class="kw">values</span> (<span class="dv">1</span>, <span class="st">&#39;Aliyun&#39;</span>, <span class="st">&#39;https://www.aliyun.com&#39;</span>);</span></code></pre></div></li>
+<li><p><strong>示例2</strong>：执行<code>insert into</code>命令向分区表<code>sale_detail</code>中追加数据。</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="dml-data-manipulation-language.html#cb3-1" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> sale_detail <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span>) <span class="kw">values</span> (<span class="st">&#39;s1&#39;</span>, <span class="st">&#39;c1&#39;</span>, <span class="fl">100.1</span>), (<span class="st">&#39;s2&#39;</span>, <span class="st">&#39;c2&#39;</span>, <span class="fl">100.2</span>), (<span class="st">&#39;s3&#39;</span>, <span class="st">&#39;c3&#39;</span>, <span class="fl">100.3</span>);</span></code></pre></div></li>
+<li><p><strong>示例3</strong>：执行<code>insert overwrite</code>命令更新表<code>sale_detail_insert</code>中的数据。</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="dml-data-manipulation-language.html#cb4-1" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> sale_detail_insert <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span>)</span>
+<span id="cb4-2"><a href="dml-data-manipulation-language.html#cb4-2" tabindex="-1"></a>  <span class="kw">select</span> shop_name, customer_id, total_price <span class="kw">from</span> sale_detail</span>
+<span id="cb4-3"><a href="dml-data-manipulation-language.html#cb4-3" tabindex="-1"></a>  zorder <span class="kw">by</span> customer_id, total_price;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="transaction-table2.0类型表" class="section level4 hasAnchor" number="4.1.5.2">
+<h4><span class="header-section-number">4.1.5.2</span> Transaction Table2.0类型表<a href="dml-data-manipulation-language.html#transaction-table2.0类型表" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p><strong>写入表数据</strong>：</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="dml-data-manipulation-language.html#cb5-1" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> mf_tt6 <span class="kw">partition</span> (dd<span class="op">=</span><span class="st">&#39;01&#39;</span>, hh<span class="op">=</span><span class="st">&#39;01&#39;</span>) </span>
+<span id="cb5-2"><a href="dml-data-manipulation-language.html#cb5-2" tabindex="-1"></a>  <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">1</span>), (<span class="dv">2</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">3</span>);</span></code></pre></div></li>
+<li><p><strong>更新/删除表数据</strong>：</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="dml-data-manipulation-language.html#cb6-1" tabindex="-1"></a><span class="kw">update</span> mf_tt6 <span class="kw">set</span> val <span class="op">=</span> delta.val </span>
+<span id="cb6-2"><a href="dml-data-manipulation-language.html#cb6-2" tabindex="-1"></a>  <span class="kw">from</span> (<span class="kw">select</span> pk, val <span class="kw">from</span> <span class="kw">values</span> (<span class="dv">1</span>, <span class="dv">10</span>), (<span class="dv">2</span>, <span class="dv">20</span>) t (pk, val)) delta </span>
+<span id="cb6-3"><a href="dml-data-manipulation-language.html#cb6-3" tabindex="-1"></a>  <span class="kw">where</span> delta.pk <span class="op">=</span> mf_tt6.pk <span class="kw">and</span> mf_tt6.dd<span class="op">=</span><span class="st">&#39;01&#39;</span> <span class="kw">and</span> mf_tt6.hh<span class="op">=</span><span class="st">&#39;01&#39;</span>;</span></code></pre></div></li>
+<li><p><strong>删除记录</strong>：</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="dml-data-manipulation-language.html#cb7-1" tabindex="-1"></a><span class="kw">delete</span> <span class="kw">from</span> mf_tt6 <span class="kw">where</span> val <span class="op">=</span> <span class="dv">5</span> <span class="kw">and</span> dd<span class="op">=</span><span class="st">&#39;01&#39;</span> <span class="kw">and</span> hh<span class="op">=</span><span class="st">&#39;01&#39;</span>;</span></code></pre></div></li>
+<li><p><strong><code>merge into</code>操作</strong>：</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="dml-data-manipulation-language.html#cb8-1" tabindex="-1"></a><span class="kw">merge</span> <span class="kw">into</span> mf_tt6 <span class="kw">using</span> mf_delta </span>
+<span id="cb8-2"><a href="dml-data-manipulation-language.html#cb8-2" tabindex="-1"></a>  <span class="kw">on</span> mf_tt6.pk <span class="op">=</span> mf_delta.pk <span class="kw">and</span> mf_tt6.dd<span class="op">=</span><span class="st">&#39;01&#39;</span> <span class="kw">and</span> mf_tt6.hh<span class="op">=</span><span class="st">&#39;01&#39;</span> </span>
+<span id="cb8-3"><a href="dml-data-manipulation-language.html#cb8-3" tabindex="-1"></a>  <span class="cf">when</span> matched <span class="kw">and</span> (mf_tt6.pk <span class="op">&gt;</span> <span class="dv">1</span>) <span class="cf">then</span> <span class="kw">update</span> <span class="kw">set</span> mf_tt6.val <span class="op">=</span> mf_delta.val </span>
+<span id="cb8-4"><a href="dml-data-manipulation-language.html#cb8-4" tabindex="-1"></a>  <span class="cf">when</span> matched <span class="cf">then</span> <span class="kw">delete</span> </span>
+<span id="cb8-5"><a href="dml-data-manipulation-language.html#cb8-5" tabindex="-1"></a>  <span class="cf">when</span> <span class="kw">not</span> matched <span class="cf">then</span> <span class="kw">insert</span> <span class="kw">values</span> (mf_delta.pk, mf_delta.val, <span class="st">&#39;01&#39;</span>, <span class="st">&#39;01&#39;</span>);</span></code></pre></div></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="插入或覆写动态分区数据dynamic-partition" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> 插入或覆写动态分区数据（DYNAMIC PARTITION）<a href="dml-data-manipulation-language.html#插入或覆写动态分区数据dynamic-partition" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="插入数据到表格" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> 插入数据到表格<a href="dml-data-manipulation-language.html#插入数据到表格" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>命令格式：</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="dml-data-manipulation-language.html#cb9-1" tabindex="-1"></a><span class="kw">insert</span> {<span class="kw">into</span>|overwrite} <span class="kw">table</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> <span class="kw">partition</span> (<span class="op">&lt;</span>ptcol_name<span class="op">&gt;</span>[, <span class="op">&lt;</span>ptcol_name<span class="op">&gt;</span> <span class="op">..</span>.]) </span>
+<span id="cb9-2"><a href="dml-data-manipulation-language.html#cb9-2" tabindex="-1"></a><span class="op">&lt;</span>select_statement<span class="op">&gt;</span> <span class="kw">from</span> <span class="op">&lt;</span>from_statement<span class="op">&gt;</span>;</span></code></pre></div>
+<ul>
+<li><code>table_name</code>：需要插入数据的目标表名。</li>
+<li><code>ptcol_name</code>：目标表分区列的名称。</li>
+<li><code>select_statement</code>：从源表中查询需要插入目标表的数据。</li>
+<li><code>from_statement</code>：数据来源，例如源表名称。</li>
+</ul>
+</div>
+<div id="使用示例-1" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> 使用示例<a href="dml-data-manipulation-language.html#使用示例-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="示例1插入数据到目标表total_revenues" class="section level4 hasAnchor" number="4.2.2.1">
+<h4><span class="header-section-number">4.2.2.1</span> 示例1：插入数据到目标表total_revenues<a href="dml-data-manipulation-language.html#示例1插入数据到目标表total_revenues" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb10-1"><a href="dml-data-manipulation-language.html#cb10-1" tabindex="-1"></a><span class="co">-- 创建目标表total_revenues。</span></span>
+<span id="cb10-2"><a href="dml-data-manipulation-language.html#cb10-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> total_revenues (revenue <span class="dt">double</span>) partitioned <span class="kw">by</span> (region string);</span>
+<span id="cb10-3"><a href="dml-data-manipulation-language.html#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="dml-data-manipulation-language.html#cb10-4" tabindex="-1"></a><span class="co">-- 将源表sale_detail中的数据插入到目标表total_revenues。</span></span>
+<span id="cb10-5"><a href="dml-data-manipulation-language.html#cb10-5" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>; </span>
+<span id="cb10-6"><a href="dml-data-manipulation-language.html#cb10-6" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> total_revenues <span class="kw">partition</span>(region)</span>
+<span id="cb10-7"><a href="dml-data-manipulation-language.html#cb10-7" tabindex="-1"></a><span class="kw">select</span> total_price <span class="kw">as</span> revenue, region <span class="kw">from</span> sale_detail;</span>
+<span id="cb10-8"><a href="dml-data-manipulation-language.html#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="dml-data-manipulation-language.html#cb10-9" tabindex="-1"></a><span class="co">-- 查看表total_revenues的分区。</span></span>
+<span id="cb10-10"><a href="dml-data-manipulation-language.html#cb10-10" tabindex="-1"></a>show <span class="kw">partitions</span> total_revenues;</span>
+<span id="cb10-11"><a href="dml-data-manipulation-language.html#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="dml-data-manipulation-language.html#cb10-12" tabindex="-1"></a><span class="co">-- 查看表total_revenues中的数据。  </span></span>
+<span id="cb10-13"><a href="dml-data-manipulation-language.html#cb10-13" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>; </span>
+<span id="cb10-14"><a href="dml-data-manipulation-language.html#cb10-14" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> total_revenues;    </span></code></pre></div>
+</div>
+<div id="示例2多级分区插入数据到表格sale_detail_dypart" class="section level4 hasAnchor" number="4.2.2.2">
+<h4><span class="header-section-number">4.2.2.2</span> 示例2：多级分区插入数据到表格sale_detail_dypart<a href="dml-data-manipulation-language.html#示例2多级分区插入数据到表格sale_detail_dypart" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb11-1"><a href="dml-data-manipulation-language.html#cb11-1" tabindex="-1"></a><span class="co">-- 创建目标表sale_detail_dypart。 </span></span>
+<span id="cb11-2"><a href="dml-data-manipulation-language.html#cb11-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> sale_detail_dypart <span class="kw">like</span> sale_detail; </span>
+<span id="cb11-3"><a href="dml-data-manipulation-language.html#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="dml-data-manipulation-language.html#cb11-4" tabindex="-1"></a><span class="co">-- 指定一级分区，将数据插入目标表。</span></span>
+<span id="cb11-5"><a href="dml-data-manipulation-language.html#cb11-5" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> sale_detail_dypart <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region)</span>
+<span id="cb11-6"><a href="dml-data-manipulation-language.html#cb11-6" tabindex="-1"></a><span class="kw">select</span> shop_name, customer_id, total_price, region <span class="kw">from</span> sale_detail;</span>
+<span id="cb11-7"><a href="dml-data-manipulation-language.html#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="dml-data-manipulation-language.html#cb11-8" tabindex="-1"></a><span class="co">-- 查看表sale_detail_dypart中的数据。</span></span>
+<span id="cb11-9"><a href="dml-data-manipulation-language.html#cb11-9" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>; </span>
+<span id="cb11-10"><a href="dml-data-manipulation-language.html#cb11-10" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> sale_detail_dypart;</span></code></pre></div>
+</div>
+<div id="示例3动态分区中数据插入到表格sale_detail_dypart" class="section level4 hasAnchor" number="4.2.2.3">
+<h4><span class="header-section-number">4.2.2.3</span> 示例3：动态分区中数据插入到表格sale_detail_dypart<a href="dml-data-manipulation-language.html#示例3动态分区中数据插入到表格sale_detail_dypart" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb12-1"><a href="dml-data-manipulation-language.html#cb12-1" tabindex="-1"></a><span class="co">-- 将源表sale_detail中的数据插入到目标表sale_detail_dypart。</span></span>
+<span id="cb12-2"><a href="dml-data-manipulation-language.html#cb12-2" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> sale_detail_dypart <span class="kw">partition</span> (sale_date, region)</span>
+<span id="cb12-3"><a href="dml-data-manipulation-language.html#cb12-3" tabindex="-1"></a><span class="kw">select</span> shop_name, customer_id, total_price, sale_date, region <span class="kw">from</span> sale_detail;</span>
+<span id="cb12-4"><a href="dml-data-manipulation-language.html#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="dml-data-manipulation-language.html#cb12-5" tabindex="-1"></a><span class="co">-- 查看表sale_detail_dypart中的数据。</span></span>
+<span id="cb12-6"><a href="dml-data-manipulation-language.html#cb12-6" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>; </span>
+<span id="cb12-7"><a href="dml-data-manipulation-language.html#cb12-7" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> sale_detail_dypart;</span></code></pre></div>
+</div>
+<div id="示例4动态分区插入数据失败示例" class="section level4 hasAnchor" number="4.2.2.4">
+<h4><span class="header-section-number">4.2.2.4</span> 示例4：动态分区插入数据失败示例<a href="dml-data-manipulation-language.html#示例4动态分区插入数据失败示例" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="dml-data-manipulation-language.html#cb13-1" tabindex="-1"></a><span class="co">-- 错误示例：动态分区列未在select列表中。</span></span>
+<span id="cb13-2"><a href="dml-data-manipulation-language.html#cb13-2" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> sale_detail_dypart <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;2013&#39;</span>, region)</span>
+<span id="cb13-3"><a href="dml-data-manipulation-language.html#cb13-3" tabindex="-1"></a><span class="kw">select</span> shop_name, customer_id, total_price <span class="kw">from</span> sale_detail;</span></code></pre></div>
+</div>
+<div id="示例5动态分区插入数据失败示例" class="section level4 hasAnchor" number="4.2.2.5">
+<h4><span class="header-section-number">4.2.2.5</span> 示例5：动态分区插入数据失败示例<a href="dml-data-manipulation-language.html#示例5动态分区插入数据失败示例" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb14-1"><a href="dml-data-manipulation-language.html#cb14-1" tabindex="-1"></a><span class="co">-- 错误示例：不能仅指定低级子分区。</span></span>
+<span id="cb14-2"><a href="dml-data-manipulation-language.html#cb14-2" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> sale_detail_dypart <span class="kw">partition</span> (sale_date, region<span class="op">=</span><span class="st">&#39;china&#39;</span>)</span>
+<span id="cb14-3"><a href="dml-data-manipulation-language.html#cb14-3" tabindex="-1"></a><span class="kw">select</span> shop_name, customer_id, total_price, sale_date <span class="kw">from</span> sale_detail_dypart;</span></code></pre></div>
+</div>
+<div id="示例6数据类型不严格一致的隐式转换示例" class="section level4 hasAnchor" number="4.2.2.6">
+<h4><span class="header-section-number">4.2.2.6</span> 示例6：数据类型不严格一致的隐式转换示例<a href="dml-data-manipulation-language.html#示例6数据类型不严格一致的隐式转换示例" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb15-1"><a href="dml-data-manipulation-language.html#cb15-1" tabindex="-1"></a><span class="co">-- 创建源表src。</span></span>
+<span id="cb15-2"><a href="dml-data-manipulation-language.html#cb15-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> src (c <span class="dt">int</span>, d string) partitioned <span class="kw">by</span> (e <span class="dt">int</span>);</span>
+<span id="cb15-3"><a href="dml-data-manipulation-language.html#cb15-3" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="dml-data-manipulation-language.html#cb15-4" tabindex="-1"></a><span class="co">-- 向源表src增加分区。</span></span>
+<span id="cb15-5"><a href="dml-data-manipulation-language.html#cb15-5" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> src <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (e<span class="op">=</span><span class="dv">201312</span>);</span>
+<span id="cb15-6"><a href="dml-data-manipulation-language.html#cb15-6" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="dml-data-manipulation-language.html#cb15-7" tabindex="-1"></a><span class="co">-- 向源表src追加数据。</span></span>
+<span id="cb15-8"><a href="dml-data-manipulation-language.html#cb15-8" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> src <span class="kw">partition</span> (e<span class="op">=</span><span class="dv">201312</span>) <span class="kw">values</span> (<span class="dv">1</span>,<span class="fl">100.1</span>),(<span class="dv">2</span>,<span class="fl">100.2</span>),(<span class="dv">3</span>,<span class="fl">100.3</span>);</span>
+<span id="cb15-9"><a href="dml-data-manipulation-language.html#cb15-9" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="dml-data-manipulation-language.html#cb15-10" tabindex="-1"></a><span class="co">-- 创建目标表parttable。</span></span>
+<span id="cb15-11"><a href="dml-data-manipulation-language.html#cb15-11" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> parttable(a <span class="dt">int</span>, b <span class="dt">double</span>) partitioned <span class="kw">by</span> (p string);</span>
+<span id="cb15-12"><a href="dml-data-manipulation-language.html#cb15-12" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="dml-data-manipulation-language.html#cb15-13" tabindex="-1"></a><span class="co">-- 将源表src数据插入目标表parttable。</span></span>
+<span id="cb15-14"><a href="dml-data-manipulation-language.html#cb15-14" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> parttable <span class="kw">partition</span> (p) <span class="kw">select</span> c, d, <span class="fu">current_timestamp</span>() <span class="kw">from</span> src;</span>
+<span id="cb15-15"><a href="dml-data-manipulation-language.html#cb15-15" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="dml-data-manipulation-language.html#cb15-16" tabindex="-1"></a><span class="co">-- 查询目标表parttable。</span></span>
+<span id="cb15-17"><a href="dml-data-manipulation-language.html#cb15-17" tabindex="-1"></a><span class="kw">set</span> odps.sql.allow.fullscan<span class="op">=</span><span class="kw">true</span>;</span>
+<span id="cb15-18"><a href="dml-data-manipulation-language.html#cb15-18" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> parttable;</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="更新或删除数据update-delete" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 更新或删除数据（UPDATE | DELETE）<a href="dml-data-manipulation-language.html#更新或删除数据update-delete" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="删除数据delete" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> 删除数据（DELETE）<a href="dml-data-manipulation-language.html#删除数据delete" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>命令格式：</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb16-1"><a href="dml-data-manipulation-language.html#cb16-1" tabindex="-1"></a><span class="kw">delete</span> <span class="kw">from</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> [<span class="kw">where</span> <span class="op">&lt;</span>where_condition<span class="op">&gt;</span>];</span></code></pre></div>
+<ul>
+<li><code>table_name</code>：待执行delete操作的Transactional表名称。</li>
+<li><code>where_condition</code>：可选。WHERE子句，用于筛选满足条件的数据。如果不带WHERE子句，会删除表中的所有数据。</li>
+</ul>
+</div>
+<div id="使用示例-2" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> 使用示例<a href="dml-data-manipulation-language.html#使用示例-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="示例1删除满足指定条件的行数据" class="section level4 hasAnchor" number="4.3.2.1">
+<h4><span class="header-section-number">4.3.2.1</span> 示例1：删除满足指定条件的行数据<a href="dml-data-manipulation-language.html#示例1删除满足指定条件的行数据" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb17-1"><a href="dml-data-manipulation-language.html#cb17-1" tabindex="-1"></a><span class="co">-- 创建Transactional表acid_delete。</span></span>
+<span id="cb17-2"><a href="dml-data-manipulation-language.html#cb17-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> acid_delete(<span class="kw">id</span> bigint) tblproperties (<span class="ot">&quot;transactional&quot;</span><span class="op">=</span><span class="ot">&quot;true&quot;</span>); </span>
+<span id="cb17-3"><a href="dml-data-manipulation-language.html#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="dml-data-manipulation-language.html#cb17-4" tabindex="-1"></a><span class="co">-- 插入数据。</span></span>
+<span id="cb17-5"><a href="dml-data-manipulation-language.html#cb17-5" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_delete <span class="kw">values</span>(<span class="dv">1</span>),(<span class="dv">2</span>),(<span class="dv">3</span>),(<span class="dv">2</span>); </span>
+<span id="cb17-6"><a href="dml-data-manipulation-language.html#cb17-6" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="dml-data-manipulation-language.html#cb17-7" tabindex="-1"></a><span class="co">-- 查看插入结果。</span></span>
+<span id="cb17-8"><a href="dml-data-manipulation-language.html#cb17-8" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_delete; </span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb18-1"><a href="dml-data-manipulation-language.html#cb18-1" tabindex="-1"></a><span class="co">-- 删除id为2的行，确认操作。</span></span>
+<span id="cb18-2"><a href="dml-data-manipulation-language.html#cb18-2" tabindex="-1"></a><span class="kw">delete</span> <span class="kw">from</span> acid_delete <span class="kw">where</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">2</span>; </span>
+<span id="cb18-3"><a href="dml-data-manipulation-language.html#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="dml-data-manipulation-language.html#cb18-4" tabindex="-1"></a><span class="co">-- 查看结果表中数据只有1、3。</span></span>
+<span id="cb18-5"><a href="dml-data-manipulation-language.html#cb18-5" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_delete; </span></code></pre></div>
+</div>
+<div id="示例2删除分区表中满足指定条件的行" class="section level4 hasAnchor" number="4.3.2.2">
+<h4><span class="header-section-number">4.3.2.2</span> 示例2：删除分区表中满足指定条件的行<a href="dml-data-manipulation-language.html#示例2删除分区表中满足指定条件的行" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb19-1"><a href="dml-data-manipulation-language.html#cb19-1" tabindex="-1"></a><span class="co">-- 创建Transactional表acid_delete_pt。</span></span>
+<span id="cb19-2"><a href="dml-data-manipulation-language.html#cb19-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> acid_delete_pt(<span class="kw">id</span> bigint) partitioned <span class="kw">by</span>(ds string) tblproperties (<span class="ot">&quot;transactional&quot;</span><span class="op">=</span><span class="ot">&quot;true&quot;</span>);</span>
+<span id="cb19-3"><a href="dml-data-manipulation-language.html#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="dml-data-manipulation-language.html#cb19-4" tabindex="-1"></a><span class="co">-- 添加分区。</span></span>
+<span id="cb19-5"><a href="dml-data-manipulation-language.html#cb19-5" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> acid_delete_pt <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (ds<span class="op">=</span> <span class="st">&#39;2019&#39;</span>);</span>
+<span id="cb19-6"><a href="dml-data-manipulation-language.html#cb19-6" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> acid_delete_pt <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (ds<span class="op">=</span> <span class="st">&#39;2018&#39;</span>);</span>
+<span id="cb19-7"><a href="dml-data-manipulation-language.html#cb19-7" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="dml-data-manipulation-language.html#cb19-8" tabindex="-1"></a><span class="co">-- 插入数据。</span></span>
+<span id="cb19-9"><a href="dml-data-manipulation-language.html#cb19-9" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_delete_pt <span class="kw">partition</span> (ds<span class="op">=</span><span class="st">&#39;2019&#39;</span>) <span class="kw">values</span>(<span class="dv">1</span>),(<span class="dv">2</span>),(<span class="dv">3</span>);</span>
+<span id="cb19-10"><a href="dml-data-manipulation-language.html#cb19-10" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_delete_pt <span class="kw">partition</span> (ds<span class="op">=</span><span class="st">&#39;2018&#39;</span>) <span class="kw">values</span>(<span class="dv">1</span>),(<span class="dv">2</span>),(<span class="dv">3</span>);</span>
+<span id="cb19-11"><a href="dml-data-manipulation-language.html#cb19-11" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="dml-data-manipulation-language.html#cb19-12" tabindex="-1"></a><span class="co">-- 查看插入结果。</span></span>
+<span id="cb19-13"><a href="dml-data-manipulation-language.html#cb19-13" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_delete_pt;</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb20-1"><a href="dml-data-manipulation-language.html#cb20-1" tabindex="-1"></a><span class="co">-- 删除分区为2019且id为2的数据，确认操作。</span></span>
+<span id="cb20-2"><a href="dml-data-manipulation-language.html#cb20-2" tabindex="-1"></a><span class="kw">delete</span> <span class="kw">from</span> acid_delete_pt <span class="kw">where</span> ds<span class="op">=</span><span class="st">&#39;2019&#39;</span> <span class="kw">and</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">2</span>;</span>
+<span id="cb20-3"><a href="dml-data-manipulation-language.html#cb20-3" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="dml-data-manipulation-language.html#cb20-4" tabindex="-1"></a><span class="co">-- 查看结果表中已删除分区为2019且id为2的数据。</span></span>
+<span id="cb20-5"><a href="dml-data-manipulation-language.html#cb20-5" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_delete_pt;</span></code></pre></div>
+</div>
+<div id="示例3通过关联操作删除满足指定条件的行" class="section level4 hasAnchor" number="4.3.2.3">
+<h4><span class="header-section-number">4.3.2.3</span> 示例3：通过关联操作删除满足指定条件的行<a href="dml-data-manipulation-language.html#示例3通过关联操作删除满足指定条件的行" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb21-1"><a href="dml-data-manipulation-language.html#cb21-1" tabindex="-1"></a><span class="co">-- 创建目标Transactional表acid_delete_t和关联表acid_delete_s。</span></span>
+<span id="cb21-2"><a href="dml-data-manipulation-language.html#cb21-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> acid_delete_t(<span class="kw">id</span> <span class="dt">int</span>,value1 <span class="dt">int</span>,value2 <span class="dt">int</span>) tblproperties (<span class="ot">&quot;transactional&quot;</span><span class="op">=</span><span class="ot">&quot;true&quot;</span>);</span>
+<span id="cb21-3"><a href="dml-data-manipulation-language.html#cb21-3" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> acid_delete_s(<span class="kw">id</span> <span class="dt">int</span>,value1 <span class="dt">int</span>,value2 <span class="dt">int</span>);</span>
+<span id="cb21-4"><a href="dml-data-manipulation-language.html#cb21-4" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="dml-data-manipulation-language.html#cb21-5" tabindex="-1"></a><span class="co">-- 插入数据。</span></span>
+<span id="cb21-6"><a href="dml-data-manipulation-language.html#cb21-6" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_delete_t <span class="kw">values</span>(<span class="dv">2</span>,<span class="dv">20</span>,<span class="dv">21</span>),(<span class="dv">3</span>,<span class="dv">30</span>,<span class="dv">31</span>),(<span class="dv">4</span>,<span class="dv">40</span>,<span class="dv">41</span>);</span>
+<span id="cb21-7"><a href="dml-data-manipulation-language.html#cb21-7" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_delete_s <span class="kw">values</span>(<span class="dv">1</span>,<span class="dv">100</span>,<span class="dv">101</span>),(<span class="dv">2</span>,<span class="dv">200</span>,<span class="dv">201</span>),(<span class="dv">3</span>,<span class="dv">300</span>,<span class="dv">301</span>);</span>
+<span id="cb21-8"><a href="dml-data-manipulation-language.html#cb21-8" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="dml-data-manipulation-language.html#cb21-9" tabindex="-1"></a><span class="co">-- 删除acid_delete_t表中id与acid_delete_s表中id不匹配的行，确认操作。</span></span>
+<span id="cb21-10"><a href="dml-data-manipulation-language.html#cb21-10" tabindex="-1"></a><span class="kw">delete</span> <span class="kw">from</span> acid_delete_t <span class="kw">where</span> <span class="kw">not</span> <span class="kw">exists</span> (<span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_delete_s <span class="kw">where</span> acid_delete_t.<span class="kw">id</span><span class="op">=</span>acid_delete_s.<span class="kw">id</span>);</span>
+<span id="cb21-11"><a href="dml-data-manipulation-language.html#cb21-11" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="dml-data-manipulation-language.html#cb21-12" tabindex="-1"></a><span class="co">-- 查看结果表中只有id为2、3的数据。</span></span>
+<span id="cb21-13"><a href="dml-data-manipulation-language.html#cb21-13" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_delete_t;</span></code></pre></div>
+</div>
+</div>
+<div id="清空列数据" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> 清空列数据<a href="dml-data-manipulation-language.html#清空列数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>使用<code>clear column</code>命令清空普通表的列，将不再使用的列数据从磁盘删除并置NULL，从而达到降低存储成本的目的。</p>
+<div id="命令格式-1" class="section level4 hasAnchor" number="4.3.3.1">
+<h4><span class="header-section-number">4.3.3.1</span> 命令格式<a href="dml-data-manipulation-language.html#命令格式-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb22-1"><a href="dml-data-manipulation-language.html#cb22-1" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> </span>
+<span id="cb22-2"><a href="dml-data-manipulation-language.html#cb22-2" tabindex="-1"></a>           [<span class="kw">partition</span> ( <span class="op">&lt;</span>pt_spec<span class="op">&gt;</span>[, <span class="op">&lt;</span>pt_spec<span class="op">&gt;....</span>] )] </span>
+<span id="cb22-3"><a href="dml-data-manipulation-language.html#cb22-3" tabindex="-1"></a>                     <span class="kw">CLEAR</span> <span class="kw">COLUMN</span> column1[, column2, column3, <span class="op">..</span>.]</span>
+<span id="cb22-4"><a href="dml-data-manipulation-language.html#cb22-4" tabindex="-1"></a>                                     [<span class="kw">without</span> touch];</span></code></pre></div>
+<ul>
+<li><code>table_name</code>：将要执行清空列数据的表名称。</li>
+<li><code>column1 , column2 ...</code>：将要被清空数据的列名称。</li>
+<li><code>partition</code>：指定分区，若未指定，则表示操作所有分区。</li>
+<li><code>pt_spec</code>：分区描述，格式为<code>(partition_col1 = partition_col_value1, partition_col2 = partition_col_value2, ...)</code>.</li>
+<li><code>without touch</code>：表示不更新<code>LastDataModifiedTime</code>，若未指定，则会更新<code>LastDataModifiedTime</code>。</li>
+</ul>
+</div>
+</div>
+<div id="更新数据update" class="section level3 hasAnchor" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> 更新数据（UPDATE）<a href="dml-data-manipulation-language.html#更新数据update" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>update</code> 操作用于将Transactional分区表或非分区表中行对应的单列或多列数据更新为新值。</p>
+<div id="命令格式-2" class="section level4 hasAnchor" number="4.3.4.1">
+<h4><span class="header-section-number">4.3.4.1</span> 命令格式<a href="dml-data-manipulation-language.html#命令格式-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb23-1"><a href="dml-data-manipulation-language.html#cb23-1" tabindex="-1"></a><span class="co">-- 方式1</span></span>
+<span id="cb23-2"><a href="dml-data-manipulation-language.html#cb23-2" tabindex="-1"></a><span class="kw">update</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> <span class="kw">set</span> <span class="op">&lt;</span>col1_name<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>value1<span class="op">&gt;</span> [, <span class="op">&lt;</span>col2_name<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>value2<span class="op">&gt;</span> <span class="op">..</span>.] [<span class="kw">WHERE</span> <span class="op">&lt;</span>where_condition<span class="op">&gt;</span>];</span>
+<span id="cb23-3"><a href="dml-data-manipulation-language.html#cb23-3" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="dml-data-manipulation-language.html#cb23-4" tabindex="-1"></a><span class="co">-- 方式2</span></span>
+<span id="cb23-5"><a href="dml-data-manipulation-language.html#cb23-5" tabindex="-1"></a><span class="kw">update</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> <span class="kw">set</span> (<span class="op">&lt;</span>col1_name<span class="op">&gt;</span> [, <span class="op">&lt;</span>col2_name<span class="op">&gt;</span> <span class="op">..</span>.]) <span class="op">=</span> (<span class="op">&lt;</span>value1<span class="op">&gt;</span> [, <span class="op">&lt;</span>value2<span class="op">&gt;</span> <span class="op">..</span>.])[<span class="kw">WHERE</span> <span class="op">&lt;</span>where_condition<span class="op">&gt;</span>];</span>
+<span id="cb23-6"><a href="dml-data-manipulation-language.html#cb23-6" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="dml-data-manipulation-language.html#cb23-7" tabindex="-1"></a><span class="co">-- 方式3</span></span>
+<span id="cb23-8"><a href="dml-data-manipulation-language.html#cb23-8" tabindex="-1"></a><span class="kw">UPDATE</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span></span>
+<span id="cb23-9"><a href="dml-data-manipulation-language.html#cb23-9" tabindex="-1"></a>       <span class="kw">SET</span> <span class="op">&lt;</span>col1_name<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>value1<span class="op">&gt;</span> [ , <span class="op">&lt;</span>col2_name<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>value2<span class="op">&gt;</span> , <span class="op">..</span>. ]</span>
+<span id="cb23-10"><a href="dml-data-manipulation-language.html#cb23-10" tabindex="-1"></a>        [ <span class="kw">FROM</span> <span class="op">&lt;</span>additional_tables<span class="op">&gt;</span> ]</span>
+<span id="cb23-11"><a href="dml-data-manipulation-language.html#cb23-11" tabindex="-1"></a>        [ <span class="kw">WHERE</span> <span class="op">&lt;</span>where_condition<span class="op">&gt;</span> ]</span></code></pre></div>
+<ul>
+<li><code>table_name</code>：待执行update操作的Transactional表名称。</li>
+<li><code>col1_name</code>、<code>col2_name</code>：待修改行对应的列名称。</li>
+<li><code>value1</code>、<code>value2</code>：修改后的新值。</li>
+<li><code>where_condition</code>：可选。WHERE子句，用于筛选满足条件的数据。如果不带WHERE子句，会更新表中的所有数据。</li>
+<li><code>additional_tables</code>：可选，from子句。</li>
+</ul>
+</div>
+<div id="使用示例-3" class="section level4 hasAnchor" number="4.3.4.2">
+<h4><span class="header-section-number">4.3.4.2</span> 使用示例<a href="dml-data-manipulation-language.html#使用示例-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>示例1：</strong> 更新非分区表中满足指定条件的行对应的列数据。</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="dml-data-manipulation-language.html#cb24-1" tabindex="-1"></a><span class="co">-- 创建Transactional表acid_update。</span></span>
+<span id="cb24-2"><a href="dml-data-manipulation-language.html#cb24-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> acid_update(<span class="kw">id</span> bigint) tblproperties (<span class="ot">&quot;transactional&quot;</span><span class="op">=</span><span class="ot">&quot;true&quot;</span>);</span>
+<span id="cb24-3"><a href="dml-data-manipulation-language.html#cb24-3" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="dml-data-manipulation-language.html#cb24-4" tabindex="-1"></a><span class="co">-- 插入数据。</span></span>
+<span id="cb24-5"><a href="dml-data-manipulation-language.html#cb24-5" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_update <span class="kw">values</span>(<span class="dv">1</span>),(<span class="dv">2</span>),(<span class="dv">3</span>),(<span class="dv">2</span>);</span>
+<span id="cb24-6"><a href="dml-data-manipulation-language.html#cb24-6" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="dml-data-manipulation-language.html#cb24-7" tabindex="-1"></a><span class="co">-- 查看插入结果。</span></span>
+<span id="cb24-8"><a href="dml-data-manipulation-language.html#cb24-8" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_update;</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb25-1"><a href="dml-data-manipulation-language.html#cb25-1" tabindex="-1"></a><span class="co">-- 将所有id为2的行，id值更新为4。</span></span>
+<span id="cb25-2"><a href="dml-data-manipulation-language.html#cb25-2" tabindex="-1"></a><span class="kw">update</span> acid_update <span class="kw">set</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">4</span> <span class="kw">where</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">2</span>; </span>
+<span id="cb25-3"><a href="dml-data-manipulation-language.html#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="dml-data-manipulation-language.html#cb25-4" tabindex="-1"></a><span class="co">-- 查看更新结果，2被更新为4。</span></span>
+<span id="cb25-5"><a href="dml-data-manipulation-language.html#cb25-5" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_update; </span></code></pre></div>
+<p><strong>示例2：</strong> 更新分区表中满足指定条件的行对应的列数据。</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="dml-data-manipulation-language.html#cb26-1" tabindex="-1"></a><span class="co">-- 创建Transactional表acid_update_pt。 </span></span>
+<span id="cb26-2"><a href="dml-data-manipulation-language.html#cb26-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> acid_update_pt(<span class="kw">id</span> bigint) partitioned <span class="kw">by</span>(ds string) tblproperties (<span class="ot">&quot;transactional&quot;</span><span class="op">=</span><span class="ot">&quot;true&quot;</span>);</span>
+<span id="cb26-3"><a href="dml-data-manipulation-language.html#cb26-3" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="dml-data-manipulation-language.html#cb26-4" tabindex="-1"></a><span class="co">-- 添加分区。</span></span>
+<span id="cb26-5"><a href="dml-data-manipulation-language.html#cb26-5" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> acid_update_pt <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (ds<span class="op">=</span> <span class="st">&#39;2019&#39;</span>);</span>
+<span id="cb26-6"><a href="dml-data-manipulation-language.html#cb26-6" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="dml-data-manipulation-language.html#cb26-7" tabindex="-1"></a><span class="co">-- 插入数据。</span></span>
+<span id="cb26-8"><a href="dml-data-manipulation-language.html#cb26-8" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_update_pt <span class="kw">partition</span> (ds<span class="op">=</span><span class="st">&#39;2019&#39;</span>) <span class="kw">values</span>(<span class="dv">1</span>),(<span class="dv">2</span>),(<span class="dv">3</span>);</span>
+<span id="cb26-9"><a href="dml-data-manipulation-language.html#cb26-9" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="dml-data-manipulation-language.html#cb26-10" tabindex="-1"></a><span class="co">-- 更新指定行的一列数据，将分区为2019的所有id=2的行，id值更新为4。</span></span>
+<span id="cb26-11"><a href="dml-data-manipulation-language.html#cb26-11" tabindex="-1"></a><span class="kw">update</span> acid_update_pt <span class="kw">set</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">4</span> <span class="kw">where</span> ds <span class="op">=</span> <span class="st">&#39;2019&#39;</span> <span class="kw">and</span> <span class="kw">id</span> <span class="op">=</span> <span class="dv">2</span>; </span>
+<span id="cb26-12"><a href="dml-data-manipulation-language.html#cb26-12" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="dml-data-manipulation-language.html#cb26-13" tabindex="-1"></a><span class="co">-- 查看更新结果，2被更新为4。</span></span>
+<span id="cb26-14"><a href="dml-data-manipulation-language.html#cb26-14" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> acid_update_pt <span class="kw">where</span> ds <span class="op">=</span> <span class="st">&#39;2019&#39;</span>;</span></code></pre></div>
+<p><strong>示例3：</strong> 更新目标表和关联表中的数据。</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb27-1"><a href="dml-data-manipulation-language.html#cb27-1" tabindex="-1"></a><span class="co">-- 创建待更新目标Transactional表acid_update_t和关联表acid_update_s。</span></span>
+<span id="cb27-2"><a href="dml-data-manipulation-language.html#cb27-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> acid_update_t(<span class="kw">id</span> <span class="dt">int</span>,value1 <span class="dt">int</span>,value2 <span class="dt">int</span>) tblproperties (<span class="ot">&quot;transactional&quot;</span><span class="op">=</span><span class="ot">&quot;true&quot;</span>);</span>
+<span id="cb27-3"><a href="dml-data-manipulation-language.html#cb27-3" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> acid_update_s(<span class="kw">id</span> <span class="dt">int</span>,value1 <span class="dt">int</span>,value2 <span class="dt">int</span>);</span>
+<span id="cb27-4"><a href="dml-data-manipulation-language.html#cb27-4" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="dml-data-manipulation-language.html#cb27-5" tabindex="-1"></a><span class="co">-- 插入数据。</span></span>
+<span id="cb27-6"><a href="dml-data-manipulation-language.html#cb27-6" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_update_t <span class="kw">values</span>(<span class="dv">2</span>,<span class="dv">20</span>,<span class="dv">21</span>),(<span class="dv">3</span>,<span class="dv">30</span>,<span class="dv">31</span>),(<span class="dv">4</span>,<span class="dv">40</span>,<span class="dv">41</span>);</span>
+<span id="cb27-7"><a href="dml-data-manipulation-language.html#cb27-7" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> acid_update_s <span class="kw">values</span>(<span class="dv">1</span>,<span class="dv">100</span>,<span class="dv">101</span>),(<span class="dv">2</span>,<span class="dv">200</span>,<span class="dv">201</span>),(<span class="dv">3</span>,<span class="dv">300</span>,<span class="dv">301</span>);</span>
+<span id="cb27-8"><a href="dml-data-manipulation-language.html#cb27-8" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="dml-data-manipulation-language.html#cb27-9" tabindex="-1"></a><span class="co">-- 方式一：用常量更新。</span></span>
+<span id="cb27-10"><a href="dml-data-manipulation-language.html#cb27-10" tabindex="-1"></a><span class="kw">update</span> acid_update_t <span class="kw">set</span> (value1, value2) <span class="op">=</span> (<span class="dv">60</span>,<span class="dv">61</span>);</span>
+<span id="cb27-11"><a href="dml-data-manipulation-language.html#cb27-11" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="dml-data-manipulation-language.html#cb27-12" tabindex="-1"></a><span class="co">-- 方式二：关联更新，规则为acid_update_t表左关联acid_update_s表。</span></span>
+<span id="cb27-13"><a href="dml-data-manipulation-language.html#cb27-13" tabindex="-1"></a><span class="kw">update</span> acid_update_t <span class="kw">set</span> (value1, value2) <span class="op">=</span> (<span class="kw">select</span> value1, value2 <span class="kw">from</span> acid_update_s <span class="kw">where</span> acid_update_t.<span class="kw">id</span> <span class="op">=</span> acid_update_s.<span class="kw">id</span>);</span>
+<span id="cb27-14"><a href="dml-data-manipulation-language.html#cb27-14" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="dml-data-manipulation-language.html#cb27-15" tabindex="-1"></a><span class="co">-- 方式三：关联更新，规则为增加过滤条件，只更新交集。</span></span>
+<span id="cb27-16"><a href="dml-data-manipulation-language.html#cb27-16" tabindex="-1"></a><span class="kw">update</span> acid_update_t <span class="kw">set</span> (value1, value2) <span class="op">=</span> (<span class="kw">select</span> value1, value2 <span class="kw">from</span> acid_update_s <span class="kw">where</span> acid_update_t.<span class="kw">id</span> <span class="op">=</span> acid_update_s.<span class="kw">id</span>) <span class="kw">where</span> acid_update_t.<span class="kw">id</span> <span class="kw">in</span> (<span class="kw">select</span> <span class="kw">id</span> <span class="kw">from</span> acid_update_s);</span>
+<span id="cb27-17"><a href="dml-data-manipulation-language.html#cb27-17" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="dml-data-manipulation-language.html#cb27-18" tabindex="-1"></a><span class="co">-- 方式四：用汇总结果关联更新。</span></span>
+<span id="cb27-19"><a href="dml-data-manipulation-language.html#cb27-19" tabindex="-1"></a><span class="kw">update</span> acid_update_t <span class="kw">set</span> (<span class="kw">id</span>, value1, value2) <span class="op">=</span> (<span class="kw">select</span> <span class="kw">id</span>, <span class="fu">max</span>(value1),<span class="fu">max</span>(value2) <span class="kw">from</span> acid_update_s <span class="kw">where</span> acid_update_t.<span class="kw">id</span> <span class="op">=</span> acid_update_s.<span class="kw">id</span> <span class="kw">group</span> <span class="kw">by</span> acid_update_s.<span class="kw">id</span>) <span class="kw">where</span> acid_update_t.<span class="kw">id</span> <span class="kw">in</span> (<span class="kw">select</span> <span class="kw">id</span> <span class="kw">from</span> acid_update_s);</span></code></pre></div>
+<p>这些示例覆盖了常见的更新操作，包括基本的更新、分区表的更新以及关联更新等。</p>
+</div>
+</div>
+</div>
+<div id="merge-into" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> MERGE INTO<a href="dml-data-manipulation-language.html#merge-into" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>需要对Transactional表执行insert、update、delete操作时，可以通过merge into功能将这些操作合并为一条SQL语句，根据与源表关联的结果，对目标Transactional表执行插入、更新或删除操作，只需要进行一次全表扫描操作，以提高执行效率。</p>
+<p>merge into操作用于将源表的数据合并到目标表中，可以实现对目标表中已存在的数据进行更新，以及将源表中不存在于目标表中的数据插入到目标表中。以下是merge into命令的格式和示例用法：</p>
+<div id="命令格式-3" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> 命令格式<a href="dml-data-manipulation-language.html#命令格式-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="dml-data-manipulation-language.html#cb28-1" tabindex="-1"></a><span class="kw">merge</span> <span class="kw">into</span> <span class="op">&lt;</span>target_table<span class="op">&gt;</span> <span class="kw">as</span> <span class="op">&lt;</span>alias_name_t<span class="op">&gt;</span> <span class="kw">using</span> <span class="op">&lt;</span><span class="kw">source</span> expression|table_name<span class="op">&gt;</span> <span class="kw">as</span> <span class="op">&lt;</span>alias_name_s<span class="op">&gt;</span></span>
+<span id="cb28-2"><a href="dml-data-manipulation-language.html#cb28-2" tabindex="-1"></a><span class="kw">on</span> <span class="op">&lt;</span><span class="dt">boolean</span> expression1<span class="op">&gt;</span></span>
+<span id="cb28-3"><a href="dml-data-manipulation-language.html#cb28-3" tabindex="-1"></a><span class="cf">when</span> matched [<span class="kw">and</span> <span class="op">&lt;</span><span class="dt">boolean</span> expression2<span class="op">&gt;</span>] <span class="cf">then</span> <span class="kw">update</span> <span class="kw">set</span> <span class="op">&lt;</span>set_clause_list<span class="op">&gt;</span></span>
+<span id="cb28-4"><a href="dml-data-manipulation-language.html#cb28-4" tabindex="-1"></a><span class="cf">when</span> matched [<span class="kw">and</span> <span class="op">&lt;</span><span class="dt">boolean</span> expression3<span class="op">&gt;</span>] <span class="cf">then</span> <span class="kw">delete</span> </span>
+<span id="cb28-5"><a href="dml-data-manipulation-language.html#cb28-5" tabindex="-1"></a><span class="cf">when</span> <span class="kw">not</span> matched [<span class="kw">and</span> <span class="op">&lt;</span><span class="dt">boolean</span> expression4<span class="op">&gt;</span>] <span class="cf">then</span> <span class="kw">insert</span> <span class="kw">values</span> <span class="op">&lt;</span>value_list<span class="op">&gt;</span></span></code></pre></div>
+<ul>
+<li><code>&lt;target_table&gt;</code>: 目标表的名称，必须是实际存在的表。</li>
+<li><code>&lt;alias_name_t&gt;</code>: 目标表的别名。</li>
+<li><code>&lt;source expression|table_name&gt;</code>: 关联的源表名称、视图或子查询。</li>
+<li><code>&lt;alias_name_s&gt;</code>: 关联的源表、视图或子查询的别名。</li>
+<li><code>&lt;boolean expression1&gt;</code>: BOOLEAN类型的判断条件，用于判断是否存在匹配的行。</li>
+<li><code>&lt;boolean expression2&gt;</code>, <code>&lt;boolean expression3&gt;</code>, <code>&lt;boolean expression4&gt;</code>: 可选的条件，用于update、delete、insert操作的条件。</li>
+<li><code>&lt;set_clause_list&gt;</code>: update操作时，待更新的列及其对应的新值。</li>
+<li><code>&lt;value_list&gt;</code>: insert操作时，待插入数据的值。</li>
+</ul>
+</div>
+<div id="使用示例-4" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> 使用示例<a href="dml-data-manipulation-language.html#使用示例-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="示例1基本用法" class="section level4 hasAnchor" number="4.4.2.1">
+<h4><span class="header-section-number">4.4.2.1</span> 示例1：基本用法<a href="dml-data-manipulation-language.html#示例1基本用法" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb29-1"><a href="dml-data-manipulation-language.html#cb29-1" tabindex="-1"></a><span class="kw">merge</span> <span class="kw">into</span> target_table <span class="kw">as</span> t <span class="kw">using</span> source_table <span class="kw">as</span> s</span>
+<span id="cb29-2"><a href="dml-data-manipulation-language.html#cb29-2" tabindex="-1"></a><span class="kw">on</span> t.<span class="kw">id</span> <span class="op">=</span> s.<span class="kw">id</span></span>
+<span id="cb29-3"><a href="dml-data-manipulation-language.html#cb29-3" tabindex="-1"></a><span class="cf">when</span> matched <span class="cf">then</span> <span class="kw">update</span> <span class="kw">set</span> t.name <span class="op">=</span> s.name</span>
+<span id="cb29-4"><a href="dml-data-manipulation-language.html#cb29-4" tabindex="-1"></a><span class="cf">when</span> <span class="kw">not</span> matched <span class="cf">then</span> <span class="kw">insert</span> <span class="kw">values</span> (s.<span class="kw">id</span>, s.name);</span></code></pre></div>
+</div>
+<div id="示例2指定分区更新或插入" class="section level4 hasAnchor" number="4.4.2.2">
+<h4><span class="header-section-number">4.4.2.2</span> 示例2：指定分区更新或插入<a href="dml-data-manipulation-language.html#示例2指定分区更新或插入" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb30"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb30-1"><a href="dml-data-manipulation-language.html#cb30-1" tabindex="-1"></a><span class="kw">merge</span> <span class="kw">into</span> merge_acid_sp tar <span class="kw">using</span> merge_acid_source src</span>
+<span id="cb30-2"><a href="dml-data-manipulation-language.html#cb30-2" tabindex="-1"></a><span class="kw">on</span> tar.c2 <span class="op">=</span> src.c2 <span class="kw">and</span> tar.dd <span class="op">=</span> <span class="st">&#39;01&#39;</span> <span class="kw">and</span> tar.hh <span class="op">=</span> <span class="st">&#39;01&#39;</span></span>
+<span id="cb30-3"><a href="dml-data-manipulation-language.html#cb30-3" tabindex="-1"></a><span class="cf">when</span> matched <span class="cf">then</span> <span class="kw">update</span> <span class="kw">set</span> tar.c1 <span class="op">=</span> src.c1</span>
+<span id="cb30-4"><a href="dml-data-manipulation-language.html#cb30-4" tabindex="-1"></a><span class="cf">when</span> <span class="kw">not</span> matched <span class="cf">then</span> <span class="kw">insert</span> <span class="kw">values</span>(src.c1, src.c2, src.c3, src.c4);</span></code></pre></div>
+</div>
+<div id="示例3更新和删除操作" class="section level4 hasAnchor" number="4.4.2.3">
+<h4><span class="header-section-number">4.4.2.3</span> 示例3：更新和删除操作<a href="dml-data-manipulation-language.html#示例3更新和删除操作" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb31"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb31-1"><a href="dml-data-manipulation-language.html#cb31-1" tabindex="-1"></a><span class="kw">merge</span> <span class="kw">into</span> target_table <span class="kw">as</span> t <span class="kw">using</span> source_table <span class="kw">as</span> s</span>
+<span id="cb31-2"><a href="dml-data-manipulation-language.html#cb31-2" tabindex="-1"></a><span class="kw">on</span> t.<span class="kw">id</span> <span class="op">=</span> s.<span class="kw">id</span></span>
+<span id="cb31-3"><a href="dml-data-manipulation-language.html#cb31-3" tabindex="-1"></a><span class="cf">when</span> matched <span class="kw">and</span> s.status <span class="op">=</span> <span class="st">&#39;inactive&#39;</span> <span class="cf">then</span> <span class="kw">delete</span></span>
+<span id="cb31-4"><a href="dml-data-manipulation-language.html#cb31-4" tabindex="-1"></a><span class="cf">when</span> matched <span class="kw">and</span> t.name <span class="op">!=</span> s.name <span class="cf">then</span> <span class="kw">update</span> <span class="kw">set</span> t.name <span class="op">=</span> s.name;</span></code></pre></div>
+<p>这些示例展示了如何使用merge into命令进行更新、插入和删除操作，以及如何根据特定条件进行操作。</p>
+</div>
+</div>
+</div>
+<div id="多路输出multi-insert" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> 多路输出（MULTI INSERT）<a href="dml-data-manipulation-language.html#多路输出multi-insert" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>下面是示例1中命令的解释和用法说明：</p>
+<div id="命令解释" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> 命令解释<a href="dml-data-manipulation-language.html#命令解释" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb32-1"><a href="dml-data-manipulation-language.html#cb32-1" tabindex="-1"></a><span class="kw">from</span> sale_detail</span>
+<span id="cb32-2"><a href="dml-data-manipulation-language.html#cb32-2" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> sale_detail_multi <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;2010&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span> )</span>
+<span id="cb32-3"><a href="dml-data-manipulation-language.html#cb32-3" tabindex="-1"></a><span class="kw">select</span> shop_name, customer_id, total_price</span>
+<span id="cb32-4"><a href="dml-data-manipulation-language.html#cb32-4" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> sale_detail_multi <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;2011&#39;</span>, region<span class="op">=</span><span class="st">&#39;china&#39;</span> )</span>
+<span id="cb32-5"><a href="dml-data-manipulation-language.html#cb32-5" tabindex="-1"></a><span class="kw">select</span> shop_name, customer_id, total_price;</span></code></pre></div>
+</div>
+<div id="用法说明" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> 用法说明<a href="dml-data-manipulation-language.html#用法说明" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><code>from sale_detail</code>: 指定数据来源为表 <code>sale_detail</code>。</li>
+<li><code>insert overwrite table sale_detail_multi partition (sale_date='2010', region='china')</code>: 将查询结果插入到目标表 <code>sale_detail_multi</code> 的分区 <code>(sale_date='2010', region='china')</code> 中，并且使用 <code>overwrite</code> 模式，即覆盖已存在的数据。</li>
+</ul>
+</div>
+</div>
+<div id="values" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> VALUES<a href="dml-data-manipulation-language.html#values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>关于在MaxCompute中使用 <code>insert … values</code> 或 <code>values table</code> 操作向表中插入少量数据的详细说明。以下是对示例中命令的解释和用法说明：</p>
+<div id="示例1通过-insert-values-操作向特定分区内插入数据" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> 示例1：通过 <code>insert … values</code> 操作向特定分区内插入数据<a href="dml-data-manipulation-language.html#示例1通过-insert-values-操作向特定分区内插入数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb33"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb33-1"><a href="dml-data-manipulation-language.html#cb33-1" tabindex="-1"></a><span class="co">--创建分区表srcp。</span></span>
+<span id="cb33-2"><a href="dml-data-manipulation-language.html#cb33-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> srcp (<span class="kw">key</span> string,<span class="fu">value</span> bigint) partitioned <span class="kw">by</span> (p string);</span>
+<span id="cb33-3"><a href="dml-data-manipulation-language.html#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="dml-data-manipulation-language.html#cb33-4" tabindex="-1"></a><span class="co">--向分区表srcp添加分区。</span></span>
+<span id="cb33-5"><a href="dml-data-manipulation-language.html#cb33-5" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> srcp <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (p<span class="op">=</span><span class="st">&#39;abc&#39;</span>);</span>
+<span id="cb33-6"><a href="dml-data-manipulation-language.html#cb33-6" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="dml-data-manipulation-language.html#cb33-7" tabindex="-1"></a><span class="co">--向表srcp的指定分区abc中插入数据。</span></span>
+<span id="cb33-8"><a href="dml-data-manipulation-language.html#cb33-8" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> <span class="kw">table</span> srcp <span class="kw">partition</span> (p<span class="op">=</span><span class="st">&#39;abc&#39;</span>) <span class="kw">values</span> (<span class="st">&#39;a&#39;</span>,<span class="dv">1</span>),(<span class="st">&#39;b&#39;</span>,<span class="dv">2</span>),(<span class="st">&#39;c&#39;</span>,<span class="dv">3</span>);</span>
+<span id="cb33-9"><a href="dml-data-manipulation-language.html#cb33-9" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="dml-data-manipulation-language.html#cb33-10" tabindex="-1"></a><span class="co">--查询表srcp。</span></span>
+<span id="cb33-11"><a href="dml-data-manipulation-language.html#cb33-11" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> srcp <span class="kw">where</span> p<span class="op">=</span><span class="st">&#39;abc&#39;</span>;</span></code></pre></div>
+<p><strong>说明</strong>：
+- 首先创建了分区表 <code>srcp</code>，并且添加了分区 <code>p='abc'</code>。
+- 使用 <code>insert into table</code> 语句将数据插入到指定分区中。</p>
+</div>
+<div id="示例2通过-insert-values-操作向非特定分区内插入数据" class="section level3 hasAnchor" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> 示例2：通过 <code>insert … values</code> 操作向非特定分区内插入数据<a href="dml-data-manipulation-language.html#示例2通过-insert-values-操作向非特定分区内插入数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb34-1"><a href="dml-data-manipulation-language.html#cb34-1" tabindex="-1"></a><span class="co">--创建分区表srcp。</span></span>
+<span id="cb34-2"><a href="dml-data-manipulation-language.html#cb34-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> srcp (<span class="kw">key</span> string,<span class="fu">value</span> bigint) partitioned <span class="kw">by</span> (p string);</span>
+<span id="cb34-3"><a href="dml-data-manipulation-language.html#cb34-3" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="dml-data-manipulation-language.html#cb34-4" tabindex="-1"></a><span class="co">--向表srcp中插入数据，不指定分区。</span></span>
+<span id="cb34-5"><a href="dml-data-manipulation-language.html#cb34-5" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> <span class="kw">table</span> srcp <span class="kw">partition</span> (p)(<span class="kw">key</span>,p) <span class="kw">values</span> (<span class="st">&#39;d&#39;</span>,<span class="st">&#39;20170101&#39;</span>),(<span class="st">&#39;e&#39;</span>,<span class="st">&#39;20170101&#39;</span>),(<span class="st">&#39;f&#39;</span>,<span class="st">&#39;20170101&#39;</span>);</span>
+<span id="cb34-6"><a href="dml-data-manipulation-language.html#cb34-6" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="dml-data-manipulation-language.html#cb34-7" tabindex="-1"></a><span class="co">--查询表srcp。</span></span>
+<span id="cb34-8"><a href="dml-data-manipulation-language.html#cb34-8" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> srcp <span class="kw">where</span> p<span class="op">=</span><span class="st">&#39;20170101&#39;</span>;</span></code></pre></div>
+<p><strong>说明</strong>：
+- 创建了分区表 <code>srcp</code>。
+- 插入数据时未指定分区，数据会被插入到分区列的所有分区中。</p>
+</div>
+<div id="示例3使用复杂数据类型构造常量通过-insert-操作导入数据" class="section level3 hasAnchor" number="4.6.3">
+<h3><span class="header-section-number">4.6.3</span> 示例3：使用复杂数据类型构造常量，通过 <code>insert</code> 操作导入数据<a href="dml-data-manipulation-language.html#示例3使用复杂数据类型构造常量通过-insert-操作导入数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb35-1"><a href="dml-data-manipulation-language.html#cb35-1" tabindex="-1"></a><span class="co">--创建分区表srcp。</span></span>
+<span id="cb35-2"><a href="dml-data-manipulation-language.html#cb35-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> srcp (<span class="kw">key</span> string,<span class="fu">value</span> <span class="dt">array</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span>) partitioned <span class="kw">by</span> (p string);</span>
+<span id="cb35-3"><a href="dml-data-manipulation-language.html#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="dml-data-manipulation-language.html#cb35-4" tabindex="-1"></a><span class="co">--向分区表srcp添加分区。</span></span>
+<span id="cb35-5"><a href="dml-data-manipulation-language.html#cb35-5" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> srcp <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (p<span class="op">=</span><span class="st">&#39;abc&#39;</span>);</span>
+<span id="cb35-6"><a href="dml-data-manipulation-language.html#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="dml-data-manipulation-language.html#cb35-7" tabindex="-1"></a><span class="co">--向表srcp的指定分区abc中插入数据。</span></span>
+<span id="cb35-8"><a href="dml-data-manipulation-language.html#cb35-8" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> <span class="kw">table</span> srcp <span class="kw">partition</span> (p<span class="op">=</span><span class="st">&#39;abc&#39;</span>) <span class="kw">select</span> <span class="st">&#39;a&#39;</span>, <span class="dt">array</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>);</span>
+<span id="cb35-9"><a href="dml-data-manipulation-language.html#cb35-9" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="dml-data-manipulation-language.html#cb35-10" tabindex="-1"></a><span class="co">--查询表srcp。</span></span>
+<span id="cb35-11"><a href="dml-data-manipulation-language.html#cb35-11" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> srcp <span class="kw">where</span> p<span class="op">=</span><span class="st">&#39;abc&#39;</span>;</span></code></pre></div>
+<p><strong>说明</strong>：
+- 使用了 <code>array()</code> 函数构造了数组类型的常量，插入到了表 <code>srcp</code> 的分区 <code>p='abc'</code> 中。</p>
+</div>
+<div id="示例4通过-insert-values-操作写入-datetime-或-timestamp-数据类型" class="section level3 hasAnchor" number="4.6.4">
+<h3><span class="header-section-number">4.6.4</span> 示例4：通过 <code>insert … values</code> 操作写入 DATETIME 或 TIMESTAMP 数据类型<a href="dml-data-manipulation-language.html#示例4通过-insert-values-操作写入-datetime-或-timestamp-数据类型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb36"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb36-1"><a href="dml-data-manipulation-language.html#cb36-1" tabindex="-1"></a><span class="co">--创建分区表srcp。</span></span>
+<span id="cb36-2"><a href="dml-data-manipulation-language.html#cb36-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> srcp (<span class="kw">key</span> string, <span class="fu">value</span> <span class="dt">timestamp</span>) partitioned <span class="kw">by</span> (p string);</span>
+<span id="cb36-3"><a href="dml-data-manipulation-language.html#cb36-3" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="dml-data-manipulation-language.html#cb36-4" tabindex="-1"></a><span class="co">--向分区表srcp添加分区。</span></span>
+<span id="cb36-5"><a href="dml-data-manipulation-language.html#cb36-5" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> srcp <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (p<span class="op">=</span><span class="st">&#39;abc&#39;</span>);</span>
+<span id="cb36-6"><a href="dml-data-manipulation-language.html#cb36-6" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="dml-data-manipulation-language.html#cb36-7" tabindex="-1"></a><span class="co">--向表srcp的指定分区abc中插入数据。</span></span>
+<span id="cb36-8"><a href="dml-data-manipulation-language.html#cb36-8" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> <span class="kw">table</span> srcp <span class="kw">partition</span> (p<span class="op">=</span><span class="st">&#39;abc&#39;</span>) <span class="kw">values</span> (datetime<span class="st">&#39;2017-11-11 00:00:00&#39;</span>,timestamp<span class="st">&#39;2017-11-11 00:00:00.123456789&#39;</span>);</span>
+<span id="cb36-9"><a href="dml-data-manipulation-language.html#cb36-9" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="dml-data-manipulation-language.html#cb36-10" tabindex="-1"></a><span class="co">--查询表srcp。</span></span>
+<span id="cb36-11"><a href="dml-data-manipulation-language.html#cb36-11" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> srcp <span class="kw">where</span> p<span class="op">=</span><span class="st">&#39;abc&#39;</span>;</span></code></pre></div>
+<p><strong>说明</strong>：
+- 在插入 DATETIME 和 TIMESTAMP 数据类型时，需要在 values 中指定类型名称。</p>
+</div>
+<div id="示例5通过-values-table-操作插入数据" class="section level3 hasAnchor" number="4.6.5">
+<h3><span class="header-section-number">4.6.5</span> 示例5：通过 <code>values table</code> 操作插入数据<a href="dml-data-manipulation-language.html#示例5通过-values-table-操作插入数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb37"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb37-1"><a href="dml-data-manipulation-language.html#cb37-1" tabindex="-1"></a><span class="co">--创建分区表srcp。</span></span>
+<span id="cb37-2"><a href="dml-data-manipulation-language.html#cb37-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> srcp (<span class="kw">key</span> string,<span class="fu">value</span> bigint) partitioned <span class="kw">by</span> (p string);</span>
+<span id="cb37-3"><a href="dml-data-manipulation-language.html#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="dml-data-manipulation-language.html#cb37-4" tabindex="-1"></a><span class="co">--向表srcp中插入数据。</span></span>
+<span id="cb37-5"><a href="dml-data-manipulation-language.html#cb37-5" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> <span class="kw">table</span> srcp <span class="kw">partition</span> (p) <span class="kw">select</span> <span class="fu">concat</span>(a,b), <span class="fu">length</span>(a)<span class="op">+</span><span class="fu">length</span>(b),<span class="st">&#39;20170102&#39;</span> <span class="kw">from</span> <span class="kw">values</span> (<span class="st">&#39;d&#39;</span>,<span class="dv">4</span>),(<span class="st">&#39;e&#39;</span>,<span class="dv">5</span>),(<span class="st">&#39;f&#39;</span>,<span class="dv">6</span>) t(a,b);</span>
+<span id="cb37-6"><a href="dml-data-manipulation-language.html#cb37-6" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="dml-data-manipulation-language.html#cb37-7" tabindex="-1"></a><span class="co">--查询表srcp。</span></span>
+<span id="cb37-8"><a href="dml-data-manipulation-language.html#cb37-8" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> srcp <span class="kw">where</span> p<span class="op">=</span><span class="st">&#39;20170102&#39;</span>;</span>
+<span id="cb37-9"><a href="dml-data-manipulation-language.html#cb37-9" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="dml-data-manipulation-language.html#cb37-10" tabindex="-1"></a><span class="co">--返回结果。</span></span>
+<span id="cb37-11"><a href="dml-data-manipulation-language.html#cb37-11" tabindex="-1"></a><span class="op">+</span><span class="co">------------+------------+------------+</span></span>
+<span id="cb37-12"><a href="dml-data-manipulation-language.html#cb37-12" tabindex="-1"></a>| <span class="kw">key</span>        | <span class="fu">value</span>      | p          |</span>
+<span id="cb37-13"><a href="dml-data-manipulation-language.html#cb37-13" tabindex="-1"></a><span class="op">+</span><span class="co">------------+------------+------------+</span></span>
+<span id="cb37-14"><a href="dml-data-manipulation-language.html#cb37-14" tabindex="-1"></a>| d4         | <span class="dv">2</span>          | <span class="dv">20170102</span>   |</span>
+<span id="cb37-15"><a href="dml-data-manipulation-language.html#cb37-15" tabindex="-1"></a>| e5         | <span class="dv">2</span>          | <span class="dv">20170102</span>   |</span>
+<span id="cb37-16"><a href="dml-data-manipulation-language.html#cb37-16" tabindex="-1"></a>| f6         | <span class="dv">2</span>          | <span class="dv">20170102</span>   |</span>
+<span id="cb37-17"><a href="dml-data-manipulation-language.html#cb37-17" tabindex="-1"></a><span class="op">+</span><span class="co">------------+------------+------------+</span></span></code></pre></div>
+<p><strong>说明</strong>：
+- 使用了 <code>values</code> 表示常量表，然后通过 <code>select</code> 语句选择需要插入的数据。
+- <code>select shop_name, customer_id, total_price</code>: 从源表 <code>sale_detail</code> 中选择需要插入的列。
+- 第二个 <code>insert</code> 语句与第一个类似，只是插入到了不同的分区 <code>(sale_date='2011', region='china')</code> 中。</p>
+<p>这个示例演示了如何从一个表中选择数据并插入到另一个表的不同分区中。在这种情况下，数据根据 <code>sale_date</code> 和 <code>region</code> 分别分区，并且使用 <code>overwrite</code> 模式进行覆盖插入。</p>
+</div>
+</div>
+<div id="load" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> LOAD<a href="dml-data-manipulation-language.html#load" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>如果需要将外部存储上的数据导入MaxCompute的表或表的分区中，可以通过LOAD命令实现该操作。以下是LOAD命令的介绍及使用示例。</p>
+<div id="功能介绍-1" class="section level3 hasAnchor" number="4.7.1">
+<h3><span class="header-section-number">4.7.1</span> 功能介绍<a href="dml-data-manipulation-language.html#功能介绍-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>MaxCompute支持使用load overwrite或load into命令将外部存储的CSV格式或其他开源格式数据导入MaxCompute的表或表的分区。其中：</p>
+<ul>
+<li>Amazon Redshift和BigQuery的数据需要先导入OSS，才可以通过OSS导入MaxCompute。</li>
+<li>MaxCompute支持将数据按照动态分区方式导入MaxCompute的分区表的分区。</li>
+<li>load into命令会直接向表或分区中追加数据。load overwrite命令会先清空表或分区中的原有数据，再向表或分区中插入数据。</li>
+</ul>
+</div>
+<div id="使用限制-1" class="section level3 hasAnchor" number="4.7.2">
+<h3><span class="header-section-number">4.7.2</span> 使用限制<a href="dml-data-manipulation-language.html#使用限制-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>当前只支持将外部存储的数据导入至同区域的MaxCompute项目空间中。</li>
+<li>通过OSS导入数据时，目标表的Schema（除分区列）需要和外部数据格式一致，且外部数据的Schema不包含分区列。</li>
+</ul>
+</div>
+<div id="前提条件-1" class="section level3 hasAnchor" number="4.7.3">
+<h3><span class="header-section-number">4.7.3</span> 前提条件<a href="dml-data-manipulation-language.html#前提条件-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>操作账号已具备MaxCompute的相关权限。</li>
+<li>执行load操作前，操作账号需要具备MaxCompute项目空间创建表权限（CreateTable）及修改表权限（Alter）。</li>
+<li>操作账号已具备外部存储数据对应数据源的相关权限。</li>
+</ul>
+</div>
+<div id="load命令示例" class="section level3 hasAnchor" number="4.7.4">
+<h3><span class="header-section-number">4.7.4</span> LOAD命令示例<a href="dml-data-manipulation-language.html#load命令示例" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>以下是通过内置Extractor（StorageHandler）导入数据的示例，假设要将外部存储中的vehicle.csv文件的数据导入MaxCompute中。</p>
+<ol style="list-style-type: decimal">
+<li>将vehicle.csv文件保存至OSS Bucket目录下，并组织OSS目录路径。</li>
+<li>创建MaxCompute目标表ambulance_data_csv_load。</li>
+<li>执行load overwrite命令，将OSS上的vehicle.csv文件导入目标表。</li>
+<li>查看目标表导入的数据结果。</li>
+</ol>
+<div class="sourceCode" id="cb38"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb38-1"><a href="dml-data-manipulation-language.html#cb38-1" tabindex="-1"></a><span class="kw">create</span> <span class="kw">table</span> ambulance_data_csv_load (</span>
+<span id="cb38-2"><a href="dml-data-manipulation-language.html#cb38-2" tabindex="-1"></a>    vehicleId <span class="dt">INT</span>,</span>
+<span id="cb38-3"><a href="dml-data-manipulation-language.html#cb38-3" tabindex="-1"></a>    recordId <span class="dt">INT</span>,</span>
+<span id="cb38-4"><a href="dml-data-manipulation-language.html#cb38-4" tabindex="-1"></a>    patientId <span class="dt">INT</span>,</span>
+<span id="cb38-5"><a href="dml-data-manipulation-language.html#cb38-5" tabindex="-1"></a>    calls <span class="dt">INT</span>,</span>
+<span id="cb38-6"><a href="dml-data-manipulation-language.html#cb38-6" tabindex="-1"></a>    locationLatitute <span class="dt">DOUBLE</span>,</span>
+<span id="cb38-7"><a href="dml-data-manipulation-language.html#cb38-7" tabindex="-1"></a>    locationLongtitue <span class="dt">DOUBLE</span>,</span>
+<span id="cb38-8"><a href="dml-data-manipulation-language.html#cb38-8" tabindex="-1"></a>    recordTime STRING,</span>
+<span id="cb38-9"><a href="dml-data-manipulation-language.html#cb38-9" tabindex="-1"></a>    direction STRING</span>
+<span id="cb38-10"><a href="dml-data-manipulation-language.html#cb38-10" tabindex="-1"></a>);</span>
+<span id="cb38-11"><a href="dml-data-manipulation-language.html#cb38-11" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="dml-data-manipulation-language.html#cb38-12" tabindex="-1"></a>load overwrite <span class="kw">table</span> ambulance_data_csv_load</span>
+<span id="cb38-13"><a href="dml-data-manipulation-language.html#cb38-13" tabindex="-1"></a><span class="kw">from</span></span>
+<span id="cb38-14"><a href="dml-data-manipulation-language.html#cb38-14" tabindex="-1"></a>location <span class="st">&#39;oss://oss-cn-hangzhou-internal.aliyuncs.com/mc-test/data_location/&#39;</span></span>
+<span id="cb38-15"><a href="dml-data-manipulation-language.html#cb38-15" tabindex="-1"></a>stored <span class="kw">by</span> <span class="st">&#39;com.aliyun.odps.CsvStorageHandler&#39;</span></span>
+<span id="cb38-16"><a href="dml-data-manipulation-language.html#cb38-16" tabindex="-1"></a><span class="kw">with</span> serdeproperties (</span>
+<span id="cb38-17"><a href="dml-data-manipulation-language.html#cb38-17" tabindex="-1"></a><span class="st">&#39;odps.properties.rolearn&#39;</span><span class="op">=</span><span class="st">&#39;acs:ram::xxxxx:role/aliyunodpsdefaultrole&#39;</span>,   <span class="co">--AliyunODPSDefaultRole的ARN信息，可通过RAM角色管理页面获取。</span></span>
+<span id="cb38-18"><a href="dml-data-manipulation-language.html#cb38-18" tabindex="-1"></a><span class="st">&#39;odps.text.option.delimiter&#39;</span><span class="op">=</span><span class="st">&#39;,&#39;</span></span>
+<span id="cb38-19"><a href="dml-data-manipulation-language.html#cb38-19" tabindex="-1"></a>);</span>
+<span id="cb38-20"><a href="dml-data-manipulation-language.html#cb38-20" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="dml-data-manipulation-language.html#cb38-21" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> ambulance_data_csv_load;</span></code></pre></div>
+<p>这样就成功将外部存储中的数据导入到了MaxCompute的表中。</p>
+</div>
+</div>
+<div id="cte公用表表达式介绍" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> CTE（公用表表达式）介绍<a href="dml-data-manipulation-language.html#cte公用表表达式介绍" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>CTE（Common Table Expression）是一个临时命名结果集，用于简化SQL语句。MaxCompute支持标准SQL的CTE，能够提高SQL语句的可读性和执行效率。以下是CTE的功能、命令格式及使用示例。</p>
+<div id="功能介绍-2" class="section level3 hasAnchor" number="4.8.1">
+<h3><span class="header-section-number">4.8.1</span> 功能介绍<a href="dml-data-manipulation-language.html#功能介绍-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>CTE类似于派生表，它在单个DML语句的执行范围内定义的临时结果集。</li>
+<li>CTE不作为对象存储，并且仅在查询期间持续。</li>
+<li>结合CTE，可以提高SQL语句的可读性，便于维护复杂查询。</li>
+</ul>
+</div>
+<div id="命令格式-4" class="section level3 hasAnchor" number="4.8.2">
+<h3><span class="header-section-number">4.8.2</span> 命令格式<a href="dml-data-manipulation-language.html#命令格式-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb39"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb39-1"><a href="dml-data-manipulation-language.html#cb39-1" tabindex="-1"></a><span class="kw">with</span> </span>
+<span id="cb39-2"><a href="dml-data-manipulation-language.html#cb39-2" tabindex="-1"></a>     <span class="op">&lt;</span>cte_name<span class="op">&gt;</span> <span class="kw">as</span></span>
+<span id="cb39-3"><a href="dml-data-manipulation-language.html#cb39-3" tabindex="-1"></a>    (</span>
+<span id="cb39-4"><a href="dml-data-manipulation-language.html#cb39-4" tabindex="-1"></a>        <span class="op">&lt;</span>cte_query<span class="op">&gt;</span></span>
+<span id="cb39-5"><a href="dml-data-manipulation-language.html#cb39-5" tabindex="-1"></a>    )</span>
+<span id="cb39-6"><a href="dml-data-manipulation-language.html#cb39-6" tabindex="-1"></a>    [,<span class="op">&lt;</span>cte_name2<span class="op">&gt;</span>  <span class="kw">as</span> </span>
+<span id="cb39-7"><a href="dml-data-manipulation-language.html#cb39-7" tabindex="-1"></a>     (</span>
+<span id="cb39-8"><a href="dml-data-manipulation-language.html#cb39-8" tabindex="-1"></a>     <span class="op">&lt;</span>cte_query2<span class="op">&gt;</span></span>
+<span id="cb39-9"><a href="dml-data-manipulation-language.html#cb39-9" tabindex="-1"></a>     )</span>
+<span id="cb39-10"><a href="dml-data-manipulation-language.html#cb39-10" tabindex="-1"></a>    ,……]</span></code></pre></div>
+<ul>
+<li><code>cte_name</code>：CTE的名称，不能与当前with子句中的其他CTE的名称相同。</li>
+<li><code>cte_query</code>：一个select语句，其结果集用于填充CTE。</li>
+</ul>
+</div>
+<div id="使用示例-5" class="section level3 hasAnchor" number="4.8.3">
+<h3><span class="header-section-number">4.8.3</span> 使用示例<a href="dml-data-manipulation-language.html#使用示例-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>假设有以下代码：</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb40-1"><a href="dml-data-manipulation-language.html#cb40-1" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> srcp <span class="kw">partition</span> (p<span class="op">=</span><span class="st">&#39;abc&#39;</span>)</span>
+<span id="cb40-2"><a href="dml-data-manipulation-language.html#cb40-2" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> (</span>
+<span id="cb40-3"><a href="dml-data-manipulation-language.html#cb40-3" tabindex="-1"></a>    <span class="kw">select</span> a.<span class="kw">key</span>, b.<span class="fu">value</span></span>
+<span id="cb40-4"><a href="dml-data-manipulation-language.html#cb40-4" tabindex="-1"></a>    <span class="kw">from</span> (</span>
+<span id="cb40-5"><a href="dml-data-manipulation-language.html#cb40-5" tabindex="-1"></a>        <span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> src <span class="kw">where</span> <span class="kw">key</span> <span class="kw">is</span> <span class="kw">not</span> <span class="kw">null</span>    ) a</span>
+<span id="cb40-6"><a href="dml-data-manipulation-language.html#cb40-6" tabindex="-1"></a>    <span class="kw">join</span> (</span>
+<span id="cb40-7"><a href="dml-data-manipulation-language.html#cb40-7" tabindex="-1"></a>        <span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> src2 <span class="kw">where</span> <span class="fu">value</span> <span class="op">&gt;</span> <span class="dv">0</span>    ) b</span>
+<span id="cb40-8"><a href="dml-data-manipulation-language.html#cb40-8" tabindex="-1"></a>    <span class="kw">on</span> a.<span class="kw">key</span> <span class="op">=</span> b.<span class="kw">key</span></span>
+<span id="cb40-9"><a href="dml-data-manipulation-language.html#cb40-9" tabindex="-1"></a>) c</span>
+<span id="cb40-10"><a href="dml-data-manipulation-language.html#cb40-10" tabindex="-1"></a><span class="kw">union</span> <span class="kw">all</span></span>
+<span id="cb40-11"><a href="dml-data-manipulation-language.html#cb40-11" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> (</span>
+<span id="cb40-12"><a href="dml-data-manipulation-language.html#cb40-12" tabindex="-1"></a>    <span class="kw">select</span> a.<span class="kw">key</span>, b.<span class="fu">value</span></span>
+<span id="cb40-13"><a href="dml-data-manipulation-language.html#cb40-13" tabindex="-1"></a>    <span class="kw">from</span> (</span>
+<span id="cb40-14"><a href="dml-data-manipulation-language.html#cb40-14" tabindex="-1"></a>        <span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> src <span class="kw">where</span> <span class="kw">key</span> <span class="kw">is</span> <span class="kw">not</span> <span class="kw">null</span>    ) a</span>
+<span id="cb40-15"><a href="dml-data-manipulation-language.html#cb40-15" tabindex="-1"></a>    <span class="kw">left</span> <span class="kw">outer</span> <span class="kw">join</span> (</span>
+<span id="cb40-16"><a href="dml-data-manipulation-language.html#cb40-16" tabindex="-1"></a>        <span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> src3 <span class="kw">where</span> <span class="fu">value</span> <span class="op">&gt;</span> <span class="dv">0</span>    ) b</span>
+<span id="cb40-17"><a href="dml-data-manipulation-language.html#cb40-17" tabindex="-1"></a>    <span class="kw">on</span> a.<span class="kw">key</span> <span class="op">=</span> b.<span class="kw">key</span> <span class="kw">and</span> b.<span class="kw">key</span> <span class="kw">is</span> <span class="kw">not</span> <span class="kw">null</span></span>
+<span id="cb40-18"><a href="dml-data-manipulation-language.html#cb40-18" tabindex="-1"></a>)d;</span></code></pre></div>
+<p>重写以上语句，使用CTE的方式，命令如下：</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb41-1"><a href="dml-data-manipulation-language.html#cb41-1" tabindex="-1"></a><span class="kw">with</span> </span>
+<span id="cb41-2"><a href="dml-data-manipulation-language.html#cb41-2" tabindex="-1"></a>  a <span class="kw">as</span> (<span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> src <span class="kw">where</span> <span class="kw">key</span> <span class="kw">is</span> <span class="kw">not</span> <span class="kw">null</span>),</span>
+<span id="cb41-3"><a href="dml-data-manipulation-language.html#cb41-3" tabindex="-1"></a>  b <span class="kw">as</span> (<span class="kw">select</span>  <span class="op">*</span> <span class="kw">from</span> src2 <span class="kw">where</span> <span class="fu">value</span> <span class="op">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb41-4"><a href="dml-data-manipulation-language.html#cb41-4" tabindex="-1"></a>  c <span class="kw">as</span> (<span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> src3 <span class="kw">where</span> <span class="fu">value</span> <span class="op">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb41-5"><a href="dml-data-manipulation-language.html#cb41-5" tabindex="-1"></a>  d <span class="kw">as</span> (<span class="kw">select</span> a.<span class="kw">key</span>, b.<span class="fu">value</span> <span class="kw">from</span> a <span class="kw">join</span> b <span class="kw">on</span> a.<span class="kw">key</span><span class="op">=</span>b.<span class="kw">key</span>),</span>
+<span id="cb41-6"><a href="dml-data-manipulation-language.html#cb41-6" tabindex="-1"></a>  e <span class="kw">as</span> (<span class="kw">select</span> a.<span class="kw">key</span>,c.<span class="fu">value</span> <span class="kw">from</span> a <span class="kw">left</span> <span class="kw">outer</span> <span class="kw">join</span> c <span class="kw">on</span> a.<span class="kw">key</span><span class="op">=</span>c.<span class="kw">key</span> <span class="kw">and</span> c.<span class="kw">key</span> <span class="kw">is</span> <span class="kw">not</span> <span class="kw">null</span>)</span>
+<span id="cb41-7"><a href="dml-data-manipulation-language.html#cb41-7" tabindex="-1"></a><span class="kw">insert</span> overwrite <span class="kw">table</span> srcp <span class="kw">partition</span> (p<span class="op">=</span><span class="st">&#39;abc&#39;</span>)</span>
+<span id="cb41-8"><a href="dml-data-manipulation-language.html#cb41-8" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> d <span class="kw">union</span> <span class="kw">all</span> <span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> e;</span></code></pre></div>
+<p>重写后，可以看到对应的子查询只需写一次，便可在后面进行重用，提高了代码的可维护性和可读性。</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ddl-data-definition-language.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dql操作select.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-parts.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

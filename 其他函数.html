@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 其他函数 | ODPS SQL</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 其他函数 | ODPS SQL" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 其他函数 | ODPS SQL" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="米霖" />
+
+
+<meta name="date" content="2024-01-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="数学函数.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ODPS SQL</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#odps-sql-的特点"><i class="fa fa-check"></i><b>1.1</b> ODPS SQL 的特点</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#应用场景"><i class="fa fa-check"></i><b>1.2</b> 应用场景</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#odps-sql-与其他-sql-的比较"><i class="fa fa-check"></i><b>1.3</b> ODPS SQL 与其他 SQL 的比较</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="基本语法.html"><a href="基本语法.html"><i class="fa fa-check"></i><b>2</b> 基本语法</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="基本语法.html"><a href="基本语法.html#运算符"><i class="fa fa-check"></i><b>2.1</b> 运算符</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符"><i class="fa fa-check"></i><b>2.1.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.1.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符"><i class="fa fa-check"></i><b>2.1.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.1.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符"><i class="fa fa-check"></i><b>2.1.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.1.4" data-path="基本语法.html"><a href="基本语法.html#位运算符"><i class="fa fa-check"></i><b>2.1.4</b> 位运算符</a></li>
+<li class="chapter" data-level="2.1.5" data-path="基本语法.html"><a href="基本语法.html#其他运算符"><i class="fa fa-check"></i><b>2.1.5</b> 其他运算符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符"><i class="fa fa-check"></i><b>2.2</b> 转义字符</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="基本语法.html"><a href="基本语法.html#转义字符列表"><i class="fa fa-check"></i><b>2.2.1</b> 转义字符列表</a></li>
+<li class="chapter" data-level="2.2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符的重要性"><i class="fa fa-check"></i><b>2.2.2</b> 转义字符的重要性</a></li>
+<li class="chapter" data-level="2.2.3" data-path="基本语法.html"><a href="基本语法.html#注意事项"><i class="fa fa-check"></i><b>2.2.3</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="基本语法.html"><a href="基本语法.html#like-匹配符"><i class="fa fa-check"></i><b>2.3</b> LIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="基本语法.html"><a href="基本语法.html#like-匹配符的使用"><i class="fa fa-check"></i><b>2.3.1</b> LIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.3.2" data-path="基本语法.html"><a href="基本语法.html#示例"><i class="fa fa-check"></i><b>2.3.2</b> 示例</a></li>
+<li class="chapter" data-level="2.3.3" data-path="基本语法.html"><a href="基本语法.html#like-的高级用法"><i class="fa fa-check"></i><b>2.3.3</b> LIKE 的高级用法</a></li>
+<li class="chapter" data-level="2.3.4" data-path="基本语法.html"><a href="基本语法.html#使用-like-时的注意事项"><i class="fa fa-check"></i><b>2.3.4</b> 使用 LIKE 时的注意事项</a></li>
+<li class="chapter" data-level="2.3.5" data-path="基本语法.html"><a href="基本语法.html#转义字符在-like-中的应用"><i class="fa fa-check"></i><b>2.3.5</b> 转义字符在 LIKE 中的应用</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符"><i class="fa fa-check"></i><b>2.4</b> RLIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符的使用"><i class="fa fa-check"></i><b>2.4.1</b> RLIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.4.2" data-path="基本语法.html"><a href="基本语法.html#rlike-高级元字符"><i class="fa fa-check"></i><b>2.4.2</b> RLIKE 高级元字符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="基本语法.html"><a href="基本语法.html#odps-sql-保留字与关键字"><i class="fa fa-check"></i><b>2.5</b> ODPS SQL 保留字与关键字</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符-1"><i class="fa fa-check"></i><b>2.5.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.5.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符-1"><i class="fa fa-check"></i><b>2.5.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.5.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符-1"><i class="fa fa-check"></i><b>2.5.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.5.4" data-path="基本语法.html"><a href="基本语法.html#数据类型"><i class="fa fa-check"></i><b>2.5.4</b> 数据类型</a></li>
+<li class="chapter" data-level="2.5.5" data-path="基本语法.html"><a href="基本语法.html#数据定义语言-ddl"><i class="fa fa-check"></i><b>2.5.5</b> 数据定义语言 (DDL)</a></li>
+<li class="chapter" data-level="2.5.6" data-path="基本语法.html"><a href="基本语法.html#数据操作语言-dml"><i class="fa fa-check"></i><b>2.5.6</b> 数据操作语言 (DML)</a></li>
+<li class="chapter" data-level="2.5.7" data-path="基本语法.html"><a href="基本语法.html#其他关键字"><i class="fa fa-check"></i><b>2.5.7</b> 其他关键字</a></li>
+<li class="chapter" data-level="2.5.8" data-path="基本语法.html"><a href="基本语法.html#集合操作"><i class="fa fa-check"></i><b>2.5.8</b> 集合操作</a></li>
+<li class="chapter" data-level="2.5.9" data-path="基本语法.html"><a href="基本语法.html#窗口函数"><i class="fa fa-check"></i><b>2.5.9</b> 窗口函数</a></li>
+<li class="chapter" data-level="2.5.10" data-path="基本语法.html"><a href="基本语法.html#子查询"><i class="fa fa-check"></i><b>2.5.10</b> 子查询</a></li>
+<li class="chapter" data-level="2.5.11" data-path="基本语法.html"><a href="基本语法.html#连接"><i class="fa fa-check"></i><b>2.5.11</b> 连接</a></li>
+<li class="chapter" data-level="2.5.12" data-path="基本语法.html"><a href="基本语法.html#条件表达式"><i class="fa fa-check"></i><b>2.5.12</b> 条件表达式</a></li>
+<li class="chapter" data-level="2.5.13" data-path="基本语法.html"><a href="基本语法.html#聚合函数"><i class="fa fa-check"></i><b>2.5.13</b> 聚合函数</a></li>
+<li class="chapter" data-level="2.5.14" data-path="基本语法.html"><a href="基本语法.html#数据导入导出"><i class="fa fa-check"></i><b>2.5.14</b> 数据导入导出</a></li>
+<li class="chapter" data-level="2.5.15" data-path="基本语法.html"><a href="基本语法.html#事务控制"><i class="fa fa-check"></i><b>2.5.15</b> 事务控制</a></li>
+<li class="chapter" data-level="2.5.16" data-path="基本语法.html"><a href="基本语法.html#权限管理"><i class="fa fa-check"></i><b>2.5.16</b> 权限管理</a></li>
+<li class="chapter" data-level="2.5.17" data-path="基本语法.html"><a href="基本语法.html#系统管理"><i class="fa fa-check"></i><b>2.5.17</b> 系统管理</a></li>
+<li class="chapter" data-level="2.5.18" data-path="基本语法.html"><a href="基本语法.html#分区管理"><i class="fa fa-check"></i><b>2.5.18</b> 分区管理</a></li>
+<li class="chapter" data-level="2.5.19" data-path="基本语法.html"><a href="基本语法.html#排序和分组"><i class="fa fa-check"></i><b>2.5.19</b> 排序和分组</a></li>
+<li class="chapter" data-level="2.5.20" data-path="基本语法.html"><a href="基本语法.html#约束和索引"><i class="fa fa-check"></i><b>2.5.20</b> 约束和索引</a></li>
+<li class="chapter" data-level="2.5.21" data-path="基本语法.html"><a href="基本语法.html#视图和临时表"><i class="fa fa-check"></i><b>2.5.21</b> 视图和临时表</a></li>
+<li class="chapter" data-level="2.5.22" data-path="基本语法.html"><a href="基本语法.html#函数和过程"><i class="fa fa-check"></i><b>2.5.22</b> 函数和过程</a></li>
+<li class="chapter" data-level="2.5.23" data-path="基本语法.html"><a href="基本语法.html#其他关键字-1"><i class="fa fa-check"></i><b>2.5.23</b> 其他关键字</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="基本语法.html"><a href="基本语法.html#数据类型转换"><i class="fa fa-check"></i><b>2.6</b> 数据类型转换</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html"><i class="fa fa-check"></i><b>3</b> DDL (Data Definition Language)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#表操作"><i class="fa fa-check"></i><b>3.1</b> 表操作</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#创建表create-table"><i class="fa fa-check"></i><b>3.1.1</b> 创建表（Create Table）</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的所有权alter-table-owner"><i class="fa fa-check"></i><b>3.1.2</b> 修改表的所有权（Alter Table Owner）</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的生命周期alter-table-lifecycle"><i class="fa fa-check"></i><b>3.1.3</b> 修改表的生命周期（Alter Table Lifecycle）</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除表drop-table"><i class="fa fa-check"></i><b>3.1.4</b> 删除表（Drop Table）</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#查看表的详细信息describe-table"><i class="fa fa-check"></i><b>3.1.5</b> 查看表的详细信息（Describe Table）</a></li>
+<li class="chapter" data-level="3.1.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的元数据list-table"><i class="fa fa-check"></i><b>3.1.6</b> 获取表的元数据（List Table）</a></li>
+<li class="chapter" data-level="3.1.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的分区信息list-partitions"><i class="fa fa-check"></i><b>3.1.7</b> 获取表的分区信息（List Partitions）</a></li>
+<li class="chapter" data-level="3.1.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的注释"><i class="fa fa-check"></i><b>3.1.8</b> 修改表的注释</a></li>
+<li class="chapter" data-level="3.1.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#重命名表"><i class="fa fa-check"></i><b>3.1.9</b> 重命名表</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#分区和列操作"><i class="fa fa-check"></i><b>3.2</b> 分区和列操作</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#新增分区"><i class="fa fa-check"></i><b>3.2.1</b> 新增分区</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除分区"><i class="fa fa-check"></i><b>3.2.2</b> 删除分区</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改分区"><i class="fa fa-check"></i><b>3.2.3</b> 修改分区</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#合并分区"><i class="fa fa-check"></i><b>3.2.4</b> 合并分区</a></li>
+<li class="chapter" data-level="3.2.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#清空分区数据"><i class="fa fa-check"></i><b>3.2.5</b> 清空分区数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#添加列或注释"><i class="fa fa-check"></i><b>3.2.6</b> 添加列或注释</a></li>
+<li class="chapter" data-level="3.2.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除列"><i class="fa fa-check"></i><b>3.2.7</b> 删除列</a></li>
+<li class="chapter" data-level="3.2.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#更改列数据类型"><i class="fa fa-check"></i><b>3.2.8</b> 更改列数据类型</a></li>
+<li class="chapter" data-level="3.2.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列的顺序"><i class="fa fa-check"></i><b>3.2.9</b> 修改列的顺序</a></li>
+<li class="chapter" data-level="3.2.10" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名"><i class="fa fa-check"></i><b>3.2.10</b> 修改列名</a></li>
+<li class="chapter" data-level="3.2.11" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列注释"><i class="fa fa-check"></i><b>3.2.11</b> 修改列注释</a></li>
+<li class="chapter" data-level="3.2.12" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名及注释"><i class="fa fa-check"></i><b>3.2.12</b> 修改列名及注释</a></li>
+<li class="chapter" data-level="3.2.13" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的列非空属性"><i class="fa fa-check"></i><b>3.2.13</b> 修改表的列非空属性</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期操作"><i class="fa fa-check"></i><b>3.3</b> 生命周期操作</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期概念"><i class="fa fa-check"></i><b>3.3.1</b> 生命周期概念</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#设置生命周期"><i class="fa fa-check"></i><b>3.3.2</b> 设置生命周期</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#禁止或恢复生命周期"><i class="fa fa-check"></i><b>3.3.3</b> 禁止或恢复生命周期</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#注意事项-1"><i class="fa fa-check"></i><b>3.3.4</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作"><i class="fa fa-check"></i><b>3.4</b> 视图操作</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作命令"><i class="fa fa-check"></i><b>3.4.1</b> 视图操作命令</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html"><i class="fa fa-check"></i><b>4</b> DML (Data Manipulation Language)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写数据insert-into-insert-overwrite"><i class="fa fa-check"></i><b>4.1</b> 插入或覆写数据（INSERT INTO | INSERT OVERWRITE）</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件"><i class="fa fa-check"></i><b>4.1.1</b> 前提条件</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍"><i class="fa fa-check"></i><b>4.1.2</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制"><i class="fa fa-check"></i><b>4.1.3</b> 使用限制</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式"><i class="fa fa-check"></i><b>4.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="4.1.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例"><i class="fa fa-check"></i><b>4.1.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写动态分区数据dynamic-partition"><i class="fa fa-check"></i><b>4.2</b> 插入或覆写动态分区数据（DYNAMIC PARTITION）</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入数据到表格"><i class="fa fa-check"></i><b>4.2.1</b> 插入数据到表格</a></li>
+<li class="chapter" data-level="4.2.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-1"><i class="fa fa-check"></i><b>4.2.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新或删除数据update-delete"><i class="fa fa-check"></i><b>4.3</b> 更新或删除数据（UPDATE | DELETE）</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#删除数据delete"><i class="fa fa-check"></i><b>4.3.1</b> 删除数据（DELETE）</a></li>
+<li class="chapter" data-level="4.3.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-2"><i class="fa fa-check"></i><b>4.3.2</b> 使用示例</a></li>
+<li class="chapter" data-level="4.3.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#清空列数据"><i class="fa fa-check"></i><b>4.3.3</b> 清空列数据</a></li>
+<li class="chapter" data-level="4.3.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新数据update"><i class="fa fa-check"></i><b>4.3.4</b> 更新数据（UPDATE）</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#merge-into"><i class="fa fa-check"></i><b>4.4</b> MERGE INTO</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-3"><i class="fa fa-check"></i><b>4.4.1</b> 命令格式</a></li>
+<li class="chapter" data-level="4.4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-4"><i class="fa fa-check"></i><b>4.4.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#多路输出multi-insert"><i class="fa fa-check"></i><b>4.5</b> 多路输出（MULTI INSERT）</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令解释"><i class="fa fa-check"></i><b>4.5.1</b> 命令解释</a></li>
+<li class="chapter" data-level="4.5.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#用法说明"><i class="fa fa-check"></i><b>4.5.2</b> 用法说明</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#values"><i class="fa fa-check"></i><b>4.6</b> VALUES</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例1通过-insert-values-操作向特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.1</b> 示例1：通过 <code>insert … values</code> 操作向特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例2通过-insert-values-操作向非特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.2</b> 示例2：通过 <code>insert … values</code> 操作向非特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例3使用复杂数据类型构造常量通过-insert-操作导入数据"><i class="fa fa-check"></i><b>4.6.3</b> 示例3：使用复杂数据类型构造常量，通过 <code>insert</code> 操作导入数据</a></li>
+<li class="chapter" data-level="4.6.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例4通过-insert-values-操作写入-datetime-或-timestamp-数据类型"><i class="fa fa-check"></i><b>4.6.4</b> 示例4：通过 <code>insert … values</code> 操作写入 DATETIME 或 TIMESTAMP 数据类型</a></li>
+<li class="chapter" data-level="4.6.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例5通过-values-table-操作插入数据"><i class="fa fa-check"></i><b>4.6.5</b> 示例5：通过 <code>values table</code> 操作插入数据</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load"><i class="fa fa-check"></i><b>4.7</b> LOAD</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-1"><i class="fa fa-check"></i><b>4.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.7.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制-1"><i class="fa fa-check"></i><b>4.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="4.7.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件-1"><i class="fa fa-check"></i><b>4.7.3</b> 前提条件</a></li>
+<li class="chapter" data-level="4.7.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load命令示例"><i class="fa fa-check"></i><b>4.7.4</b> LOAD命令示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#cte公用表表达式介绍"><i class="fa fa-check"></i><b>4.8</b> CTE（公用表表达式）介绍</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-2"><i class="fa fa-check"></i><b>4.8.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.8.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-4"><i class="fa fa-check"></i><b>4.8.2</b> 命令格式</a></li>
+<li class="chapter" data-level="4.8.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-5"><i class="fa fa-check"></i><b>4.8.3</b> 使用示例</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dql操作select.html"><a href="dql操作select.html"><i class="fa fa-check"></i><b>5</b> DQL操作（SELECT）</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="dql操作select.html"><a href="dql操作select.html#select语法"><i class="fa fa-check"></i><b>5.1</b> SELECT语法</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-3"><i class="fa fa-check"></i><b>5.1.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.1.2" data-path="dql操作select.html"><a href="dql操作select.html#类型与功能"><i class="fa fa-check"></i><b>5.1.2</b> 类型与功能</a></li>
+<li class="chapter" data-level="5.1.3" data-path="dql操作select.html"><a href="dql操作select.html#说明"><i class="fa fa-check"></i><b>5.1.3</b> 说明</a></li>
+<li class="chapter" data-level="5.1.4" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-5"><i class="fa fa-check"></i><b>5.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="5.1.5" data-path="dql操作select.html"><a href="dql操作select.html#示例数据"><i class="fa fa-check"></i><b>5.1.5</b> 示例数据</a></li>
+<li class="chapter" data-level="5.1.6" data-path="dql操作select.html"><a href="dql操作select.html#with子句cte"><i class="fa fa-check"></i><b>5.1.6</b> WITH子句（cte）</a></li>
+<li class="chapter" data-level="5.1.7" data-path="dql操作select.html"><a href="dql操作select.html#列表达式select_expr"><i class="fa fa-check"></i><b>5.1.7</b> 列表达式（SELECT_expr）</a></li>
+<li class="chapter" data-level="5.1.8" data-path="dql操作select.html"><a href="dql操作select.html#说明-1"><i class="fa fa-check"></i><b>5.1.8</b> 说明</a></li>
+<li class="chapter" data-level="5.1.9" data-path="dql操作select.html"><a href="dql操作select.html#排除列except_expr"><i class="fa fa-check"></i><b>5.1.9</b> 排除列（except_expr）</a></li>
+<li class="chapter" data-level="5.1.10" data-path="dql操作select.html"><a href="dql操作select.html#修改列replace_expr"><i class="fa fa-check"></i><b>5.1.10</b> 修改列（replace_expr）</a></li>
+<li class="chapter" data-level="5.1.11" data-path="dql操作select.html"><a href="dql操作select.html#目标表信息table_reference"><i class="fa fa-check"></i><b>5.1.11</b> 目标表信息（table_reference）</a></li>
+<li class="chapter" data-level="5.1.12" data-path="dql操作select.html"><a href="dql操作select.html#where子句where_condition"><i class="fa fa-check"></i><b>5.1.12</b> WHERE子句（where_condition）</a></li>
+<li class="chapter" data-level="5.1.13" data-path="dql操作select.html"><a href="dql操作select.html#group-by分组查询col_list"><i class="fa fa-check"></i><b>5.1.13</b> GROUP BY分组查询（col_list）</a></li>
+<li class="chapter" data-level="5.1.14" data-path="dql操作select.html"><a href="dql操作select.html#having子句having_condition"><i class="fa fa-check"></i><b>5.1.14</b> HAVING子句（having_condition）</a></li>
+<li class="chapter" data-level="5.1.15" data-path="dql操作select.html"><a href="dql操作select.html#order-by全局排序order_condition"><i class="fa fa-check"></i><b>5.1.15</b> ORDER BY全局排序（order_condition）</a></li>
+<li class="chapter" data-level="5.1.16" data-path="dql操作select.html"><a href="dql操作select.html#limit限制输出行数number"><i class="fa fa-check"></i><b>5.1.16</b> LIMIT限制输出行数（number）</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="dql操作select.html"><a href="dql操作select.html#select语序"><i class="fa fa-check"></i><b>5.2</b> SELECT语序</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="dql操作select.html"><a href="dql操作select.html#执行语序"><i class="fa fa-check"></i><b>5.2.1</b> 执行语序</a></li>
+<li class="chapter" data-level="5.2.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-1"><i class="fa fa-check"></i><b>5.2.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.2.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-6"><i class="fa fa-check"></i><b>5.2.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="dql操作select.html"><a href="dql操作select.html#子查询subquery"><i class="fa fa-check"></i><b>5.3</b> 子查询（SUBQUERY）</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-4"><i class="fa fa-check"></i><b>5.3.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.3.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-2"><i class="fa fa-check"></i><b>5.3.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.3.3" data-path="dql操作select.html"><a href="dql操作select.html#基础子查询"><i class="fa fa-check"></i><b>5.3.3</b> 基础子查询</a></li>
+<li class="chapter" data-level="5.3.4" data-path="dql操作select.html"><a href="dql操作select.html#in-subquery"><i class="fa fa-check"></i><b>5.3.4</b> IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.5" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-2"><i class="fa fa-check"></i><b>5.3.5</b> 注意事项</a></li>
+<li class="chapter" data-level="5.3.6" data-path="dql操作select.html"><a href="dql操作select.html#not-in-subquery"><i class="fa fa-check"></i><b>5.3.6</b> NOT IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.7" data-path="dql操作select.html"><a href="dql操作select.html#exists-subquery"><i class="fa fa-check"></i><b>5.3.7</b> EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.8" data-path="dql操作select.html"><a href="dql操作select.html#not-exists-subquery"><i class="fa fa-check"></i><b>5.3.8</b> NOT EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.9" data-path="dql操作select.html"><a href="dql操作select.html#scalar-subquery"><i class="fa fa-check"></i><b>5.3.9</b> SCALAR SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.10" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-9"><i class="fa fa-check"></i><b>5.3.10</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dql操作select.html"><a href="dql操作select.html#交集并集和补集操作"><i class="fa fa-check"></i><b>5.4</b> 交集、并集和补集操作</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-5"><i class="fa fa-check"></i><b>5.4.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.4.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-3"><i class="fa fa-check"></i><b>5.4.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.4.3" data-path="dql操作select.html"><a href="dql操作select.html#交集intersect"><i class="fa fa-check"></i><b>5.4.3</b> 交集(Intersect)</a></li>
+<li class="chapter" data-level="5.4.4" data-path="dql操作select.html"><a href="dql操作select.html#并集union"><i class="fa fa-check"></i><b>5.4.4</b> 并集(Union)</a></li>
+<li class="chapter" data-level="5.4.5" data-path="dql操作select.html"><a href="dql操作select.html#补集except"><i class="fa fa-check"></i><b>5.4.5</b> 补集(Except)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="dql操作select.html"><a href="dql操作select.html#join"><i class="fa fa-check"></i><b>5.5</b> Join</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的join操作"><i class="fa fa-check"></i><b>5.5.1</b> MaxCompute支持的Join操作</a></li>
+<li class="chapter" data-level="5.5.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-4"><i class="fa fa-check"></i><b>5.5.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.5.3" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-11"><i class="fa fa-check"></i><b>5.5.3</b> 命令格式</a></li>
+<li class="chapter" data-level="5.5.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-3"><i class="fa fa-check"></i><b>5.5.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.5.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-13"><i class="fa fa-check"></i><b>5.5.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="dql操作select.html"><a href="dql操作select.html#semi-join-半连接"><i class="fa fa-check"></i><b>5.6</b> SEMI join 半连接</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的半连接操作"><i class="fa fa-check"></i><b>5.6.1</b> MaxCompute支持的半连接操作</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-4"><i class="fa fa-check"></i><b>5.6.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.6.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-14"><i class="fa fa-check"></i><b>5.6.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="dql操作select.html"><a href="dql操作select.html#mapjoin-hint"><i class="fa fa-check"></i><b>5.7</b> MAPJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-6"><i class="fa fa-check"></i><b>5.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.7.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-2"><i class="fa fa-check"></i><b>5.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.7.3" data-path="dql操作select.html"><a href="dql操作select.html#使用方法"><i class="fa fa-check"></i><b>5.7.3</b> 使用方法</a></li>
+<li class="chapter" data-level="5.7.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-5"><i class="fa fa-check"></i><b>5.7.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.7.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-15"><i class="fa fa-check"></i><b>5.7.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="dql操作select.html"><a href="dql操作select.html#distributed-mapjoin"><i class="fa fa-check"></i><b>5.8</b> DISTRIBUTED MAPJOIN</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-5"><i class="fa fa-check"></i><b>5.8.1</b> 注意事项</a></li>
+<li class="chapter" data-level="5.8.2" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-1"><i class="fa fa-check"></i><b>5.8.2</b> 使用方法</a></li>
+<li class="chapter" data-level="5.8.3" data-path="dql操作select.html"><a href="dql操作select.html#语法示例"><i class="fa fa-check"></i><b>5.8.3</b> 语法示例</a></li>
+<li class="chapter" data-level="5.8.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-16"><i class="fa fa-check"></i><b>5.8.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="dql操作select.html"><a href="dql操作select.html#skewjoin-hint"><i class="fa fa-check"></i><b>5.9</b> SKEWJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-2"><i class="fa fa-check"></i><b>5.9.1</b> 使用方法</a></li>
+<li class="chapter" data-level="5.9.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-6"><i class="fa fa-check"></i><b>5.9.2</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter"><i class="fa fa-check"></i><b>5.10</b> 动态过滤器（Dynamic Filter）</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter-1"><i class="fa fa-check"></i><b>5.10.1</b> 动态过滤器（Dynamic Filter）</a></li>
+<li class="chapter" data-level="5.10.2" data-path="dql操作select.html"><a href="dql操作select.html#优化思路"><i class="fa fa-check"></i><b>5.10.2</b> 优化思路</a></li>
+<li class="chapter" data-level="5.10.3" data-path="dql操作select.html"><a href="dql操作select.html#应用场景-1"><i class="fa fa-check"></i><b>5.10.3</b> 应用场景</a></li>
+<li class="chapter" data-level="5.10.4" data-path="dql操作select.html"><a href="dql操作select.html#动态范围过滤器或布隆过滤器dynamic-rangebloom-filter"><i class="fa fa-check"></i><b>5.10.4</b> 动态范围过滤器或布隆过滤器（Dynamic Range|Bloom Filter）</a></li>
+<li class="chapter" data-level="5.10.5" data-path="dql操作select.html"><a href="dql操作select.html#动态分区裁剪dynamic-partition-pruning"><i class="fa fa-check"></i><b>5.10.5</b> 动态分区裁剪（Dynamic Partition Pruning）</a></li>
+<li class="chapter" data-level="5.10.6" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-3"><i class="fa fa-check"></i><b>5.10.6</b> 使用方法</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="dql操作select.html"><a href="dql操作select.html#grouping-sets"><i class="fa fa-check"></i><b>5.11</b> grouping sets</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="dql操作select.html"><a href="dql操作select.html#cube-rollup"><i class="fa fa-check"></i><b>5.11.1</b> CUBE | ROLLUP</a></li>
+<li class="chapter" data-level="5.11.2" data-path="dql操作select.html"><a href="dql操作select.html#grouping-grouping_id"><i class="fa fa-check"></i><b>5.11.2</b> GROUPING | GROUPING_ID</a></li>
+<li class="chapter" data-level="5.11.3" data-path="dql操作select.html"><a href="dql操作select.html#grouping__id"><i class="fa fa-check"></i><b>5.11.3</b> GROUPING__ID</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="dql操作select.html"><a href="dql操作select.html#windows-关键字"><i class="fa fa-check"></i><b>5.12</b> Windows 关键字</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-12"><i class="fa fa-check"></i><b>5.12.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.12.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-3"><i class="fa fa-check"></i><b>5.12.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.12.3" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-6"><i class="fa fa-check"></i><b>5.12.3</b> 示例数据</a></li>
+<li class="chapter" data-level="5.12.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-17"><i class="fa fa-check"></i><b>5.12.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="dql操作select.html"><a href="dql操作select.html#tablesample采样"><i class="fa fa-check"></i><b>5.13</b> TABLESAMPLE采样</a>
+<ul>
+<li class="chapter" data-level="5.13.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-13"><i class="fa fa-check"></i><b>5.13.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.13.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-18"><i class="fa fa-check"></i><b>5.13.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.14" data-path="dql操作select.html"><a href="dql操作select.html#qualify"><i class="fa fa-check"></i><b>5.14</b> QUALIFY</a>
+<ul>
+<li class="chapter" data-level="5.14.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-14"><i class="fa fa-check"></i><b>5.14.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.14.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-19"><i class="fa fa-check"></i><b>5.14.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.15" data-path="dql操作select.html"><a href="dql操作select.html#pivotunpivot"><i class="fa fa-check"></i><b>5.15</b> PIVOT、UNPIVOT</a>
+<ul>
+<li class="chapter" data-level="5.15.1" data-path="dql操作select.html"><a href="dql操作select.html#pivot关键字"><i class="fa fa-check"></i><b>5.15.1</b> PIVOT关键字</a></li>
+<li class="chapter" data-level="5.15.2" data-path="dql操作select.html"><a href="dql操作select.html#unpivot关键字"><i class="fa fa-check"></i><b>5.15.2</b> UNPIVOT关键字</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="日期与时间函数.html"><a href="日期与时间函数.html"><i class="fa fa-check"></i><b>6</b> 日期与时间函数</a></li>
+<li class="chapter" data-level="7" data-path="数学函数.html"><a href="数学函数.html"><i class="fa fa-check"></i><b>7</b> 数学函数</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="数学函数.html"><a href="数学函数.html#参考"><i class="fa fa-check"></i><b>7.1</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="其他函数.html"><a href="其他函数.html"><i class="fa fa-check"></i><b>8</b> 其他函数</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="其他函数.html"><a href="其他函数.html#窗口函数-1"><i class="fa fa-check"></i><b>8.1</b> 窗口函数</a></li>
+<li class="chapter" data-level="8.2" data-path="其他函数.html"><a href="其他函数.html#聚合函数-1"><i class="fa fa-check"></i><b>8.2</b> 聚合函数</a></li>
+<li class="chapter" data-level="8.3" data-path="其他函数.html"><a href="其他函数.html#字符串函数"><i class="fa fa-check"></i><b>8.3</b> 字符串函数</a></li>
+<li class="chapter" data-level="8.4" data-path="其他函数.html"><a href="其他函数.html#复杂类型函数"><i class="fa fa-check"></i><b>8.4</b> 复杂类型函数</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="其他函数.html"><a href="其他函数.html#array函数"><i class="fa fa-check"></i><b>8.4.1</b> ARRAY函数</a></li>
+<li class="chapter" data-level="8.4.2" data-path="其他函数.html"><a href="其他函数.html#map函数"><i class="fa fa-check"></i><b>8.4.2</b> MAP函数</a></li>
+<li class="chapter" data-level="8.4.3" data-path="其他函数.html"><a href="其他函数.html#struct函数"><i class="fa fa-check"></i><b>8.4.3</b> STRUCT函数</a></li>
+<li class="chapter" data-level="8.4.4" data-path="其他函数.html"><a href="其他函数.html#json函数"><i class="fa fa-check"></i><b>8.4.4</b> JSON函数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="其他函数.html"><a href="其他函数.html#其他函数-1"><i class="fa fa-check"></i><b>8.5</b> 其他函数</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/liamamilin" target="blank">ODPS SQL</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ODPS SQL</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="其他函数" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> 其他函数<a href="其他函数.html#其他函数" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="窗口函数-1" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> 窗口函数<a href="其他函数.html#窗口函数-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="32%" />
+<col width="67%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AVG</td>
+<td>对窗口中的数据求平均值。</td>
+</tr>
+<tr class="even">
+<td>CLUSTER_SAMPLE</td>
+<td>用户随机抽样。返回True表示该行数据被抽中。</td>
+</tr>
+<tr class="odd">
+<td>COUNT</td>
+<td>计算窗口中的记录数。</td>
+</tr>
+<tr class="even">
+<td>CUME_DIST</td>
+<td>计算累计分布。</td>
+</tr>
+<tr class="odd">
+<td>DENSE_RANK</td>
+<td>计算排名。排名是连续的。</td>
+</tr>
+<tr class="even">
+<td>FIRST_VALUE</td>
+<td>取当前行所对应窗口的第一条数据的值。</td>
+</tr>
+<tr class="odd">
+<td>LAG</td>
+<td>取当前行往前（朝分区头部方向）第N行数据的值。</td>
+</tr>
+<tr class="even">
+<td>LAST_VALUE</td>
+<td>取当前行所对应窗口的最后一条数据的值。</td>
+</tr>
+<tr class="odd">
+<td>LEAD</td>
+<td>取当前行往后（朝分区尾部方向）第N行数据的值。</td>
+</tr>
+<tr class="even">
+<td>MAX</td>
+<td>计算窗口中的最大值。</td>
+</tr>
+<tr class="odd">
+<td>MEDIAN</td>
+<td>计算窗口中的中位数。</td>
+</tr>
+<tr class="even">
+<td>MIN</td>
+<td>计算窗口中的最小值。</td>
+</tr>
+<tr class="odd">
+<td>NTILE</td>
+<td>将数据顺序切分成N等份，返回数据所在等份的编号（从1到N）。</td>
+</tr>
+<tr class="even">
+<td>NTH_VALUE</td>
+<td>取当前行所对应窗口的第N条数据的值。</td>
+</tr>
+<tr class="odd">
+<td>PERCENT_RANK</td>
+<td>计算排名。输出百分比格式。</td>
+</tr>
+<tr class="even">
+<td>RANK</td>
+<td>计算排名。排名可能不连续。</td>
+</tr>
+<tr class="odd">
+<td>ROW_NUMBER</td>
+<td>计算行号。从1开始递增。</td>
+</tr>
+<tr class="even">
+<td>STDDEV</td>
+<td>计算总体标准差。是STDDEV_POP的别名。</td>
+</tr>
+<tr class="odd">
+<td>STDDEV_SAMP</td>
+<td>计算样本标准差。</td>
+</tr>
+<tr class="even">
+<td>SUM</td>
+<td>对窗口中的数据求和。</td>
+</tr>
+</tbody>
+</table>
+<p>以下是一些窗口函数的示例：</p>
+<ul>
+<li><p><strong>AVG</strong>：对窗口中的数据求平均值。</p>
+<pre><code>SELECT AVG(salary) OVER (PARTITION BY department_id) FROM employee;</code></pre></li>
+<li><p><strong>COUNT</strong>：计算窗口中的记录数。</p>
+<pre><code>SELECT COUNT(*) OVER (PARTITION BY department_id) FROM employee;</code></pre></li>
+<li><p><strong>MAX</strong>：计算窗口中的最大值。</p>
+<pre><code>SELECT MAX(salary) OVER (PARTITION BY department_id) FROM employee;</code></pre></li>
+<li><p><strong>ROW_NUMBER</strong>：计算行号。从1开始递增。</p>
+<pre><code>SELECT ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num FROM employee;</code></pre></li>
+<li><p><strong>SUM</strong>：对窗口中的数据求和。</p>
+<pre><code>SELECT SUM(salary) OVER (PARTITION BY department_id) FROM employee;</code></pre></li>
+</ul>
+</div>
+<div id="聚合函数-1" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> 聚合函数<a href="其他函数.html#聚合函数-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="66%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ANY_VALUE</td>
+<td>在指定范围内任选一个值返回。</td>
+</tr>
+<tr class="even">
+<td>APPROX_DISTINCT</td>
+<td>返回输入的非重复值的近似数目。</td>
+</tr>
+<tr class="odd">
+<td>ARG_MAX</td>
+<td>返回指定列的最大值对应行的列值。</td>
+</tr>
+<tr class="even">
+<td>ARG_MIN</td>
+<td>返回指定列的最小值对应行的列值。</td>
+</tr>
+<tr class="odd">
+<td>AVG</td>
+<td>计算平均值。</td>
+</tr>
+<tr class="even">
+<td>BITWISE_AND_AGG</td>
+<td>计算输入Value的bit AND聚合值。</td>
+</tr>
+<tr class="odd">
+<td>BITWISE_OR_AGG</td>
+<td>计算输入Value的bit OR聚合值。</td>
+</tr>
+<tr class="even">
+<td>COLLECT_LIST</td>
+<td>将指定的列聚合为一个数组。</td>
+</tr>
+<tr class="odd">
+<td>COLLECT_SET</td>
+<td>将指定的列聚合为一个无重复元素的数组。</td>
+</tr>
+<tr class="even">
+<td>COUNT</td>
+<td>计算记录数。</td>
+</tr>
+<tr class="odd">
+<td>COUNT_IF</td>
+<td>计算指定表达式为True的记录数。</td>
+</tr>
+<tr class="even">
+<td>COVAR_POP</td>
+<td>计算指定两个数值列的总体协方差。</td>
+</tr>
+<tr class="odd">
+<td>COVAR_SAMP</td>
+<td>计算指定两个数值列的样本协方差。</td>
+</tr>
+<tr class="even">
+<td>HISTOGRAM</td>
+<td>构造输入Map的Key值出现次数的Map。</td>
+</tr>
+<tr class="odd">
+<td>MAP_AGG</td>
+<td>构造两个输入字段的Map。</td>
+</tr>
+<tr class="even">
+<td>MAP_UNION</td>
+<td>对输入Map进行Union操作来构造输出Map。</td>
+</tr>
+<tr class="odd">
+<td>MAP_UNION_SUM</td>
+<td>对输入Map进行Union操作并对相同Key的Value求和来构造输出Map。</td>
+</tr>
+<tr class="even">
+<td>MAX</td>
+<td>计算最大值。</td>
+</tr>
+<tr class="odd">
+<td>MAX_BY</td>
+<td>返回指定列的最大值对应行的列值。</td>
+</tr>
+<tr class="even">
+<td>MEDIAN</td>
+<td>计算中位数。</td>
+</tr>
+<tr class="odd">
+<td>MIN</td>
+<td>计算最小值。</td>
+</tr>
+<tr class="even">
+<td>MIN_BY</td>
+<td>返回指定列的最小值对应行的列值。</td>
+</tr>
+<tr class="odd">
+<td>MULTIMAP_AGG</td>
+<td>构造两个输入字段的Map，第一个字段作为Map的Key，第二个字段构造数组作为Map的Value。</td>
+</tr>
+<tr class="even">
+<td>NUMERIC_HISTOGRAM</td>
+<td>统计指定列的近似直方图。</td>
+</tr>
+<tr class="odd">
+<td>PERCENTILE</td>
+<td>计算精确百分位数，适用于小数据量。</td>
+</tr>
+<tr class="even">
+<td>PERCENTILE_APPROX</td>
+<td>计算近似百分位数，适用于大数据量。</td>
+</tr>
+<tr class="odd">
+<td>STDDEV</td>
+<td>计算总体标准差。</td>
+</tr>
+<tr class="even">
+<td>STDDEV_SAMP</td>
+<td>计算样本标准差。</td>
+</tr>
+<tr class="odd">
+<td>SUM</td>
+<td>计算汇总值。</td>
+</tr>
+<tr class="even">
+<td>VAR_SAMP</td>
+<td>计算指定数值列的样本方差。</td>
+</tr>
+<tr class="odd">
+<td>VARIANCE/VAR_POP</td>
+<td>计算指定数值列的方差。</td>
+</tr>
+<tr class="even">
+<td>WM_CONCAT</td>
+<td>用指定的分隔符连接字符串。</td>
+</tr>
+</tbody>
+</table>
+<p>以下是一些聚合函数的示例：</p>
+<ul>
+<li><p><strong>AVG</strong>：计算平均值。</p>
+<pre><code>SELECT AVG(salary) FROM employee;</code></pre></li>
+<li><p><strong>COUNT</strong>：计算记录数。</p>
+<pre><code>SELECT COUNT(*) FROM employee;</code></pre></li>
+<li><p><strong>MAX</strong>：计算最大值。</p>
+<pre><code>SELECT MAX(salary) FROM employee;</code></pre></li>
+<li><p><strong>MIN</strong>：计算最小值。</p>
+<pre><code>SELECT MIN(salary) FROM employee;</code></pre></li>
+<li><p><strong>SUM</strong>：计算汇总值。</p>
+<pre><code>SELECT SUM(salary) FROM employee;</code></pre></li>
+</ul>
+</div>
+<div id="字符串函数" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> 字符串函数<a href="其他函数.html#字符串函数" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ASCII</td>
+<td>返回字符串的第一个字符的ASCII码。</td>
+</tr>
+<tr class="even">
+<td>CHAR_MATCHCOUNT</td>
+<td>计算A字符串出现在B字符串中的字符个数。</td>
+</tr>
+<tr class="odd">
+<td>CHR</td>
+<td>将指定ASCII码转换成字符。</td>
+</tr>
+<tr class="even">
+<td>CONCAT</td>
+<td>将字符串连接在一起。</td>
+</tr>
+<tr class="odd">
+<td>CONCAT_WS</td>
+<td>将参数中的所有字符串按照指定的分隔符连接在一起。</td>
+</tr>
+<tr class="even">
+<td>DECODE</td>
+<td>将字符串按照指定编码格式解码。</td>
+</tr>
+<tr class="odd">
+<td>ENCODE</td>
+<td>将字符串按照指定编码格式编码。</td>
+</tr>
+<tr class="even">
+<td>FIND_IN_SET</td>
+<td>在以逗号分隔的字符串中查找指定字符串的位置。</td>
+</tr>
+<tr class="odd">
+<td>FORMAT_NUMBER</td>
+<td>将数字转化为指定格式的字符串。</td>
+</tr>
+<tr class="even">
+<td>FROM_JSON</td>
+<td>根据给定的JSON字符串和输出格式信息，返回ARRAY、MAP或STRUCT类型。</td>
+</tr>
+<tr class="odd">
+<td>GET_JSON_OBJECT</td>
+<td>在一个标准JSON字符串中，按照指定方式抽取指定的字符串。</td>
+</tr>
+<tr class="even">
+<td>INITCAP</td>
+<td>将字符串转换为固定格式的字符串，单词之间以空格分隔。</td>
+</tr>
+<tr class="odd">
+<td>INSTR</td>
+<td>计算A字符串在B字符串中的位置。</td>
+</tr>
+<tr class="even">
+<td>IS_ENCODING</td>
+<td>判断字符串是否可以从指定的A字符集转换为B字符集。</td>
+</tr>
+<tr class="odd">
+<td>JSON_TUPLE</td>
+<td>在一个标准的JSON字符串中，按照输入的一组键抽取各个键指定的字符串。</td>
+</tr>
+<tr class="even">
+<td>KEYVALUE</td>
+<td>将字符串拆分为Key-Value对，并将Key-Value对分开，返回Key对应的Value。</td>
+</tr>
+<tr class="odd">
+<td>KEYVALUE_TUPLE</td>
+<td>将字符串拆分为多个Key-Value对，并将Key-Value对分开，返回多个Key对应的Value。</td>
+</tr>
+<tr class="even">
+<td>LENGTH</td>
+<td>计算字符串的长度。</td>
+</tr>
+<tr class="odd">
+<td>LENGTHB</td>
+<td>计算字符串以字节为单位的长度。</td>
+</tr>
+<tr class="even">
+<td>LOCATE</td>
+<td>在字符串中查找另一指定字符串的位置。</td>
+</tr>
+<tr class="odd">
+<td>LPAD</td>
+<td>将字符串向左补足到指定位数。</td>
+</tr>
+<tr class="even">
+<td>LTRIM</td>
+<td>去除字符串的左端字符。</td>
+</tr>
+<tr class="odd">
+<td>MASK_HASH</td>
+<td>返回基于字符串表达式计算的Hash值。</td>
+</tr>
+<tr class="even">
+<td>MD5</td>
+<td>计算字符串的MD5值。</td>
+</tr>
+<tr class="odd">
+<td>PARSE_URL</td>
+<td>对URL进行解析返回指定部分的信息。</td>
+</tr>
+<tr class="even">
+<td>PARSE_URL_TUPLE</td>
+<td>对URL进行解析返回多个部分的信息。</td>
+</tr>
+<tr class="odd">
+<td>REGEXP_COUNT</td>
+<td>计算字符串从指定位置开始，匹配指定规则的子串数。</td>
+</tr>
+<tr class="even">
+<td>REGEXP_EXTRACT</td>
+<td>将字符串按照指定规则拆分为组后，返回指定组的字符串。</td>
+</tr>
+<tr class="odd">
+<td>REGEXP_EXTRACT_ALL</td>
+<td>在字符串中查找所有出现的正则表达式匹配的子字符串，并把找到的字符串以数组形式返回。</td>
+</tr>
+<tr class="even">
+<td>REGEXP_INSTR</td>
+<td>返回字符串从指定位置开始，与指定规则匹配指定次数的子串的起始或结束位置。</td>
+</tr>
+<tr class="odd">
+<td>REGEXP_REPLACE</td>
+<td>将字符串中，与指定规则在指定次数匹配的子串替换为另一字符串。</td>
+</tr>
+<tr class="even">
+<td>REGEXP_SUBSTR</td>
+<td>返回字符串中，从指定位置开始，与指定规则匹配指定次数的子串。</td>
+</tr>
+<tr class="odd">
+<td>REPEAT</td>
+<td>返回将字符串重复指定次数后的结果。</td>
+</tr>
+<tr class="even">
+<td>REPLACE</td>
+<td>将字符串中与指定字符串匹配的子串替换为另一字符串。</td>
+</tr>
+<tr class="odd">
+<td>REVERSE</td>
+<td>返回倒序字符串。</td>
+</tr>
+<tr class="even">
+<td>RPAD</td>
+<td>将字符串向右补足到指定位数。</td>
+</tr>
+<tr class="odd">
+<td>RTRIM</td>
+<td>去除字符串的右端字符。</td>
+</tr>
+<tr class="even">
+<td>SOUNDEX</td>
+<td>将普通字符串替换为SOUNDEX字符串。</td>
+</tr>
+<tr class="odd">
+<td>SPACE</td>
+<td>生成空格字符串。</td>
+</tr>
+<tr class="even">
+<td>SPLIT</td>
+<td>按照分隔符分割字符串后返回数组。</td>
+</tr>
+<tr class="odd">
+<td>SPLIT_PART</td>
+<td>按照分隔符拆分字符串，返回指定部分的子串。</td>
+</tr>
+<tr class="even">
+<td>SUBSTR</td>
+<td>返回STRING类型字符串从指定位置开始，指定长度的子串。</td>
+</tr>
+<tr class="odd">
+<td>SUBSTRING</td>
+<td>返回STRING或BINARY类型字符串从指定位置开始，指定长度的子串。</td>
+</tr>
+<tr class="even">
+<td>SUBSTRING_INDEX</td>
+<td>截取字符串指定分隔符前的字符串。</td>
+</tr>
+<tr class="odd">
+<td>TO_CHAR</td>
+<td>将BOOLEAN、BIGINT、DECIMAL或DOUBLE类型值转为对应的STRING类型表示。</td>
+</tr>
+<tr class="even">
+<td>TO_JSON</td>
+<td>将指定的复杂类型输出为JSON字符串。</td>
+</tr>
+<tr class="odd">
+<td>TOLOWER</td>
+<td>将字符串中的英文字符转换为小写形式。</td>
+</tr>
+<tr class="even">
+<td>TOUPPER</td>
+<td>将字符串中</td>
+</tr>
+</tbody>
+</table>
+<p>的英文字符转换为大写形式。 |
+| TRANSLATE | 将A出现在B中的字符串替换为C字符串。 |
+| TRIM | 去除字符串的左右两端字符。 |
+| URL_DECODE | 将字符串从application/x-www-form-urlencoded MIME格式转换为常规字符。 |
+| URL_ENCODE | 将字符串编码为application/x-www-form-urlencoded MIME格式。 |</p>
+<p>以下是一些字符串函数的示例：</p>
+<ul>
+<li><p><strong>CONCAT</strong>：将字符串连接在一起。</p>
+<pre><code>SELECT CONCAT(&#39;Hello&#39;, &#39; &#39;, &#39;World&#39;); -- 返回 &#39;Hello World&#39;</code></pre></li>
+<li><p><strong>LENGTH</strong>：计算字符串的长度。</p>
+<pre><code>SELECT LENGTH(&#39;MaxCompute&#39;); -- 返回 11</code></pre></li>
+<li><p><strong>SUBSTR</strong>：返回指定位置开始的子串。</p>
+<pre><code>SELECT SUBSTR(&#39;MaxCompute&#39;, 4); -- 返回 &#39;Compute&#39;</code></pre></li>
+<li><p><strong>UPPER</strong>：将字符串转换为大写形式。</p>
+<pre><code>SELECT UPPER(&#39;maxcompute&#39;); -- 返回 &#39;MAXCOMPUTE&#39;</code></pre></li>
+<li><p><strong>ASCII</strong>：返回字符串的第一个字符的ASCII码。</p>
+<pre><code>SELECT ASCII(&#39;A&#39;); -- 返回 65</code></pre></li>
+<li><p><strong>CHR</strong>：将指定ASCII码转换成字符。</p>
+<pre><code>SELECT CHR(65); -- 返回 &#39;A&#39;</code></pre></li>
+<li><p><strong>CONCAT_WS</strong>：将参数中的所有字符串按照指定的分隔符连接在一起。</p>
+<pre><code>SELECT CONCAT_WS(&#39;-&#39;, &#39;2022&#39;, &#39;02&#39;, &#39;14&#39;); -- 返回 &#39;2022-02-14&#39;</code></pre></li>
+<li><p><strong>LENGTHB</strong>：计算字符串以字节为单位的长度。</p>
+<pre><code>SELECT LENGTHB(&#39;MaxCompute&#39;); -- 返回字符串长度的字节数</code></pre></li>
+<li><p><strong>LOCATE</strong>：在字符串中查找另一指定字符串的位置。</p>
+<pre><code>SELECT LOCATE(&#39;abc&#39;, &#39;defabcghi&#39;); -- 返回 4</code></pre></li>
+<li><p><strong>REPLACE</strong>：将字符串中与指定字符串匹配的子串替换为另一字符串。</p>
+<pre><code>SELECT REPLACE(&#39;hello world&#39;, &#39;world&#39;, &#39;MaxCompute&#39;); -- 返回 &#39;hello MaxCompute&#39;</code></pre></li>
+<li><p><strong>REVERSE</strong>：返回倒序字符串。</p>
+<pre><code>SELECT REVERSE(&#39;MaxCompute&#39;); -- 返回 &#39;etupmoeCxaM&#39;</code></pre></li>
+<li><p><strong>SPLIT</strong>：按照分隔符分割字符串后返回数组。</p>
+<pre><code>SELECT SPLIT(&#39;apple,banana,orange&#39;, &#39;,&#39;); -- 返回数组 [&#39;apple&#39;, &#39;banana&#39;, &#39;orange&#39;]</code></pre></li>
+<li><p><strong>TOUPPER</strong>：将字符串中的英文字符转换为大写形式。</p>
+<pre><code>SELECT TOUPPER(&#39;MaxCompute&#39;); -- 返回 &#39;MAXCOMPUTE&#39;</code></pre></li>
+<li><p><strong>TRIM</strong>：去除字符串的左右两端字符。</p>
+<pre><code>SELECT TRIM(&#39;  MaxCompute  &#39;); -- 返回 &#39;MaxCompute&#39;</code></pre></li>
+</ul>
+</div>
+<div id="复杂类型函数" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> 复杂类型函数<a href="其他函数.html#复杂类型函数" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="8%" />
+<col width="16%" />
+<col width="75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数类别</th>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ARRAY函数</td>
+<td>ALL_MATCH</td>
+<td>判断ARRAY数组中是否所有元素都满足指定条件。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ANY_MATCH</td>
+<td>判断ARRAY数组中是否存在满足指定条件的元素。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAY</td>
+<td>使用给定的值构造ARRAY。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ARRAY_CONTAINS</td>
+<td>检测指定的ARRAY中是否包含指定的值。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAY_DISTINCT</td>
+<td>去除ARRAY数组中的重复元素。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ARRAY_EXCEPT</td>
+<td>找出在ARRAY A中，但不在ARRAY B中的元素，并去掉重复的元素后，以ARRAY形式返回结果。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAY_INTERSECT</td>
+<td>计算两个ARRAY数组的交集。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ARRAY_JOIN</td>
+<td>将ARRAY数组中的元素按照指定字符串进行拼接。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAY_MAX</td>
+<td>计算ARRAY数组中的最大值。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ARRAY_MIN</td>
+<td>计算ARRAY数组中的最小值。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAY_NORMALIZE</td>
+<td>返回根据指定p范数（p Norm）对数组元素规范化后的数组。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ARRAY_POSITION</td>
+<td>计算指定元素在ARRAY数组中第一次出现的位置。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAY_REDUCE</td>
+<td>将ARRAY数组的元素进行聚合。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ARRAY_REMOVE</td>
+<td>在ARRAY数组中删除指定元素。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAY_REPEAT</td>
+<td>返回将指定元素重复指定次数后的ARRAY数组。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ARRAY_SORT</td>
+<td>将ARRAY数组的元素进行排序。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAY_UNION</td>
+<td>计算两个ARRAY数组的并集并去掉重复元素。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ARRAYS_OVERLAP</td>
+<td>判断两个ARRAY数组中是否包含相同元素。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ARRAYS_ZIP</td>
+<td>合并多个ARRAY数组。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>COMBINATIONS</td>
+<td>返回输入数组元素的N元组合组成的数组。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>CONCAT</td>
+<td>将ARRAY数组或字符串连接在一起。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>EXPLODE</td>
+<td>将一行数据转为多行的UDTF。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>FILTER</td>
+<td>将ARRAY数组中的元素进行过滤。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>FLATTEN</td>
+<td>将数组类型的数组转换为单个数组。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>INDEX</td>
+<td>返回ARRAY数组指定位置的元素值。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>NGRAMS</td>
+<td>返回指定数组元素的N元语法（n-gram）数组。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>POSEXPLODE</td>
+<td>将指定的ARRAY展开，每个Value一行，每行两列分别对应数组从0开始的下标和数组元素。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>REVERSE</td>
+<td>返回指定数组的元素倒序数组。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>SEQUENCE</td>
+<td>根据表达式生成包含指定元素的数组。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>SHUFFLE</td>
+<td>返回指定数组的元素随机排列数组。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>SIZE</td>
+<td>返回指定ARRAY中的元素数目。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>SLICE</td>
+<td>对ARRAY数据切片，返回从指定位置开始、指定长度的数组。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>SORT_ARRAY</td>
+<td>为指定的数组中的元素排序。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>SPLIT</td>
+<td>将字符串按照指定的分隔符分割后返回数组。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>TRANSFORM</td>
+<td>将ARRAY数组中的元素进行转换。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ZIP_WITH</td>
+<td>将2个ARRAY数组按照位置进行元素级别的合并。</td>
+</tr>
+<tr class="odd">
+<td>MAP函数</td>
+<td>EXPLODE</td>
+<td>将一行数据转为多行的UDTF。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>INDEX</td>
+<td>返回MAP类型参数中满足指定条件的Value。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>MAP</td>
+<td>使用指定的Key-Value对建立MAP。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>MAP_CONCAT</td>
+<td>返回多个MAP的并集。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>MAP_ENTRIES</td>
+<td>将MAP中的Key、Value键值映射转换为STRUCT结构数组。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>MAP_FILTER</td>
+<td>将MAP中的元素进行过滤。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>MAP_FROM_ARRAYS</td>
+<td>通过给定的ARRAY数组构造MAP。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>MAP_FROM_ENTRIES</td>
+<td>通过给定的结构体数组构造MAP。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>MAP_KEYS</td>
+<td>将参数MAP中的所有Key作为数组返回。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>MAP_VALUES</td>
+<td>将参数MAP中的所有Value作为数组返回。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>MAP_ZIP_WITH</td>
+<td>对输入的两个MAP进行合并得到一个新MAP。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>MULTIMAP_FROM_ENTRIES</td>
+<td>结构体数组中返回一个MAP。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>SIZE</td>
+<td>返回指定MAP中的K/V对数。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>TRANSFORM_KEYS</td>
+<td>对MAP进行变换，保持Value不变，根据指定函数计算新的Key。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>TRANSFORM_VALUES</td>
+<td>对MAP进行变换，保持Key不变，根据指定函数计算新的Value。</td>
+</tr>
+<tr class="even">
+<td>STRUCT函数</td>
+<td>FIELD</td>
+<td>获取STRUCT中的成员变量的取值。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>INLINE</td>
+<td>将指定的STRUCT数组展开。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>NAMED_STRUCT</td>
+<td>使用给定的Name、Value列表建立STRUCT。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>STRUCT</td>
+<td>使用给定Value列表</td>
+</tr>
+<tr class="even">
+<td>JSON函数</td>
+<td>FROM_JSON</td>
+<td>根据给定的JSON字符串和输出格式信息，返回ARRAY、MAP或STRUCT类型。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>GET_JSON_OBJECT</td>
+<td>在一个标准JSON字符串中，按照指定方式抽取指定的字符串。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>JSON_TUPLE</td>
+<td>在一个标准的JSON字符串中，按照输入的一组键抽取各个键指定的字符串。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>TO_JSON</td>
+<td>将指定的复杂类型输出为JSON字符串。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>JSON_OBJECT</td>
+<td>生成JSON OBJECT，要求key和value成对出现。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>JSON_ARRAY</td>
+<td>生成JSON ARRAY。将一个可能为空的JSON类型对象，转换为包含这些类型的数组。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>JSON_EXTRACT</td>
+<td>解析JSON表达式中对应json_path的数据，注意json_path非法时会报错。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>JSON_EXISTS</td>
+<td>查看json_path对应的JSON值是否存在。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>JSON_PRETTY</td>
+<td>美化JSON，增加换行及空格。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>JSON_TYPE</td>
+<td>返回JSON数据所属的数据类型名称。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>JSON_FORMAT</td>
+<td>将JSON数据转换成STRING类型，默认不自动进行美化。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>JSON_PARSE</td>
+<td>将STRING类型转成JSON类型，非JSON格式转换为字符串会报错。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>JSON_VALID</td>
+<td>检查字符串是否为合法的JSON格式。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>CAST</td>
+<td>支持基本类型与JSON类型的转换。</td>
+</tr>
+</tbody>
+</table>
+<div id="array函数" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> ARRAY函数<a href="其他函数.html#array函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>ALL_MATCH</strong></li>
+</ul>
+<pre><code>SELECT ALL_MATCH(my_array, x -&gt; x &gt; 5) AS all_greater_than_5
+FROM my_table;
+-- 这个示例中，检查数组中的所有元素是否大于5。</code></pre>
+<ul>
+<li><strong>ANY_MATCH</strong></li>
+</ul>
+<pre><code>SELECT ANY_MATCH(my_array, x -&gt; x = 10) AS has_value_10
+FROM my_table;
+-- 这个示例中，检查数组中是否存在值为10的元素。</code></pre>
+<ul>
+<li><strong>ARRAY</strong></li>
+</ul>
+<pre><code>SELECT ARRAY(1, 2, 3, 4, 5) AS my_array;
+-- 这个示例中，创建一个包含整数 1 到 5 的数组。</code></pre>
+<ul>
+<li><strong>ARRAY_CONTAINS</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_CONTAINS(my_array, 3) AS contains_value_3
+FROM my_table;
+-- 这个示例中，检查数组中是否包含值为3的元素。</code></pre>
+<ul>
+<li><strong>ARRAY_DISTINCT</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_DISTINCT(my_array) AS unique_values
+FROM my_table;
+-- 这个示例中，获取数组中的唯一值。</code></pre>
+<ul>
+<li><strong>ARRAY_EXCEPT</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_EXCEPT(array_a, array_b) AS difference
+FROM my_table;
+-- 这个示例中，获取数组 A 中存在但数组 B 中不存在的元素。</code></pre>
+<ul>
+<li><strong>ARRAY_INTERSECT</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_INTERSECT(array_a, array_b) AS common_elements
+FROM my_table;
+-- 这个示例中，获取两个数组中的交集元素。</code></pre>
+<ul>
+<li><strong>ARRAY_JOIN</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_JOIN(my_array, &#39;, &#39;) AS joined_string
+FROM my_table;
+-- 这个示例中，使用逗号和空格将数组中的元素连接成一个字符串。</code></pre>
+<ul>
+<li><strong>ARRAY_MAX</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_MAX(my_array) AS max_value
+FROM my_table;
+-- 这个示例中，获取数组中的最大值。</code></pre>
+<ul>
+<li><strong>ARRAY_MIN</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_MIN(my_array) AS min_value
+FROM my_table;
+-- 这个示例中，获取数组中的最小值。</code></pre>
+<ul>
+<li><strong>ARRAY_NORMALIZE</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_NORMALIZE(my_array) AS normalized_array
+FROM my_table;
+-- 这个示例中，对数组进行 p 范数（p Norm）规范化。</code></pre>
+<ul>
+<li><strong>ARRAY_POSITION</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_POSITION(my_array, 3) AS position_of_3
+FROM my_table;
+-- 这个示例中，获取值为3的元素在数组中的位置。</code></pre>
+<ul>
+<li><strong>ARRAY_REDUCE</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_REDUCE(my_array, (acc, x) -&gt; acc + x, 0) AS sum_of_array
+FROM my_table;
+-- 这个示例中，对数组中的元素进行求和。</code></pre>
+<ul>
+<li><strong>ARRAY_REMOVE</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_REMOVE(my_array, 3) AS array_without_3
+FROM my_table;
+-- 这个示例中，从数组中删除值为3的元素。</code></pre>
+<ul>
+<li><strong>ARRAY_REPEAT</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_REPEAT(1, 5) AS repeated_array
+FROM my_table;
+-- 这个示例中，重复值为1的元素5次构成的数组。</code></pre>
+<ul>
+<li><strong>ARRAY_SORT</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_SORT(my_array) AS sorted_array
+FROM my_table;
+-- 这个示例中，对数组进行排序。</code></pre>
+<ul>
+<li><strong>ARRAY_UNION</strong></li>
+</ul>
+<pre><code>SELECT ARRAY_UNION(array_a, array_b) AS merged_array
+FROM my_table;
+-- 这个示例中，获取两个数组的并集。</code></pre>
+<ul>
+<li><strong>ARRAYS_OVERLAP</strong></li>
+</ul>
+<pre><code>SELECT ARRAYS_OVERLAP(array_a, array_b) AS overlap_exists
+FROM my_table;
+-- 这个示例中，检查两个数组是否存在重叠元素。</code></pre>
+<ul>
+<li><strong>ARRAYS_ZIP</strong></li>
+</ul>
+<pre><code>SELECT ARRAYS_ZIP(array_a, array_b) AS zipped_array
+FROM my_table;
+-- 这个示例中，将多个数组合并成一个。</code></pre>
+<ul>
+<li><strong>COMBINATIONS</strong></li>
+</ul>
+<pre><code>SELECT COMBINATIONS(my_array, 2) AS combinations
+FROM my_table;
+-- 这个示例中，获取数组中两两组合的结果。</code></pre>
+<ul>
+<li><strong>CONCAT</strong></li>
+</ul>
+<pre><code>SELECT CONCAT(array_a, array_b) AS concatenated_array
+FROM my_table;
+-- 这个示例中，将两个数组连接成一个数组。</code></pre>
+<ul>
+<li><strong>EXPLODE</strong></li>
+</ul>
+<pre><code>SELECT EXPLODE(my_array) AS exploded_element
+FROM my_table;
+-- 这个示例中，将数组拆分成多行。</code></pre>
+<ul>
+<li><strong>FILTER</strong></li>
+</ul>
+<pre><code>SELECT FILTER(my_array, x -&gt; x &gt; 5) AS filtered_array
+FROM my_table;
+-- 这个示例中，过滤出数组中大于5的元素。</code></pre>
+<ul>
+<li><strong>FLATTEN</strong></li>
+</ul>
+<pre><code>SELECT FLATTEN(array_of_arrays) AS flattened_array
+FROM my_table;
+-- 这个示例中，将数组类型的数组转换为单个数组。</code></pre>
+<ul>
+<li><strong>INDEX</strong></li>
+</ul>
+<pre><code>SELECT INDEX(my_array, 2) AS value_at_index_2
+FROM my_table;
+-- 这个示例中，获取数组中索引为2的元素值。</code></pre>
+<ul>
+<li><strong>NGRAMS</strong></li>
+</ul>
+<pre><code>SELECT NGRAMS(my_array, 2) AS ngrams
+FROM my_table;
+-- 这个示例中，获取数组元素的2元语法数组。</code></pre>
+<ul>
+<li><strong>POSEXPLODE</strong></li>
+</ul>
+<pre><code>SELECT POSEXPLODE(my_array) AS (pos, val)
+FROM my_table;
+-- 这个示例中，将数组展开成每个元素和对应位置的行。</code></pre>
+<ul>
+<li><strong>REVERSE</strong></li>
+</ul>
+<pre><code>SELECT REVERSE(my_array) AS reversed_array
+FROM my_table;
+-- 这个示例中，获取数组的逆序数组。</code></pre>
+<ul>
+<li><strong>SEQUENCE</strong></li>
+</ul>
+<pre><code>SELECT SEQUENCE(1, 10, 2) AS sequence_array
+FROM my_table;
+-- 这个示例中，生成一个从1到10，步长为2的数组。</code></pre>
+<ul>
+<li><strong>SHUFFLE</strong></li>
+</ul>
+<pre><code>SELECT SHUFFLE(my_array) AS shuffled_array
+FROM my_table;
+-- 这个示例中，将数组的元素随机排列。</code></pre>
+<ul>
+<li><strong>SIZE</strong></li>
+</ul>
+<pre><code>SELECT SIZE(my_array) AS array_size
+FROM my_table;
+-- 这个示例中，获取数组中的元素数量。</code></pre>
+<ul>
+<li><strong>SLICE</strong></li>
+</ul>
+<pre><code>SELECT SLICE(my_array, 2, 3) AS sliced_array
+FROM my_table;
+-- 这
+
+个示例中，对数组进行切片，从索引2开始，长度为3。</code></pre>
+<ul>
+<li><strong>SORT_ARRAY</strong></li>
+</ul>
+<pre><code>SELECT SORT_ARRAY(my_array, (a, b) -&gt; a - b) AS sorted_array
+FROM my_table;
+-- 这个示例中，按照升序对数组中的元素进行排序。</code></pre>
+<ul>
+<li><strong>SPLIT</strong></li>
+</ul>
+<pre><code>SELECT SPLIT(&#39;a,b,c&#39;, &#39;,&#39;) AS split_array
+FROM my_table;
+-- 这个示例中，将字符串按逗号分割成数组。</code></pre>
+<ul>
+<li><strong>TRANSFORM</strong></li>
+</ul>
+<pre><code>SELECT TRANSFORM(my_array, x -&gt; x * 2) AS transformed_array
+FROM my_table;
+-- 这个示例中，将数组中的每个元素都乘以2进行转换。</code></pre>
+<ul>
+<li><strong>ZIP_WITH</strong></li>
+</ul>
+<pre><code>SELECT ZIP_WITH(array_a, array_b, (a, b) -&gt; a + b) AS zipped_with_array
+FROM my_table;
+-- 这个示例中，将两个数组按位置元素级别合并，并对应位置元素相加。</code></pre>
+</div>
+<div id="map函数" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> MAP函数<a href="其他函数.html#map函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>EXPLODE</strong></li>
+</ul>
+<pre><code>SELECT EXPLODE(my_map) AS (key, value)
+FROM my_table;
+-- 这个示例中，将映射展开成键值对。</code></pre>
+<ul>
+<li><strong>INDEX</strong></li>
+</ul>
+<pre><code>SELECT INDEX(my_map, x -&gt; x &gt; 5) AS indexed_values
+FROM my_table;
+-- 这个示例中，获取映射中值大于5的元素。</code></pre>
+<ul>
+<li><strong>MAP</strong></li>
+</ul>
+<pre><code>SELECT MAP(ARRAY[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], ARRAY[1, 2, 3]) AS my_map;
+-- 这个示例中，创建一个包含键值对的映射。</code></pre>
+<ul>
+<li><strong>MAP_CONCAT</strong></li>
+</ul>
+<pre><code>SELECT MAP_CONCAT(map_a, map_b) AS concatenated_map
+FROM my_table;
+-- 这个示例中，获取多个映射的并集。</code></pre>
+<ul>
+<li><strong>MAP_ENTRIES</strong></li>
+</ul>
+<pre><code>SELECT MAP_ENTRIES(my_map) AS map_entries
+FROM my_table;
+-- 这个示例中，将映射中的键值对转换为结构体数组。</code></pre>
+<ul>
+<li><strong>MAP_FILTER</strong></li>
+</ul>
+<pre><code>SELECT MAP_FILTER(my_map, (k, v) -&gt; v &gt; 5) AS filtered_map
+FROM my_table;
+-- 这个示例中，过滤出映射中值大于5的键值对。</code></pre>
+<ul>
+<li><strong>MAP_FROM_ARRAYS</strong></li>
+</ul>
+<pre><code>SELECT MAP_FROM_ARRAYS(keys_array, values_array) AS mapped_array
+FROM my_table;
+-- 这个示例中，使用给定的数组构建映射。</code></pre>
+<ul>
+<li><strong>MAP_FROM_ENTRIES</strong></li>
+</ul>
+<pre><code>SELECT MAP_FROM_ENTRIES(array_of_structs) AS mapped_map
+FROM my_table;
+-- 这个示例中，使用给定的结构体数组构建映射。</code></pre>
+<ul>
+<li><strong>MAP_KEYS</strong></li>
+</ul>
+<pre><code>SELECT MAP_KEYS(my_map) AS keys_array
+FROM my_table;
+-- 这个示例中，获取映射中的所有键。</code></pre>
+<ul>
+<li><strong>MAP_VALUES</strong></li>
+</ul>
+<pre><code>SELECT MAP_VALUES(my_map) AS values_array
+FROM my_table;
+-- 这个示例中，获取映射中的所有值。</code></pre>
+<ul>
+<li><strong>MAP_ZIP_WITH</strong></li>
+</ul>
+<pre><code>SELECT MAP_ZIP_WITH(map_a, map_b, (a, b) -&gt; a + b) AS zipped_map
+FROM my_table;
+-- 这个示例中，将两个映射合并成一个，并对相同键的值进行相加。</code></pre>
+<ul>
+<li><strong>MULTIMAP_FROM_ENTRIES</strong></li>
+</ul>
+<pre><code>SELECT MULTIMAP_FROM_ENTRIES(array_of_structs) AS multimap
+FROM my_table;
+-- 这个示例中，从结构体数组中创建一个多重映射。</code></pre>
+<ul>
+<li><strong>SIZE</strong></li>
+</ul>
+<pre><code>SELECT SIZE(my_map) AS map_size
+FROM my_table;
+-- 这个示例中，获取映射中键值对的数量。</code></pre>
+<ul>
+<li><strong>TRANSFORM_KEYS</strong></li>
+</ul>
+<pre><code>SELECT TRANSFORM_KEYS(my_map, k -&gt; k * 2) AS transformed_keys_map
+FROM my_table;
+-- 这个示例中，对映射中的键进行转换，保持值不变。</code></pre>
+<ul>
+<li><strong>TRANSFORM_VALUES</strong></li>
+</ul>
+<pre><code>SELECT TRANSFORM_VALUES(my_map, v -&gt; v * 2) AS transformed_values_map
+FROM my_table;
+-- 这个示例中，对映射中的值进行转换，保持键不变。</code></pre>
+</div>
+<div id="struct函数" class="section level3 hasAnchor" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> STRUCT函数<a href="其他函数.html#struct函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>FIELD</strong></li>
+</ul>
+<pre><code>SELECT FIELD(my_struct, &#39;age&#39;) AS age_value
+FROM my_table;
+-- 这个示例中，获取结构体中名为 &#39;age&#39; 的字段的值。</code></pre>
+<ul>
+<li><strong>INLINE</strong></li>
+</ul>
+<pre><code>SELECT INLINE(array_of_structs) AS (field1, field2)
+FROM my_table;
+-- 这个示例中，将结构体数组展开成字段。</code></pre>
+<ul>
+<li><strong>NAMED_STRUCT</strong></li>
+</ul>
+<pre><code>SELECT NAMED_STRUCT(&#39;name&#39;, &#39;Alice&#39;, &#39;age&#39;, 30) AS my_struct;
+-- 这个示例中，创建一个包含指定字段名和值的结构体。</code></pre>
+<ul>
+<li><strong>STRUCT</strong></li>
+</ul>
+<pre><code>SELECT STRUCT(1 AS id, &#39;Alice&#39; AS name, 30 AS age) AS my_struct;
+-- 这个示例中，创建一个具有指定字段和值的结构体。</code></pre>
+</div>
+<div id="json函数" class="section level3 hasAnchor" number="8.4.4">
+<h3><span class="header-section-number">8.4.4</span> JSON函数<a href="其他函数.html#json函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>FROM_JSON</strong></li>
+</ul>
+<pre><code>SELECT FROM_JSON(&#39;{&quot;key&quot;: &quot;value&quot;}&#39;) AS json_object
+FROM my_table;
+-- 这个示例中，将 JSON 字符串转换为 MAP 或 ARRAY 或 STRUCT 类型。</code></pre>
+<ul>
+<li><strong>GET_JSON_OBJECT</strong></li>
+</ul>
+<pre><code>SELECT GET_JSON_OBJECT(&#39;{&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30}&#39;, &#39;$.name&#39;) AS name
+FROM my_table;
+-- 这个示例中，从 JSON 字符串中提取指定键的值。</code></pre>
+<ul>
+<li><strong>JSON_TUPLE</strong></li>
+</ul>
+<pre><code>SELECT JSON_TUPLE(&#39;{&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30}&#39;, &#39;name&#39;, &#39;age&#39;) AS (name, age)
+FROM my_table;
+-- 这个示例中，从 JSON 字符串中提取指定键的值作为元组返回。</code></pre>
+<ul>
+<li><strong>TO_JSON</strong></li>
+</ul>
+<pre><code>SELECT TO_JSON(MAP(&#39;name&#39;, &#39;Alice&#39;, &#39;age&#39;, 30)) AS json_string
+FROM my_table;
+-- 这个示例中，将复杂类型输出为 JSON 字符串。</code></pre>
+<ul>
+<li><strong>JSON_OBJECT</strong></li>
+</ul>
+<pre><code>SELECT JSON_OBJECT(&#39;name&#39;, &#39;Alice&#39;, &#39;age&#39;, 30) AS json_obj
+FROM my_table;
+-- 这个示例中，创建
+
+一个 JSON 对象。</code></pre>
+<ul>
+<li><strong>JSON_ARRAY</strong></li>
+</ul>
+<pre><code>SELECT JSON_ARRAY(&#39;Alice&#39;, 30) AS json_arr
+FROM my_table;
+-- 这个示例中，创建一个 JSON 数组。</code></pre>
+<ul>
+<li><strong>JSON_EXTRACT</strong></li>
+</ul>
+<pre><code>SELECT JSON_EXTRACT(&#39;{&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30}&#39;, &#39;$.name&#39;) AS extracted_name
+FROM my_table;
+-- 这个示例中，从 JSON 字符串中提取指定路径的值。</code></pre>
+<ul>
+<li><strong>JSON_EXISTS</strong></li>
+</ul>
+<pre><code>SELECT JSON_EXISTS(&#39;{&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30}&#39;, &#39;$.name&#39;) AS name_exists
+FROM my_table;
+-- 这个示例中，检查 JSON 字符串中是否存在指定路径的值。</code></pre>
+<ul>
+<li><strong>JSON_PRETTY</strong></li>
+</ul>
+<pre><code>SELECT JSON_PRETTY(&#39;{&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30}&#39;) AS pretty_json
+FROM my_table;
+-- 这个示例中，对 JSON 字符串进行美化。</code></pre>
+<ul>
+<li><strong>JSON_TYPE</strong></li>
+</ul>
+<pre><code>SELECT JSON_TYPE(&#39;{&quot;name&quot;: &quot;Alice&quot;}&#39;) AS json_data_type
+FROM my_table;
+-- 这个示例中，返回 JSON 数据的数据类型名称。</code></pre>
+<ul>
+<li><strong>JSON_FORMAT</strong></li>
+</ul>
+<pre><code>SELECT JSON_FORMAT(&#39;{&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30}&#39;) AS formatted_json
+FROM my_table;
+-- 这个示例中，将 JSON 数据格式化为字符串。</code></pre>
+<ul>
+<li><strong>JSON_PARSE</strong></li>
+</ul>
+<pre><code>SELECT JSON_PARSE(&#39;{&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30}&#39;) AS parsed_json
+FROM my_table;
+-- 这个示例中，将字符串类型的 JSON 转换为 JSON 类型。</code></pre>
+<ul>
+<li><strong>JSON_VALID</strong></li>
+</ul>
+<pre><code>SELECT JSON_VALID(&#39;{&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 30}&#39;) AS is_valid_json
+FROM my_table;
+-- 这个示例中，检查字符串是否为合法的 JSON 格式。</code></pre>
+<ul>
+<li><strong>CAST</strong></li>
+</ul>
+<pre><code>SELECT CAST(&#39;{&quot;age&quot;: 30}&#39; AS MAP&lt;STRING, INT&gt;) AS casted_json
+FROM my_table;
+-- 这个示例中，将 JSON 字符串转换为指定的 JSON 类型。</code></pre>
+</div>
+</div>
+<div id="其他函数-1" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> 其他函数<a href="其他函数.html#其他函数-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="66%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BASE64</td>
+<td>将二进制表示值转换为BASE64编码格式字符串。</td>
+</tr>
+<tr class="even">
+<td>BETWEEN AND</td>
+<td>筛选满足区间条件的数据。</td>
+</tr>
+<tr class="odd">
+<td>CASE WHEN</td>
+<td>根据表达式的计算结果，灵活地返回不同的值。</td>
+</tr>
+<tr class="even">
+<td>CAST</td>
+<td>将表达式的结果转换为目标数据类型。</td>
+</tr>
+<tr class="odd">
+<td>COALESCE</td>
+<td>返回参数列表中第一个非NULL的值。</td>
+</tr>
+<tr class="even">
+<td>COMPRESS</td>
+<td>对STRING或BINARY类型输入参数按照GZIP算法进行压缩。</td>
+</tr>
+<tr class="odd">
+<td>CRC32</td>
+<td>计算字符串或二进制数据的循环冗余校验值。</td>
+</tr>
+<tr class="even">
+<td>DECODE</td>
+<td>实现if-then-else分支选择的功能。</td>
+</tr>
+<tr class="odd">
+<td>DECOMPRESS</td>
+<td>对BINARY类型输入参数按照GZIP算法进行解压。</td>
+</tr>
+<tr class="even">
+<td>GET_IDCARD_AGE</td>
+<td>根据身份证号码返回当前的年龄。</td>
+</tr>
+<tr class="odd">
+<td>GET_IDCARD_BIRTHDAY</td>
+<td>根据身份证号码返回出生日期。</td>
+</tr>
+<tr class="even">
+<td>GET_IDCARD_SEX</td>
+<td>根据身份证号码返回性别。</td>
+</tr>
+<tr class="odd">
+<td>GET_USER_ID</td>
+<td>获取当前账号的账号ID。</td>
+</tr>
+<tr class="even">
+<td>GREATEST</td>
+<td>返回输入参数中的最大值。</td>
+</tr>
+<tr class="odd">
+<td>HASH</td>
+<td>根据输入参数计算Hash值。</td>
+</tr>
+<tr class="even">
+<td>IF</td>
+<td>判断指定的条件是否为真。</td>
+</tr>
+<tr class="odd">
+<td>LEAST</td>
+<td>返回输入参数中最小的值。</td>
+</tr>
+<tr class="even">
+<td>MAX_PT</td>
+<td>返回分区表的一级分区的最大值。</td>
+</tr>
+<tr class="odd">
+<td>NULLIF</td>
+<td>比较两个入参是否相等。</td>
+</tr>
+<tr class="even">
+<td>NVL</td>
+<td>指定值为NULL的参数的返回结果。</td>
+</tr>
+<tr class="odd">
+<td>ORDINAL</td>
+<td>将输入变量按从小到大排序后，返回指定位置的值。</td>
+</tr>
+<tr class="even">
+<td>PARTITION_EXISTS</td>
+<td>查询指定的分区是否存在。</td>
+</tr>
+<tr class="odd">
+<td>SAMPLE</td>
+<td>对所有读入的列值，采样并过滤掉不满足采样条件的行。</td>
+</tr>
+<tr class="even">
+<td>SHA</td>
+<td>计算字符串或二进制数据的SHA-1哈希值。</td>
+</tr>
+<tr class="odd">
+<td>SHA1</td>
+<td>计算字符串或二进制数据的SHA-1哈希值。</td>
+</tr>
+<tr class="even">
+<td>SHA2</td>
+<td>计算字符串或二进制数据的SHA-2哈希值。</td>
+</tr>
+<tr class="odd">
+<td>STACK</td>
+<td>将指定的参数组分割为指定的行数。</td>
+</tr>
+<tr class="even">
+<td>STR_TO_MAP</td>
+<td>将字符串按照指定的分隔符分割得到Key和Value。</td>
+</tr>
+<tr class="odd">
+<td>TABLE_EXISTS</td>
+<td>查询指定的表是否存在。</td>
+</tr>
+<tr class="even">
+<td>TRANS_ARRAY</td>
+<td>将一行数据转为多行的UDTF，将列中存储的以固定分隔符格式分隔的数组转为多行。</td>
+</tr>
+<tr class="odd">
+<td>TRANS_COLS</td>
+<td>将一行数据转换为多行数据的UDTF，将不同的列拆分为不同的行。</td>
+</tr>
+<tr class="even">
+<td>UNBASE64</td>
+<td>将BASE64编码格式字符串转换为二进制表示值。</td>
+</tr>
+<tr class="odd">
+<td>UNIQUE_ID</td>
+<td>返回一个随机ID，运行效率高于UUID函数。</td>
+</tr>
+<tr class="even">
+<td>UUID</td>
+<td>返回一个随机ID。</td>
+</tr>
+</tbody>
+</table>
+<p>BASE64:</p>
+<pre><code>SELECT BASE64(&#39;hello&#39;); -- 返回 &quot;aGVsbG8=&quot;</code></pre>
+<p>BETWEEN AND:</p>
+<pre><code>SELECT * FROM table_name WHERE column_name BETWEEN value1 AND value2;</code></pre>
+<p>CASE WHEN:</p>
+<pre><code>SELECT 
+  CASE 
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    ELSE default_result
+  END 
+FROM table_name;</code></pre>
+<p>CAST:</p>
+<pre><code>SELECT CAST(column_name AS INT) FROM table_name;</code></pre>
+<p>COALESCE:</p>
+<pre><code>SELECT COALESCE(column1, column2, column3, &#39;default_value&#39;) FROM table_name;</code></pre>
+<p>COMPRESS:</p>
+<pre><code>SELECT COMPRESS(&#39;hello&#39;); -- 返回压缩后的二进制数据</code></pre>
+<p>CRC32:</p>
+<pre><code>SELECT CRC32(&#39;hello&#39;); -- 返回CRC32值</code></pre>
+<p>DECODE:</p>
+<pre><code>SELECT DECODE(column_name, value1, result1, value2, result2, default_result) FROM table_name;</code></pre>
+<p>DECOMPRESS:</p>
+<pre><code>SELECT DECOMPRESS(compressed_data) FROM table_name; -- 返回解压后的数据</code></pre>
+<p>GET_IDCARD_AGE:</p>
+<pre><code>SELECT GET_IDCARD_AGE(&#39;身份证号码&#39;) FROM dual;</code></pre>
+<p>GET_IDCARD_BIRTHDAY:</p>
+<pre><code>SELECT GET_IDCARD_BIRTHDAY(&#39;身份证号码&#39;) FROM dual;</code></pre>
+<p>GET_IDCARD_SEX:</p>
+<pre><code>SELECT GET_IDCARD_SEX(&#39;身份证号码&#39;) FROM dual;</code></pre>
+<p>GET_USER_ID:</p>
+<pre><code>SELECT GET_USER_ID() FROM dual;</code></pre>
+<p>GREATEST:</p>
+<pre><code>SELECT GREATEST(value1, value2, value3) FROM dual;</code></pre>
+<p>HASH:</p>
+<pre><code>SELECT HASH(column_name) FROM table_name;</code></pre>
+<p>IF:</p>
+<pre><code>SELECT IF(condition, true_value, false_value) FROM table_name;</code></pre>
+<p>LEAST:</p>
+<pre><code>SELECT LEAST(value1, value2, value3) FROM dual;</code></pre>
+<p>MAX_PT:</p>
+<pre><code>SELECT MAX_PT() FROM dual;</code></pre>
+<p>NULLIF:</p>
+<pre><code>SELECT NULLIF(value1, value2) FROM dual;</code></pre>
+<p>NVL:</p>
+<pre><code>SELECT NVL(column_name, &#39;default_value&#39;) FROM table_name;</code></pre>
+<p>ORDINAL:</p>
+<pre><code>SELECT ORDINAL(value1, value2, value3, ...) FROM dual;</code></pre>
+<p>PARTITION_EXISTS:</p>
+<pre><code>SELECT PARTITION_EXISTS(&#39;partition_name&#39;) FROM dual;</code></pre>
+<p>SAMPLE:</p>
+<pre><code>SELECT SAMPLE(column_name) FROM table_name;</code></pre>
+<p>SHA:</p>
+<pre><code>SELECT SHA(&#39;hello&#39;); -- 返回SHA-1哈希值</code></pre>
+<p>SHA1:</p>
+<pre><code>SELECT SHA1(&#39;hello&#39;); -- 返回SHA-1哈希值</code></pre>
+<p>SHA2:</p>
+<pre><code>SELECT SHA2(&#39;hello&#39;, 256); -- 返回SHA-256哈希值</code></pre>
+<p>STACK:</p>
+<pre><code>SELECT STACK(2, &#39;value1&#39;, &#39;value2&#39;) FROM dual; -- 返回两行，每行一个参数</code></pre>
+<p>STR_TO_MAP:</p>
+<pre><code>SELECT STR_TO_MAP(&#39;key1=value1,key2=value2&#39;, &#39;,&#39;) FROM dual;</code></pre>
+<p>TABLE_EXISTS:</p>
+<pre><code>SELECT TABLE_EXISTS(&#39;table_name&#39;) FROM dual;</code></pre>
+<p>TRANS_ARRAY:</p>
+<pre><code>SELECT TRANS_ARRAY(column_name, &#39;,&#39;) FROM table_name;</code></pre>
+<p>TRANS_COLS:</p>
+<pre><code>SELECT TRANS_COLS(column1, column2, column3) FROM table_name;</code></pre>
+<p>UNBASE64:</p>
+<pre><code>SELECT UNBASE64(&#39;aGVsbG8=&#39;); -- 返回二进制数据</code></pre>
+<p>UNIQUE_ID:</p>
+<pre><code>SELECT UNIQUE_ID() FROM dual;</code></pre>
+<p>UUID:</p>
+<pre><code>SELECT UUID() FROM dual;</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="数学函数.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/07-references.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

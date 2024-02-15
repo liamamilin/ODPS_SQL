@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 DDL (Data Definition Language) | ODPS SQL</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 DDL (Data Definition Language) | ODPS SQL" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 DDL (Data Definition Language) | ODPS SQL" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="米霖" />
+
+
+<meta name="date" content="2024-01-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="基本语法.html"/>
+<link rel="next" href="dml-data-manipulation-language.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ODPS SQL</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#odps-sql-的特点"><i class="fa fa-check"></i><b>1.1</b> ODPS SQL 的特点</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#应用场景"><i class="fa fa-check"></i><b>1.2</b> 应用场景</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#odps-sql-与其他-sql-的比较"><i class="fa fa-check"></i><b>1.3</b> ODPS SQL 与其他 SQL 的比较</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="基本语法.html"><a href="基本语法.html"><i class="fa fa-check"></i><b>2</b> 基本语法</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="基本语法.html"><a href="基本语法.html#运算符"><i class="fa fa-check"></i><b>2.1</b> 运算符</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符"><i class="fa fa-check"></i><b>2.1.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.1.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符"><i class="fa fa-check"></i><b>2.1.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.1.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符"><i class="fa fa-check"></i><b>2.1.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.1.4" data-path="基本语法.html"><a href="基本语法.html#位运算符"><i class="fa fa-check"></i><b>2.1.4</b> 位运算符</a></li>
+<li class="chapter" data-level="2.1.5" data-path="基本语法.html"><a href="基本语法.html#其他运算符"><i class="fa fa-check"></i><b>2.1.5</b> 其他运算符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符"><i class="fa fa-check"></i><b>2.2</b> 转义字符</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="基本语法.html"><a href="基本语法.html#转义字符列表"><i class="fa fa-check"></i><b>2.2.1</b> 转义字符列表</a></li>
+<li class="chapter" data-level="2.2.2" data-path="基本语法.html"><a href="基本语法.html#转义字符的重要性"><i class="fa fa-check"></i><b>2.2.2</b> 转义字符的重要性</a></li>
+<li class="chapter" data-level="2.2.3" data-path="基本语法.html"><a href="基本语法.html#注意事项"><i class="fa fa-check"></i><b>2.2.3</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="基本语法.html"><a href="基本语法.html#like-匹配符"><i class="fa fa-check"></i><b>2.3</b> LIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="基本语法.html"><a href="基本语法.html#like-匹配符的使用"><i class="fa fa-check"></i><b>2.3.1</b> LIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.3.2" data-path="基本语法.html"><a href="基本语法.html#示例"><i class="fa fa-check"></i><b>2.3.2</b> 示例</a></li>
+<li class="chapter" data-level="2.3.3" data-path="基本语法.html"><a href="基本语法.html#like-的高级用法"><i class="fa fa-check"></i><b>2.3.3</b> LIKE 的高级用法</a></li>
+<li class="chapter" data-level="2.3.4" data-path="基本语法.html"><a href="基本语法.html#使用-like-时的注意事项"><i class="fa fa-check"></i><b>2.3.4</b> 使用 LIKE 时的注意事项</a></li>
+<li class="chapter" data-level="2.3.5" data-path="基本语法.html"><a href="基本语法.html#转义字符在-like-中的应用"><i class="fa fa-check"></i><b>2.3.5</b> 转义字符在 LIKE 中的应用</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符"><i class="fa fa-check"></i><b>2.4</b> RLIKE 匹配符</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="基本语法.html"><a href="基本语法.html#rlike-匹配符的使用"><i class="fa fa-check"></i><b>2.4.1</b> RLIKE 匹配符的使用</a></li>
+<li class="chapter" data-level="2.4.2" data-path="基本语法.html"><a href="基本语法.html#rlike-高级元字符"><i class="fa fa-check"></i><b>2.4.2</b> RLIKE 高级元字符</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="基本语法.html"><a href="基本语法.html#odps-sql-保留字与关键字"><i class="fa fa-check"></i><b>2.5</b> ODPS SQL 保留字与关键字</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="基本语法.html"><a href="基本语法.html#算术运算符-1"><i class="fa fa-check"></i><b>2.5.1</b> 算术运算符</a></li>
+<li class="chapter" data-level="2.5.2" data-path="基本语法.html"><a href="基本语法.html#比较运算符-1"><i class="fa fa-check"></i><b>2.5.2</b> 比较运算符</a></li>
+<li class="chapter" data-level="2.5.3" data-path="基本语法.html"><a href="基本语法.html#逻辑运算符-1"><i class="fa fa-check"></i><b>2.5.3</b> 逻辑运算符</a></li>
+<li class="chapter" data-level="2.5.4" data-path="基本语法.html"><a href="基本语法.html#数据类型"><i class="fa fa-check"></i><b>2.5.4</b> 数据类型</a></li>
+<li class="chapter" data-level="2.5.5" data-path="基本语法.html"><a href="基本语法.html#数据定义语言-ddl"><i class="fa fa-check"></i><b>2.5.5</b> 数据定义语言 (DDL)</a></li>
+<li class="chapter" data-level="2.5.6" data-path="基本语法.html"><a href="基本语法.html#数据操作语言-dml"><i class="fa fa-check"></i><b>2.5.6</b> 数据操作语言 (DML)</a></li>
+<li class="chapter" data-level="2.5.7" data-path="基本语法.html"><a href="基本语法.html#其他关键字"><i class="fa fa-check"></i><b>2.5.7</b> 其他关键字</a></li>
+<li class="chapter" data-level="2.5.8" data-path="基本语法.html"><a href="基本语法.html#集合操作"><i class="fa fa-check"></i><b>2.5.8</b> 集合操作</a></li>
+<li class="chapter" data-level="2.5.9" data-path="基本语法.html"><a href="基本语法.html#窗口函数"><i class="fa fa-check"></i><b>2.5.9</b> 窗口函数</a></li>
+<li class="chapter" data-level="2.5.10" data-path="基本语法.html"><a href="基本语法.html#子查询"><i class="fa fa-check"></i><b>2.5.10</b> 子查询</a></li>
+<li class="chapter" data-level="2.5.11" data-path="基本语法.html"><a href="基本语法.html#连接"><i class="fa fa-check"></i><b>2.5.11</b> 连接</a></li>
+<li class="chapter" data-level="2.5.12" data-path="基本语法.html"><a href="基本语法.html#条件表达式"><i class="fa fa-check"></i><b>2.5.12</b> 条件表达式</a></li>
+<li class="chapter" data-level="2.5.13" data-path="基本语法.html"><a href="基本语法.html#聚合函数"><i class="fa fa-check"></i><b>2.5.13</b> 聚合函数</a></li>
+<li class="chapter" data-level="2.5.14" data-path="基本语法.html"><a href="基本语法.html#数据导入导出"><i class="fa fa-check"></i><b>2.5.14</b> 数据导入导出</a></li>
+<li class="chapter" data-level="2.5.15" data-path="基本语法.html"><a href="基本语法.html#事务控制"><i class="fa fa-check"></i><b>2.5.15</b> 事务控制</a></li>
+<li class="chapter" data-level="2.5.16" data-path="基本语法.html"><a href="基本语法.html#权限管理"><i class="fa fa-check"></i><b>2.5.16</b> 权限管理</a></li>
+<li class="chapter" data-level="2.5.17" data-path="基本语法.html"><a href="基本语法.html#系统管理"><i class="fa fa-check"></i><b>2.5.17</b> 系统管理</a></li>
+<li class="chapter" data-level="2.5.18" data-path="基本语法.html"><a href="基本语法.html#分区管理"><i class="fa fa-check"></i><b>2.5.18</b> 分区管理</a></li>
+<li class="chapter" data-level="2.5.19" data-path="基本语法.html"><a href="基本语法.html#排序和分组"><i class="fa fa-check"></i><b>2.5.19</b> 排序和分组</a></li>
+<li class="chapter" data-level="2.5.20" data-path="基本语法.html"><a href="基本语法.html#约束和索引"><i class="fa fa-check"></i><b>2.5.20</b> 约束和索引</a></li>
+<li class="chapter" data-level="2.5.21" data-path="基本语法.html"><a href="基本语法.html#视图和临时表"><i class="fa fa-check"></i><b>2.5.21</b> 视图和临时表</a></li>
+<li class="chapter" data-level="2.5.22" data-path="基本语法.html"><a href="基本语法.html#函数和过程"><i class="fa fa-check"></i><b>2.5.22</b> 函数和过程</a></li>
+<li class="chapter" data-level="2.5.23" data-path="基本语法.html"><a href="基本语法.html#其他关键字-1"><i class="fa fa-check"></i><b>2.5.23</b> 其他关键字</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="基本语法.html"><a href="基本语法.html#数据类型转换"><i class="fa fa-check"></i><b>2.6</b> 数据类型转换</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html"><i class="fa fa-check"></i><b>3</b> DDL (Data Definition Language)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#表操作"><i class="fa fa-check"></i><b>3.1</b> 表操作</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#创建表create-table"><i class="fa fa-check"></i><b>3.1.1</b> 创建表（Create Table）</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的所有权alter-table-owner"><i class="fa fa-check"></i><b>3.1.2</b> 修改表的所有权（Alter Table Owner）</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的生命周期alter-table-lifecycle"><i class="fa fa-check"></i><b>3.1.3</b> 修改表的生命周期（Alter Table Lifecycle）</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除表drop-table"><i class="fa fa-check"></i><b>3.1.4</b> 删除表（Drop Table）</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#查看表的详细信息describe-table"><i class="fa fa-check"></i><b>3.1.5</b> 查看表的详细信息（Describe Table）</a></li>
+<li class="chapter" data-level="3.1.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的元数据list-table"><i class="fa fa-check"></i><b>3.1.6</b> 获取表的元数据（List Table）</a></li>
+<li class="chapter" data-level="3.1.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#获取表的分区信息list-partitions"><i class="fa fa-check"></i><b>3.1.7</b> 获取表的分区信息（List Partitions）</a></li>
+<li class="chapter" data-level="3.1.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的注释"><i class="fa fa-check"></i><b>3.1.8</b> 修改表的注释</a></li>
+<li class="chapter" data-level="3.1.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#重命名表"><i class="fa fa-check"></i><b>3.1.9</b> 重命名表</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#分区和列操作"><i class="fa fa-check"></i><b>3.2</b> 分区和列操作</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#新增分区"><i class="fa fa-check"></i><b>3.2.1</b> 新增分区</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除分区"><i class="fa fa-check"></i><b>3.2.2</b> 删除分区</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改分区"><i class="fa fa-check"></i><b>3.2.3</b> 修改分区</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#合并分区"><i class="fa fa-check"></i><b>3.2.4</b> 合并分区</a></li>
+<li class="chapter" data-level="3.2.5" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#清空分区数据"><i class="fa fa-check"></i><b>3.2.5</b> 清空分区数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#添加列或注释"><i class="fa fa-check"></i><b>3.2.6</b> 添加列或注释</a></li>
+<li class="chapter" data-level="3.2.7" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#删除列"><i class="fa fa-check"></i><b>3.2.7</b> 删除列</a></li>
+<li class="chapter" data-level="3.2.8" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#更改列数据类型"><i class="fa fa-check"></i><b>3.2.8</b> 更改列数据类型</a></li>
+<li class="chapter" data-level="3.2.9" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列的顺序"><i class="fa fa-check"></i><b>3.2.9</b> 修改列的顺序</a></li>
+<li class="chapter" data-level="3.2.10" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名"><i class="fa fa-check"></i><b>3.2.10</b> 修改列名</a></li>
+<li class="chapter" data-level="3.2.11" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列注释"><i class="fa fa-check"></i><b>3.2.11</b> 修改列注释</a></li>
+<li class="chapter" data-level="3.2.12" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改列名及注释"><i class="fa fa-check"></i><b>3.2.12</b> 修改列名及注释</a></li>
+<li class="chapter" data-level="3.2.13" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#修改表的列非空属性"><i class="fa fa-check"></i><b>3.2.13</b> 修改表的列非空属性</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期操作"><i class="fa fa-check"></i><b>3.3</b> 生命周期操作</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#生命周期概念"><i class="fa fa-check"></i><b>3.3.1</b> 生命周期概念</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#设置生命周期"><i class="fa fa-check"></i><b>3.3.2</b> 设置生命周期</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#禁止或恢复生命周期"><i class="fa fa-check"></i><b>3.3.3</b> 禁止或恢复生命周期</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#注意事项-1"><i class="fa fa-check"></i><b>3.3.4</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作"><i class="fa fa-check"></i><b>3.4</b> 视图操作</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ddl-data-definition-language.html"><a href="ddl-data-definition-language.html#视图操作命令"><i class="fa fa-check"></i><b>3.4.1</b> 视图操作命令</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html"><i class="fa fa-check"></i><b>4</b> DML (Data Manipulation Language)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写数据insert-into-insert-overwrite"><i class="fa fa-check"></i><b>4.1</b> 插入或覆写数据（INSERT INTO | INSERT OVERWRITE）</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件"><i class="fa fa-check"></i><b>4.1.1</b> 前提条件</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍"><i class="fa fa-check"></i><b>4.1.2</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制"><i class="fa fa-check"></i><b>4.1.3</b> 使用限制</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式"><i class="fa fa-check"></i><b>4.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="4.1.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例"><i class="fa fa-check"></i><b>4.1.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入或覆写动态分区数据dynamic-partition"><i class="fa fa-check"></i><b>4.2</b> 插入或覆写动态分区数据（DYNAMIC PARTITION）</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#插入数据到表格"><i class="fa fa-check"></i><b>4.2.1</b> 插入数据到表格</a></li>
+<li class="chapter" data-level="4.2.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-1"><i class="fa fa-check"></i><b>4.2.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新或删除数据update-delete"><i class="fa fa-check"></i><b>4.3</b> 更新或删除数据（UPDATE | DELETE）</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#删除数据delete"><i class="fa fa-check"></i><b>4.3.1</b> 删除数据（DELETE）</a></li>
+<li class="chapter" data-level="4.3.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-2"><i class="fa fa-check"></i><b>4.3.2</b> 使用示例</a></li>
+<li class="chapter" data-level="4.3.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#清空列数据"><i class="fa fa-check"></i><b>4.3.3</b> 清空列数据</a></li>
+<li class="chapter" data-level="4.3.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#更新数据update"><i class="fa fa-check"></i><b>4.3.4</b> 更新数据（UPDATE）</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#merge-into"><i class="fa fa-check"></i><b>4.4</b> MERGE INTO</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-3"><i class="fa fa-check"></i><b>4.4.1</b> 命令格式</a></li>
+<li class="chapter" data-level="4.4.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-4"><i class="fa fa-check"></i><b>4.4.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#多路输出multi-insert"><i class="fa fa-check"></i><b>4.5</b> 多路输出（MULTI INSERT）</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令解释"><i class="fa fa-check"></i><b>4.5.1</b> 命令解释</a></li>
+<li class="chapter" data-level="4.5.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#用法说明"><i class="fa fa-check"></i><b>4.5.2</b> 用法说明</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#values"><i class="fa fa-check"></i><b>4.6</b> VALUES</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例1通过-insert-values-操作向特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.1</b> 示例1：通过 <code>insert … values</code> 操作向特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例2通过-insert-values-操作向非特定分区内插入数据"><i class="fa fa-check"></i><b>4.6.2</b> 示例2：通过 <code>insert … values</code> 操作向非特定分区内插入数据</a></li>
+<li class="chapter" data-level="4.6.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例3使用复杂数据类型构造常量通过-insert-操作导入数据"><i class="fa fa-check"></i><b>4.6.3</b> 示例3：使用复杂数据类型构造常量，通过 <code>insert</code> 操作导入数据</a></li>
+<li class="chapter" data-level="4.6.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例4通过-insert-values-操作写入-datetime-或-timestamp-数据类型"><i class="fa fa-check"></i><b>4.6.4</b> 示例4：通过 <code>insert … values</code> 操作写入 DATETIME 或 TIMESTAMP 数据类型</a></li>
+<li class="chapter" data-level="4.6.5" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#示例5通过-values-table-操作插入数据"><i class="fa fa-check"></i><b>4.6.5</b> 示例5：通过 <code>values table</code> 操作插入数据</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load"><i class="fa fa-check"></i><b>4.7</b> LOAD</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-1"><i class="fa fa-check"></i><b>4.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.7.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用限制-1"><i class="fa fa-check"></i><b>4.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="4.7.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#前提条件-1"><i class="fa fa-check"></i><b>4.7.3</b> 前提条件</a></li>
+<li class="chapter" data-level="4.7.4" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#load命令示例"><i class="fa fa-check"></i><b>4.7.4</b> LOAD命令示例</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#cte公用表表达式介绍"><i class="fa fa-check"></i><b>4.8</b> CTE（公用表表达式）介绍</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#功能介绍-2"><i class="fa fa-check"></i><b>4.8.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="4.8.2" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#命令格式-4"><i class="fa fa-check"></i><b>4.8.2</b> 命令格式</a></li>
+<li class="chapter" data-level="4.8.3" data-path="dml-data-manipulation-language.html"><a href="dml-data-manipulation-language.html#使用示例-5"><i class="fa fa-check"></i><b>4.8.3</b> 使用示例</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dql操作select.html"><a href="dql操作select.html"><i class="fa fa-check"></i><b>5</b> DQL操作（SELECT）</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="dql操作select.html"><a href="dql操作select.html#select语法"><i class="fa fa-check"></i><b>5.1</b> SELECT语法</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-3"><i class="fa fa-check"></i><b>5.1.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.1.2" data-path="dql操作select.html"><a href="dql操作select.html#类型与功能"><i class="fa fa-check"></i><b>5.1.2</b> 类型与功能</a></li>
+<li class="chapter" data-level="5.1.3" data-path="dql操作select.html"><a href="dql操作select.html#说明"><i class="fa fa-check"></i><b>5.1.3</b> 说明</a></li>
+<li class="chapter" data-level="5.1.4" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-5"><i class="fa fa-check"></i><b>5.1.4</b> 命令格式</a></li>
+<li class="chapter" data-level="5.1.5" data-path="dql操作select.html"><a href="dql操作select.html#示例数据"><i class="fa fa-check"></i><b>5.1.5</b> 示例数据</a></li>
+<li class="chapter" data-level="5.1.6" data-path="dql操作select.html"><a href="dql操作select.html#with子句cte"><i class="fa fa-check"></i><b>5.1.6</b> WITH子句（cte）</a></li>
+<li class="chapter" data-level="5.1.7" data-path="dql操作select.html"><a href="dql操作select.html#列表达式select_expr"><i class="fa fa-check"></i><b>5.1.7</b> 列表达式（SELECT_expr）</a></li>
+<li class="chapter" data-level="5.1.8" data-path="dql操作select.html"><a href="dql操作select.html#说明-1"><i class="fa fa-check"></i><b>5.1.8</b> 说明</a></li>
+<li class="chapter" data-level="5.1.9" data-path="dql操作select.html"><a href="dql操作select.html#排除列except_expr"><i class="fa fa-check"></i><b>5.1.9</b> 排除列（except_expr）</a></li>
+<li class="chapter" data-level="5.1.10" data-path="dql操作select.html"><a href="dql操作select.html#修改列replace_expr"><i class="fa fa-check"></i><b>5.1.10</b> 修改列（replace_expr）</a></li>
+<li class="chapter" data-level="5.1.11" data-path="dql操作select.html"><a href="dql操作select.html#目标表信息table_reference"><i class="fa fa-check"></i><b>5.1.11</b> 目标表信息（table_reference）</a></li>
+<li class="chapter" data-level="5.1.12" data-path="dql操作select.html"><a href="dql操作select.html#where子句where_condition"><i class="fa fa-check"></i><b>5.1.12</b> WHERE子句（where_condition）</a></li>
+<li class="chapter" data-level="5.1.13" data-path="dql操作select.html"><a href="dql操作select.html#group-by分组查询col_list"><i class="fa fa-check"></i><b>5.1.13</b> GROUP BY分组查询（col_list）</a></li>
+<li class="chapter" data-level="5.1.14" data-path="dql操作select.html"><a href="dql操作select.html#having子句having_condition"><i class="fa fa-check"></i><b>5.1.14</b> HAVING子句（having_condition）</a></li>
+<li class="chapter" data-level="5.1.15" data-path="dql操作select.html"><a href="dql操作select.html#order-by全局排序order_condition"><i class="fa fa-check"></i><b>5.1.15</b> ORDER BY全局排序（order_condition）</a></li>
+<li class="chapter" data-level="5.1.16" data-path="dql操作select.html"><a href="dql操作select.html#limit限制输出行数number"><i class="fa fa-check"></i><b>5.1.16</b> LIMIT限制输出行数（number）</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="dql操作select.html"><a href="dql操作select.html#select语序"><i class="fa fa-check"></i><b>5.2</b> SELECT语序</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="dql操作select.html"><a href="dql操作select.html#执行语序"><i class="fa fa-check"></i><b>5.2.1</b> 执行语序</a></li>
+<li class="chapter" data-level="5.2.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-1"><i class="fa fa-check"></i><b>5.2.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.2.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-6"><i class="fa fa-check"></i><b>5.2.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="dql操作select.html"><a href="dql操作select.html#子查询subquery"><i class="fa fa-check"></i><b>5.3</b> 子查询（SUBQUERY）</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-4"><i class="fa fa-check"></i><b>5.3.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.3.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-2"><i class="fa fa-check"></i><b>5.3.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.3.3" data-path="dql操作select.html"><a href="dql操作select.html#基础子查询"><i class="fa fa-check"></i><b>5.3.3</b> 基础子查询</a></li>
+<li class="chapter" data-level="5.3.4" data-path="dql操作select.html"><a href="dql操作select.html#in-subquery"><i class="fa fa-check"></i><b>5.3.4</b> IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.5" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-2"><i class="fa fa-check"></i><b>5.3.5</b> 注意事项</a></li>
+<li class="chapter" data-level="5.3.6" data-path="dql操作select.html"><a href="dql操作select.html#not-in-subquery"><i class="fa fa-check"></i><b>5.3.6</b> NOT IN SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.7" data-path="dql操作select.html"><a href="dql操作select.html#exists-subquery"><i class="fa fa-check"></i><b>5.3.7</b> EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.8" data-path="dql操作select.html"><a href="dql操作select.html#not-exists-subquery"><i class="fa fa-check"></i><b>5.3.8</b> NOT EXISTS SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.9" data-path="dql操作select.html"><a href="dql操作select.html#scalar-subquery"><i class="fa fa-check"></i><b>5.3.9</b> SCALAR SUBQUERY</a></li>
+<li class="chapter" data-level="5.3.10" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-9"><i class="fa fa-check"></i><b>5.3.10</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="dql操作select.html"><a href="dql操作select.html#交集并集和补集操作"><i class="fa fa-check"></i><b>5.4</b> 交集、并集和补集操作</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-5"><i class="fa fa-check"></i><b>5.4.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.4.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-3"><i class="fa fa-check"></i><b>5.4.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.4.3" data-path="dql操作select.html"><a href="dql操作select.html#交集intersect"><i class="fa fa-check"></i><b>5.4.3</b> 交集(Intersect)</a></li>
+<li class="chapter" data-level="5.4.4" data-path="dql操作select.html"><a href="dql操作select.html#并集union"><i class="fa fa-check"></i><b>5.4.4</b> 并集(Union)</a></li>
+<li class="chapter" data-level="5.4.5" data-path="dql操作select.html"><a href="dql操作select.html#补集except"><i class="fa fa-check"></i><b>5.4.5</b> 补集(Except)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="dql操作select.html"><a href="dql操作select.html#join"><i class="fa fa-check"></i><b>5.5</b> Join</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的join操作"><i class="fa fa-check"></i><b>5.5.1</b> MaxCompute支持的Join操作</a></li>
+<li class="chapter" data-level="5.5.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-4"><i class="fa fa-check"></i><b>5.5.2</b> 注意事项</a></li>
+<li class="chapter" data-level="5.5.3" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-11"><i class="fa fa-check"></i><b>5.5.3</b> 命令格式</a></li>
+<li class="chapter" data-level="5.5.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-3"><i class="fa fa-check"></i><b>5.5.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.5.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-13"><i class="fa fa-check"></i><b>5.5.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="dql操作select.html"><a href="dql操作select.html#semi-join-半连接"><i class="fa fa-check"></i><b>5.6</b> SEMI join 半连接</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="dql操作select.html"><a href="dql操作select.html#maxcompute支持的半连接操作"><i class="fa fa-check"></i><b>5.6.1</b> MaxCompute支持的半连接操作</a></li>
+<li class="chapter" data-level="5.6.2" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-4"><i class="fa fa-check"></i><b>5.6.2</b> 示例数据</a></li>
+<li class="chapter" data-level="5.6.3" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-14"><i class="fa fa-check"></i><b>5.6.3</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="dql操作select.html"><a href="dql操作select.html#mapjoin-hint"><i class="fa fa-check"></i><b>5.7</b> MAPJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="dql操作select.html"><a href="dql操作select.html#功能介绍-6"><i class="fa fa-check"></i><b>5.7.1</b> 功能介绍</a></li>
+<li class="chapter" data-level="5.7.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-2"><i class="fa fa-check"></i><b>5.7.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.7.3" data-path="dql操作select.html"><a href="dql操作select.html#使用方法"><i class="fa fa-check"></i><b>5.7.3</b> 使用方法</a></li>
+<li class="chapter" data-level="5.7.4" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-5"><i class="fa fa-check"></i><b>5.7.4</b> 示例数据</a></li>
+<li class="chapter" data-level="5.7.5" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-15"><i class="fa fa-check"></i><b>5.7.5</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="dql操作select.html"><a href="dql操作select.html#distributed-mapjoin"><i class="fa fa-check"></i><b>5.8</b> DISTRIBUTED MAPJOIN</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-5"><i class="fa fa-check"></i><b>5.8.1</b> 注意事项</a></li>
+<li class="chapter" data-level="5.8.2" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-1"><i class="fa fa-check"></i><b>5.8.2</b> 使用方法</a></li>
+<li class="chapter" data-level="5.8.3" data-path="dql操作select.html"><a href="dql操作select.html#语法示例"><i class="fa fa-check"></i><b>5.8.3</b> 语法示例</a></li>
+<li class="chapter" data-level="5.8.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-16"><i class="fa fa-check"></i><b>5.8.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="dql操作select.html"><a href="dql操作select.html#skewjoin-hint"><i class="fa fa-check"></i><b>5.9</b> SKEWJOIN HINT</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-2"><i class="fa fa-check"></i><b>5.9.1</b> 使用方法</a></li>
+<li class="chapter" data-level="5.9.2" data-path="dql操作select.html"><a href="dql操作select.html#注意事项-6"><i class="fa fa-check"></i><b>5.9.2</b> 注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter"><i class="fa fa-check"></i><b>5.10</b> 动态过滤器（Dynamic Filter）</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="dql操作select.html"><a href="dql操作select.html#动态过滤器dynamic-filter-1"><i class="fa fa-check"></i><b>5.10.1</b> 动态过滤器（Dynamic Filter）</a></li>
+<li class="chapter" data-level="5.10.2" data-path="dql操作select.html"><a href="dql操作select.html#优化思路"><i class="fa fa-check"></i><b>5.10.2</b> 优化思路</a></li>
+<li class="chapter" data-level="5.10.3" data-path="dql操作select.html"><a href="dql操作select.html#应用场景-1"><i class="fa fa-check"></i><b>5.10.3</b> 应用场景</a></li>
+<li class="chapter" data-level="5.10.4" data-path="dql操作select.html"><a href="dql操作select.html#动态范围过滤器或布隆过滤器dynamic-rangebloom-filter"><i class="fa fa-check"></i><b>5.10.4</b> 动态范围过滤器或布隆过滤器（Dynamic Range|Bloom Filter）</a></li>
+<li class="chapter" data-level="5.10.5" data-path="dql操作select.html"><a href="dql操作select.html#动态分区裁剪dynamic-partition-pruning"><i class="fa fa-check"></i><b>5.10.5</b> 动态分区裁剪（Dynamic Partition Pruning）</a></li>
+<li class="chapter" data-level="5.10.6" data-path="dql操作select.html"><a href="dql操作select.html#使用方法-3"><i class="fa fa-check"></i><b>5.10.6</b> 使用方法</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="dql操作select.html"><a href="dql操作select.html#grouping-sets"><i class="fa fa-check"></i><b>5.11</b> grouping sets</a>
+<ul>
+<li class="chapter" data-level="5.11.1" data-path="dql操作select.html"><a href="dql操作select.html#cube-rollup"><i class="fa fa-check"></i><b>5.11.1</b> CUBE | ROLLUP</a></li>
+<li class="chapter" data-level="5.11.2" data-path="dql操作select.html"><a href="dql操作select.html#grouping-grouping_id"><i class="fa fa-check"></i><b>5.11.2</b> GROUPING | GROUPING_ID</a></li>
+<li class="chapter" data-level="5.11.3" data-path="dql操作select.html"><a href="dql操作select.html#grouping__id"><i class="fa fa-check"></i><b>5.11.3</b> GROUPING__ID</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="dql操作select.html"><a href="dql操作select.html#windows-关键字"><i class="fa fa-check"></i><b>5.12</b> Windows 关键字</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-12"><i class="fa fa-check"></i><b>5.12.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.12.2" data-path="dql操作select.html"><a href="dql操作select.html#使用限制-3"><i class="fa fa-check"></i><b>5.12.2</b> 使用限制</a></li>
+<li class="chapter" data-level="5.12.3" data-path="dql操作select.html"><a href="dql操作select.html#示例数据-6"><i class="fa fa-check"></i><b>5.12.3</b> 示例数据</a></li>
+<li class="chapter" data-level="5.12.4" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-17"><i class="fa fa-check"></i><b>5.12.4</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="dql操作select.html"><a href="dql操作select.html#tablesample采样"><i class="fa fa-check"></i><b>5.13</b> TABLESAMPLE采样</a>
+<ul>
+<li class="chapter" data-level="5.13.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-13"><i class="fa fa-check"></i><b>5.13.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.13.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-18"><i class="fa fa-check"></i><b>5.13.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.14" data-path="dql操作select.html"><a href="dql操作select.html#qualify"><i class="fa fa-check"></i><b>5.14</b> QUALIFY</a>
+<ul>
+<li class="chapter" data-level="5.14.1" data-path="dql操作select.html"><a href="dql操作select.html#命令格式-14"><i class="fa fa-check"></i><b>5.14.1</b> 命令格式</a></li>
+<li class="chapter" data-level="5.14.2" data-path="dql操作select.html"><a href="dql操作select.html#使用示例-19"><i class="fa fa-check"></i><b>5.14.2</b> 使用示例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.15" data-path="dql操作select.html"><a href="dql操作select.html#pivotunpivot"><i class="fa fa-check"></i><b>5.15</b> PIVOT、UNPIVOT</a>
+<ul>
+<li class="chapter" data-level="5.15.1" data-path="dql操作select.html"><a href="dql操作select.html#pivot关键字"><i class="fa fa-check"></i><b>5.15.1</b> PIVOT关键字</a></li>
+<li class="chapter" data-level="5.15.2" data-path="dql操作select.html"><a href="dql操作select.html#unpivot关键字"><i class="fa fa-check"></i><b>5.15.2</b> UNPIVOT关键字</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="日期与时间函数.html"><a href="日期与时间函数.html"><i class="fa fa-check"></i><b>6</b> 日期与时间函数</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="日期与时间函数.html"><a href="日期与时间函数.html#函数总结"><i class="fa fa-check"></i><b>6.1</b> 函数总结</a></li>
+<li class="chapter" data-level="6.2" data-path="日期与时间函数.html"><a href="日期与时间函数.html#函数例子"><i class="fa fa-check"></i><b>6.2</b> 函数例子</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="数学函数.html"><a href="数学函数.html"><i class="fa fa-check"></i><b>7</b> 数学函数</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="数学函数.html"><a href="数学函数.html#数学函数总结"><i class="fa fa-check"></i><b>7.1</b> 数学函数总结</a></li>
+<li class="chapter" data-level="7.2" data-path="数学函数.html"><a href="数学函数.html#函数例子-1"><i class="fa fa-check"></i><b>7.2</b> 函数例子</a></li>
+<li class="chapter" data-level="7.3" data-path="数学函数.html"><a href="数学函数.html#参考"><i class="fa fa-check"></i><b>7.3</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="其他函数.html"><a href="其他函数.html"><i class="fa fa-check"></i><b>8</b> 其他函数</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="其他函数.html"><a href="其他函数.html#窗口函数-1"><i class="fa fa-check"></i><b>8.1</b> 窗口函数</a></li>
+<li class="chapter" data-level="8.2" data-path="其他函数.html"><a href="其他函数.html#聚合函数-1"><i class="fa fa-check"></i><b>8.2</b> 聚合函数</a></li>
+<li class="chapter" data-level="8.3" data-path="其他函数.html"><a href="其他函数.html#字符串函数"><i class="fa fa-check"></i><b>8.3</b> 字符串函数</a></li>
+<li class="chapter" data-level="8.4" data-path="其他函数.html"><a href="其他函数.html#复杂类型函数"><i class="fa fa-check"></i><b>8.4</b> 复杂类型函数</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="其他函数.html"><a href="其他函数.html#array函数"><i class="fa fa-check"></i><b>8.4.1</b> ARRAY函数</a></li>
+<li class="chapter" data-level="8.4.2" data-path="其他函数.html"><a href="其他函数.html#map函数"><i class="fa fa-check"></i><b>8.4.2</b> MAP函数</a></li>
+<li class="chapter" data-level="8.4.3" data-path="其他函数.html"><a href="其他函数.html#struct函数"><i class="fa fa-check"></i><b>8.4.3</b> STRUCT函数</a></li>
+<li class="chapter" data-level="8.4.4" data-path="其他函数.html"><a href="其他函数.html#json函数"><i class="fa fa-check"></i><b>8.4.4</b> JSON函数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="其他函数.html"><a href="其他函数.html#其他函数-1"><i class="fa fa-check"></i><b>8.5</b> 其他函数</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/liamamilin" target="blank">ODPS SQL</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ODPS SQL</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ddl-data-definition-language" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> DDL (Data Definition Language)<a href="ddl-data-definition-language.html#ddl-data-definition-language" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>ODPS SQL中的DDL（Data Definition Language）语句用于定义和管理数据库中的对象，如表、分区、视图等。本文将逐一介绍ODPS SQL中常用的DDL语句，包括表操作、分区和列操作、生命周期操作、视图操作、物化视图操作、参数化视图以及Schema操作，并提供相应的语法和示例。</p>
+<div id="表操作" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> 表操作<a href="ddl-data-definition-language.html#表操作" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>创建表、修改表的所有权、修改表的保护属性、修改表的最后修改时间、修改表的生命周期、删除表、查看表的详细信息、获取表的元数据、获取表的分区信息以及列出所有表的语法和相关的使用场景。</p>
+<div id="创建表create-table" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> 创建表（Create Table）<a href="ddl-data-definition-language.html#创建表create-table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>语法</p>
+<pre><code>CREATE TABLE table_name (column_name data_type [comment &#39;column_comment&#39;], ...) 
+COMMENT &#39;table_comment&#39; 
+PARTITIONED BY (partition_column data_type) 
+LIFECYCLE days;
+
+</code></pre>
+<p>示例：</p>
+<pre><code>CREATE TABLE employee (id BIGINT, name STRING COMMENT &#39;员工姓名&#39;, age BIGINT COMMENT &#39;员工年龄&#39;) 
+COMMENT &#39;员工信息表&#39; 
+PARTITIONED BY (dept STRING) 
+LIFECYCLE 365;
+</code></pre>
+</div>
+<div id="修改表的所有权alter-table-owner" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> 修改表的所有权（Alter Table Owner）<a href="ddl-data-definition-language.html#修改表的所有权alter-table-owner" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>语法：</p>
+<pre><code>ALTER TABLE table_name SET OWNER &#39;new_owner&#39;;
+</code></pre>
+<p>示例：</p>
+<pre><code>ALTER TABLE employee SET OWNER &#39;admin&#39;;
+</code></pre>
+</div>
+<div id="修改表的生命周期alter-table-lifecycle" class="section level3 hasAnchor" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> 修改表的生命周期（Alter Table Lifecycle）<a href="ddl-data-definition-language.html#修改表的生命周期alter-table-lifecycle" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>语法：</p>
+<pre><code>ALTER TABLE table_name SET LIFECYCLE days;
+</code></pre>
+<p>示例：</p>
+<pre><code>ALTER TABLE employee SET LIFECYCLE 730;
+</code></pre>
+</div>
+<div id="删除表drop-table" class="section level3 hasAnchor" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> 删除表（Drop Table）<a href="ddl-data-definition-language.html#删除表drop-table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>语法：</p>
+<pre><code>DROP TABLE table_name;
+</code></pre>
+<p>示例：</p>
+<pre><code>DROP TABLE employee;
+</code></pre>
+</div>
+<div id="查看表的详细信息describe-table" class="section level3 hasAnchor" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> 查看表的详细信息（Describe Table）<a href="ddl-data-definition-language.html#查看表的详细信息describe-table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>语法：</p>
+<pre><code>DESCRIBE table_name;
+</code></pre>
+<p>示例：</p>
+<pre><code>DESCRIBE employee;
+</code></pre>
+</div>
+<div id="获取表的元数据list-table" class="section level3 hasAnchor" number="3.1.6">
+<h3><span class="header-section-number">3.1.6</span> 获取表的元数据（List Table）<a href="ddl-data-definition-language.html#获取表的元数据list-table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>语法：</p>
+<pre><code>SHOW TABLE EXTENDED LIKE &#39;table_name&#39; PARTITION(partition_description);
+</code></pre>
+<p>示例：</p>
+<pre><code>SHOW TABLE EXTENDED LIKE &#39;employee&#39; PARTITION(dept=&#39;HR&#39;);
+</code></pre>
+</div>
+<div id="获取表的分区信息list-partitions" class="section level3 hasAnchor" number="3.1.7">
+<h3><span class="header-section-number">3.1.7</span> 获取表的分区信息（List Partitions）<a href="ddl-data-definition-language.html#获取表的分区信息list-partitions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>语法：</p>
+<pre><code>SHOW PARTITIONS table_name;
+</code></pre>
+<p>示例：</p>
+<pre><code>SHOW PARTITIONS employee;
+</code></pre>
+</div>
+<div id="修改表的注释" class="section level3 hasAnchor" number="3.1.8">
+<h3><span class="header-section-number">3.1.8</span> 修改表的注释<a href="ddl-data-definition-language.html#修改表的注释" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>alter table sale_detail set comment &#39;new coments for table sale_detail&#39;;</code></pre>
+</div>
+<div id="重命名表" class="section level3 hasAnchor" number="3.1.9">
+<h3><span class="header-section-number">3.1.9</span> 重命名表<a href="ddl-data-definition-language.html#重命名表" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>alter table sale_detail rename to sale_detail_rename;</code></pre>
+</div>
+</div>
+<div id="分区和列操作" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> 分区和列操作<a href="ddl-data-definition-language.html#分区和列操作" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>以下内容是关于MaxCompute分区操作的整理，包括新增分区、删除分区、修改分区、合并分区和清空分区数据的相关命令和使用示例。</p>
+<div id="新增分区" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> 新增分区<a href="ddl-data-definition-language.html#新增分区" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>限制条件</strong>：</p>
+<ul>
+<li>单表支持的分区数量上限为6万个。</li>
+<li>必须指明全部的分区。</li>
+<li>仅支持新增分区值，不支持新增分区字段。</li>
+</ul></li>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; add [if not exists] partition &lt;pt_spec&gt; [partition &lt;pt_spec&gt; partition &lt;pt_spec&gt;...];</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待新增分区的分区表名称。</li>
+<li><code>if not exists</code>：如果未指定且同名的分区已存在，会执行失败并返回报错。</li>
+<li><code>pt_spec</code>：新增的分区，格式为<code>(partition_col1 = partition_col_value1, partition_col2 = partition_col_value2, ...)</code>。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb18-1"><a href="ddl-data-definition-language.html#cb18-1" tabindex="-1"></a><span class="co">-- 示例1：添加一个分区</span></span>
+<span id="cb18-2"><a href="ddl-data-definition-language.html#cb18-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;201312&#39;</span>, region<span class="op">=</span><span class="st">&#39;hangzhou&#39;</span>);</span>
+<span id="cb18-3"><a href="ddl-data-definition-language.html#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="ddl-data-definition-language.html#cb18-4" tabindex="-1"></a><span class="co">-- 示例2：同时添加两个分区</span></span>
+<span id="cb18-5"><a href="ddl-data-definition-language.html#cb18-5" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">add</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;201312&#39;</span>, region<span class="op">=</span><span class="st">&#39;beijing&#39;</span>) <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;201312&#39;</span>, region<span class="op">=</span><span class="st">&#39;shanghai&#39;</span>);</span></code></pre></div></li>
+</ul>
+</div>
+<div id="删除分区" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> 删除分区<a href="ddl-data-definition-language.html#删除分区" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>限制条件</strong>：</p>
+<ul>
+<li>每个分区过滤子句只能访问一个分区列。</li>
+<li>表达式用到的函数必须是内建的Scalar函数。</li>
+</ul></li>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>-- 未指定筛选条件
+alter table &lt;table_name&gt; drop [if exists] partition &lt;pt_spec&gt;;
+-- 指定筛选条件
+alter table &lt;table_name&gt; drop [if exists] partition &lt;partition_filtercondition&gt;;</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待删除分区的分区表名称。</li>
+<li><code>if exists</code>：如果未指定且分区不存在，则返回报错。</li>
+<li><code>pt_spec</code>：删除的分区，格式为<code>(partition_col1 = partition_col_value1, partition_col2 = partition_col_value2, ...)</code>。</li>
+<li><code>partition_filtercondition</code>：分区筛选条件。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb20-1"><a href="ddl-data-definition-language.html#cb20-1" tabindex="-1"></a><span class="co">-- 示例：从表sale_detail中删除一个分区</span></span>
+<span id="cb20-2"><a href="ddl-data-definition-language.html#cb20-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">drop</span> <span class="cf">if</span> <span class="kw">exists</span> <span class="kw">partition</span>(sale_date<span class="op">=</span><span class="st">&#39;201312&#39;</span>, region<span class="op">=</span><span class="st">&#39;hangzhou&#39;</span>);</span></code></pre></div></li>
+</ul>
+</div>
+<div id="修改分区" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> 修改分区<a href="ddl-data-definition-language.html#修改分区" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>修改分区的更新时间</strong>：
+<ul>
+<li><p><strong>命令格式</strong>：<code>alter table &lt;table_name&gt; touch partition (&lt;pt_spec&gt;);</code></p></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb21-1"><a href="ddl-data-definition-language.html#cb21-1" tabindex="-1"></a><span class="co">-- 修改表sale_detail的分区sale_date=&#39;201312&#39;, region=&#39;shanghai&#39;的LastModifiedTime</span></span>
+<span id="cb21-2"><a href="ddl-data-definition-language.html#cb21-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail touch <span class="kw">partition</span> (sale_date<span class="op">=</span><span class="st">&#39;201312&#39;</span>, region<span class="op">=</span><span class="st">&#39;shanghai&#39;</span>);</span></code></pre></div></li>
+</ul></li>
+<li><strong>修改分区值</strong>：
+<ul>
+<li><p><strong>命令格式</strong>：<code>alter table &lt;table_name&gt; partition (&lt;pt_spec&gt;) rename to partition (&lt;new_pt_spec&gt;);</code></p></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb22-1"><a href="ddl-data-definition-language.html#cb22-1" tabindex="-1"></a><span class="co">-- 修改表sale_detail的分区值</span></span>
+<span id="cb22-2"><a href="ddl-data-definition-language.html#cb22-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">partition</span> (sale_date <span class="op">=</span> <span class="st">&#39;201312&#39;</span>, region <span class="op">=</span> <span class="st">&#39;hangzhou&#39;</span>) <span class="kw">rename</span> <span class="kw">to</span> <span class="kw">partition</span> (sale_date <span class="op">=</span> <span class="st">&#39;201310&#39;</span>, region <span class="op">=</span> <span class="st">&#39;beijing&#39;</span>);</span></code></pre></div></li>
+</ul></li>
+</ul>
+</div>
+<div id="合并分区" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> 合并分区<a href="ddl-data-definition-language.html#合并分区" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>使用限制</strong>：</p>
+<ul>
+<li>不支持外部表，聚簇表合并后的分区会消除聚簇属性。</li>
+<li>一次性合并分区数量限制为4000个。</li>
+</ul></li>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; merge [if exists] partition (&lt;predicate&gt;) [, partition(&lt;predicate2&gt;) ...] overwrite partition (&lt;fullpartitionSpec&gt;) [purge];</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待合并分区的分区表名称。</li>
+<li><code>if exists</code>：如果未指定且分区不存在，会执行失败并返回报错。</li>
+<li><code>predicate</code>：筛选待合并分区需要满足的条件。</li>
+<li><code>fullpartitionSpec</code>：目标分区信息。</li>
+<li><code>purge</code>：可选关键字。选择该字段，则会</li>
+</ul></li>
+</ul>
+<p>清理session目录，默认清理3天内的日志。</p>
+<ul>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="ddl-data-definition-language.html#cb24-1" tabindex="-1"></a><span class="co">-- 合并所有满足hh=&#39;00&#39;的分区到hh=&#39;00&#39;，mm=&#39;00&#39;中</span></span>
+<span id="cb24-2"><a href="ddl-data-definition-language.html#cb24-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> intpstringstringstring <span class="kw">merge</span> <span class="kw">partition</span>(hh<span class="op">=</span><span class="st">&#39;00&#39;</span>) overwrite <span class="kw">partition</span>(ds<span class="op">=</span><span class="st">&#39;20181101&#39;</span>, hh<span class="op">=</span><span class="st">&#39;00&#39;</span>, mm<span class="op">=</span><span class="st">&#39;00&#39;</span>);</span></code></pre></div></li>
+</ul>
+</div>
+<div id="清空分区数据" class="section level3 hasAnchor" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> 清空分区数据<a href="ddl-data-definition-language.html#清空分区数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>-- 未指定筛选条件
+truncate table &lt;table_name&gt; partition &lt;pt_spec&gt;[, partition &lt;pt_spec&gt;....];
+-- 指定筛选条件
+truncate table &lt;table_name&gt; partition &lt;partition_filtercondition&gt;;</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待清空分区数据的分区表名称。</li>
+<li><code>pt_spec</code>：待清空数据的分区，格式为<code>(partition_col1 = partition_col_value1, partition_col2 = partition_col_value2, ...)</code>.</li>
+<li><code>partition_filtercondition</code>：分区筛选条件。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="ddl-data-definition-language.html#cb26-1" tabindex="-1"></a><span class="co">-- 从表sale_detail中清空一个分区</span></span>
+<span id="cb26-2"><a href="ddl-data-definition-language.html#cb26-2" tabindex="-1"></a><span class="kw">truncate</span> <span class="kw">table</span> sale_detail <span class="kw">partition</span>(sale_date<span class="op">=</span><span class="st">&#39;201312&#39;</span>, region<span class="op">=</span><span class="st">&#39;hangzhou&#39;</span>);</span></code></pre></div></li>
+</ul>
+<p>以下内容是关于MaxCompute表结构修改操作的整理，包括添加列或注释、删除列、更改列数据类型、修改列的顺序、修改列名、修改列注释、修改列名及注释以及修改表的列非空属性的相关命令和使用示例。</p>
+</div>
+<div id="添加列或注释" class="section level3 hasAnchor" number="3.2.6">
+<h3><span class="header-section-number">3.2.6</span> 添加列或注释<a href="ddl-data-definition-language.html#添加列或注释" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; add columns (&lt;col_name1&gt; &lt;type1&gt; comment [&#39;&lt;col_comment&gt;&#39;][, &lt;col_name2&gt; &lt;type2&gt; comment &#39;&lt;col_comment&gt;&#39;...]);</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待新增列的表名称。</li>
+<li><code>col_name</code>：新增列的名称。</li>
+<li><code>type</code>：新增列的数据类型。</li>
+<li><code>col_comment</code>：新增列的注释。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="ddl-data-definition-language.html#cb28-1" tabindex="-1"></a><span class="co">-- 示例1：添加两个列</span></span>
+<span id="cb28-2"><a href="ddl-data-definition-language.html#cb28-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">add</span> <span class="kw">columns</span> (customer_name STRING, education BIGINT);</span>
+<span id="cb28-3"><a href="ddl-data-definition-language.html#cb28-3" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="ddl-data-definition-language.html#cb28-4" tabindex="-1"></a><span class="co">-- 示例2：添加两个列并同时添加列注释</span></span>
+<span id="cb28-5"><a href="ddl-data-definition-language.html#cb28-5" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">add</span> <span class="kw">columns</span> (customer_name STRING <span class="kw">comment</span> <span class="st">&#39;客户&#39;</span>, education BIGINT <span class="kw">comment</span> <span class="st">&#39;教育&#39;</span>);</span></code></pre></div></li>
+</ul>
+</div>
+<div id="删除列" class="section level3 hasAnchor" number="3.2.7">
+<h3><span class="header-section-number">3.2.7</span> 删除列<a href="ddl-data-definition-language.html#删除列" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; drop columns &lt;col_name1&gt;[, &lt;col_name2&gt;...];</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待删除列的表名称。</li>
+<li><code>col_name</code>：待删除的列名称。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb30-1"><a href="ddl-data-definition-language.html#cb30-1" tabindex="-1"></a><span class="co">-- 删除表sale_detail的列customer_id</span></span>
+<span id="cb30-2"><a href="ddl-data-definition-language.html#cb30-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">drop</span> <span class="kw">columns</span> customer_id;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="更改列数据类型" class="section level3 hasAnchor" number="3.2.8">
+<h3><span class="header-section-number">3.2.8</span> 更改列数据类型<a href="ddl-data-definition-language.html#更改列数据类型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; change [column] &lt;old_column_name&gt; &lt;new_column_name&gt; &lt;new_data_type&gt;;</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待修改列数据类型的表名称。</li>
+<li><code>old_column_name</code>：待修改列数据类型的列名称。</li>
+<li><code>new_column_name</code>：修改列数据类型后的列名称。</li>
+<li><code>new_data_type</code>：待修改的列修改后的数据类型。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb32-1"><a href="ddl-data-definition-language.html#cb32-1" tabindex="-1"></a><span class="co">-- 将mf_evol_t3表的id字段由int转化为bigint</span></span>
+<span id="cb32-2"><a href="ddl-data-definition-language.html#cb32-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> mf_evol_t3 <span class="kw">change</span> <span class="kw">id</span> <span class="kw">id</span> bigint;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="修改列的顺序" class="section level3 hasAnchor" number="3.2.9">
+<h3><span class="header-section-number">3.2.9</span> 修改列的顺序<a href="ddl-data-definition-language.html#修改列的顺序" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; change &lt;old_column_name&gt; &lt;new_column_name&gt; &lt;column_type&gt; after &lt;column_name&gt;;</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待修改列顺序的表名称。</li>
+<li><code>old_column_name</code>：待修改顺序的列的原始名称。</li>
+<li><code>new_col_name</code>：修改后的列名称。</li>
+<li><code>column_type</code>：待修改的列的原始数据类型。</li>
+<li><code>column_name</code>：将待调整顺序的列调整至此列之后。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb34-1"><a href="ddl-data-definition-language.html#cb34-1" tabindex="-1"></a><span class="co">-- 修改表sale_detail的列customer_id为customer并位于total_price之后</span></span>
+<span id="cb34-2"><a href="ddl-data-definition-language.html#cb34-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">change</span> customer_id customer string <span class="kw">after</span> total_price;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="修改列名" class="section level3 hasAnchor" number="3.2.10">
+<h3><span class="header-section-number">3.2.10</span> 修改列名<a href="ddl-data-definition-language.html#修改列名" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; change column &lt;old_col_name&gt; rename to &lt;new_col_name&gt;;</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待修改列名的表名称。</li>
+<li><code>old_col_name</code>：待修改的列名称。</li>
+<li><code>new_col_name</code>：修改后的列名称。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb36-1"><a href="ddl-data-definition-language.html#cb36-1" tabindex="-1"></a><span class="co">-- 修改表sale_detail的列名customer_name为customer</span></span>
+<span id="cb36-2"><a href="ddl-data-definition-language.html#cb36-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">change</span> <span class="kw">column</span> customer_name <span class="kw">rename</span> <span class="kw">to</span> customer;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="修改列注释" class="section level3 hasAnchor" number="3.2.11">
+<h3><span class="header-section-number">3.2.11</span> 修改列注释<a href="ddl-data-definition-language.html#修改列注释" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; change column &lt;col_name&gt; comment &#39;&lt;col_comment&gt;&#39;;</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待修改列注释的表名称。</li>
+<li><code>col_name</code>：待修改注释的列名称。</li>
+<li><code>col_comment</code>：修改后的注释信息。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb38-1"><a href="ddl-data-definition-language.html#cb38-1" tabindex="-1"></a><span class="co">-- 修改表sale_detail的列customer的注释</span></span>
+<span id="cb38-2"><a href="ddl-data-definition-language.html#cb38-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">change</span> <span class="kw">column</span> customer <span class="kw">comment</span> <span class="st">&#39;customer&#39;</span>;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="修改列名及注释" class="section level3 hasAnchor" number="3.2.12">
+<h3><span class="header-section-number">3.2.12</span> 修改列名及注释<a href="ddl-data-definition-language.html#修改列名及注释" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>命令格式</strong>：</li>
+</ul>
+<pre><code>  alter table &lt;table_name&gt; change column &lt;old_col_name&gt; &lt;new_col_name&gt; &lt;column_type&gt; comment &quot;&lt;col_comment&gt;&quot;;</code></pre>
+<ul>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：需要修改列名以及注释的表名称。</li>
+<li><code>old_col_name</code>：需要修改的列名称。</li>
+<li><code>new_col_name</code>：新的列名称。</li>
+<li><code>column_type</code>：列的数据类型。</li>
+<li><code>col_comment</code>：修改后的注释信息。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb40-1"><a href="ddl-data-definition-language.html#cb40-1" tabindex="-1"></a><span class="co">-- 修改表sale_detail的列名customer_name为customer_newname，注释“客户”为“customer”</span></span>
+<span id="cb40-2"><a href="ddl-data-definition-language.html#cb40-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> sale_detail <span class="kw">change</span> <span class="kw">column</span> customer_name customer_newname STRING <span class="kw">comment</span> <span class="st">&#39;customer&#39;</span>;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="修改表的列非空属性" class="section level3 hasAnchor" number="3.2.13">
+<h3><span class="header-section-number">3.2.13</span> 修改表的列非空属性<a href="ddl-data-definition-language.html#修改表的列非空属性" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<pre><code>alter table &lt;table_name&gt; change column &lt;old_col_name&gt; null;</code></pre></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待修改列非空属性的表名称。</li>
+<li><code>old_col_name</code>：待修改的非分区列的名称。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb42-1"><a href="ddl-data-definition-language.html#cb42-1" tabindex="-1"></a><span class="co">-- 修改id列允许为NULL</span></span>
+<span id="cb42-2"><a href="ddl-data-definition-language.html#cb42-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">table</span> null_test <span class="kw">change</span> <span class="kw">column</span> <span class="kw">id</span> <span class="kw">null</span>;</span></code></pre></div></li>
+</ul>
+</div>
+</div>
+<div id="生命周期操作" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> 生命周期操作<a href="ddl-data-definition-language.html#生命周期操作" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>以下内容是关于MaxCompute表的生命周期设置的整理，包括生命周期的概念、设置生命周期的命令格式、参数说明以及使用示例。</p>
+<div id="生命周期概念" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> 生命周期概念<a href="ddl-data-definition-language.html#生命周期概念" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>MaxCompute表的生命周期指的是表（分区）数据从最后一次更新的时间算起，在经过指定的时间后没有变动，则此表（分区）将被MaxCompute自动回收。</li>
+<li>对于非分区表，当<code>LastModifiedTime</code>超过设定的生命周期时长时，MaxCompute会回收这些数据并删除对应的表。</li>
+<li>对于分区表，根据各分区的<code>LastModifiedTime</code>判断该分区数据是否该被回收，当最后一个分区被回收后，该表不会被删除。</li>
+</ul>
+</div>
+<div id="设置生命周期" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> 设置生命周期<a href="ddl-data-definition-language.html#设置生命周期" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="创建表时设置生命周期" class="section level4 hasAnchor" number="3.3.2.1">
+<h4><span class="header-section-number">3.3.2.1</span> 创建表时设置生命周期<a href="ddl-data-definition-language.html#创建表时设置生命周期" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb43-1"><a href="ddl-data-definition-language.html#cb43-1" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> (<span class="kw">columns</span>)</span>
+<span id="cb43-2"><a href="ddl-data-definition-language.html#cb43-2" tabindex="-1"></a>    partitioned <span class="kw">BY</span> (partition_columns)</span>
+<span id="cb43-3"><a href="ddl-data-definition-language.html#cb43-3" tabindex="-1"></a>    lifecycle <span class="op">&lt;</span>days<span class="op">&gt;</span>;</span></code></pre></div></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：需要设置生命周期的表名称。</li>
+<li><code>days</code>：生命周期时间，只能为正整数，单位为天。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb44-1"><a href="ddl-data-definition-language.html#cb44-1" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> test_lifecycle (<span class="kw">key</span> string) lifecycle <span class="dv">100</span>;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="修改已有表的生命周期" class="section level4 hasAnchor" number="3.3.2.2">
+<h4><span class="header-section-number">3.3.2.2</span> 修改已有表的生命周期<a href="ddl-data-definition-language.html#修改已有表的生命周期" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb45-1"><a href="ddl-data-definition-language.html#cb45-1" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> <span class="kw">SET</span> lifecycle <span class="op">&lt;</span>days<span class="op">&gt;</span>;</span></code></pre></div></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：需要修改生命周期的表名称。</li>
+<li><code>days</code>：修改后的生命周期时间，只能为正整数，单位为天。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb46-1"><a href="ddl-data-definition-language.html#cb46-1" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> test_lifecycle <span class="kw">SET</span> lifecycle <span class="dv">50</span>;</span></code></pre></div></li>
+</ul>
+</div>
+</div>
+<div id="禁止或恢复生命周期" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> 禁止或恢复生命周期<a href="ddl-data-definition-language.html#禁止或恢复生命周期" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb47-1"><a href="ddl-data-definition-language.html#cb47-1" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> <span class="op">&lt;</span>table_name<span class="op">&gt;</span> [<span class="op">&lt;</span>pt_spec<span class="op">&gt;</span>] {<span class="kw">enable</span>|<span class="kw">disable</span>} lifecycle;</span></code></pre></div></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>table_name</code>：待禁止或恢复生命周期的表的名称。</li>
+<li><code>pt_spec</code>：待禁止或恢复生命周期表的分区信息，对于有多级分区的表，必须指明全部的分区值。</li>
+<li><code>enable</code>：恢复表或分区的生命周期功能。</li>
+<li><code>disable</code>：禁止表或分区的生命周期功能。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb48-1"><a href="ddl-data-definition-language.html#cb48-1" tabindex="-1"></a><span class="co">-- 禁止表trans的生命周期功能</span></span>
+<span id="cb48-2"><a href="ddl-data-definition-language.html#cb48-2" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> trans <span class="kw">disable</span> lifecycle;</span>
+<span id="cb48-3"><a href="ddl-data-definition-language.html#cb48-3" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="ddl-data-definition-language.html#cb48-4" tabindex="-1"></a><span class="co">-- 禁止表trans中时间为20141111分区的生命周期功能</span></span>
+<span id="cb48-5"><a href="ddl-data-definition-language.html#cb48-5" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> trans <span class="kw">partition</span> (dt<span class="op">=</span><span class="st">&#39;20141111&#39;</span>) <span class="kw">disable</span> lifecycle;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="注意事项-1" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> 注意事项<a href="ddl-data-definition-language.html#注意事项-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>当项目级别与表级别的设置发生冲突，会优先使用表级别的设置。</li>
+<li>为分区表设置生命周期时，该生命周期设置将应用于整个表，包括所有的分区，不支持在分区级别单独设置或修改生命周期时长。</li>
+<li>数据被回收后，默认在回收站保留一天，超过一天，数据将被永久清理，清理后将无法恢复。</li>
+<li>生命周期主要提供定期回收表或分区的功能，每天根据服务的繁忙程度，不定时回收。不能确保表或分区的生命周期到期后，立刻被回收。</li>
+<li>在进行数据写入、更新和删除操作时，会更新<code>LastModifiedTime</code>；而修改生命周期时，不会影响<code>LastModifiedTime</code>。</li>
+</ul>
+</div>
+</div>
+<div id="视图操作" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> 视图操作<a href="ddl-data-definition-language.html#视图操作" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>以下内容是关于MaxCompute视图操作的整理，包括创建或更新视图、重命名视图、查看视图、删除视图和修改视图的所有人的相关命令和使用示例。</p>
+<div id="视图操作命令" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> 视图操作命令<a href="ddl-data-definition-language.html#视图操作命令" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="创建或更新视图" class="section level4 hasAnchor" number="3.4.1.1">
+<h4><span class="header-section-number">3.4.1.1</span> 创建或更新视图<a href="ddl-data-definition-language.html#创建或更新视图" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb49-1"><a href="ddl-data-definition-language.html#cb49-1" tabindex="-1"></a><span class="kw">create</span> [<span class="kw">or</span> <span class="kw">replace</span>] <span class="kw">view</span> [<span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span>] <span class="op">&lt;</span>view_name<span class="op">&gt;</span></span>
+<span id="cb49-2"><a href="ddl-data-definition-language.html#cb49-2" tabindex="-1"></a>    [(<span class="op">&lt;</span>col_name<span class="op">&gt;</span> [<span class="kw">comment</span> <span class="op">&lt;</span>col_comment<span class="op">&gt;</span>], <span class="op">..</span>.)]</span>
+<span id="cb49-3"><a href="ddl-data-definition-language.html#cb49-3" tabindex="-1"></a>    [<span class="kw">comment</span> <span class="op">&lt;</span>view_comment<span class="op">&gt;</span>]</span>
+<span id="cb49-4"><a href="ddl-data-definition-language.html#cb49-4" tabindex="-1"></a>    <span class="kw">as</span> <span class="op">&lt;</span>select_statement<span class="op">&gt;</span>;</span></code></pre></div></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>or replace</code>：可选。更新视图需要携带该字段。</li>
+<li><code>if not exists</code>：可选。如果视图已经存在时用<code>create view</code>会导致异常，可以用<code>create or replace view</code>重建视图。</li>
+<li><code>view_name</code>：必填。待创建或更新的视图的名称。</li>
+<li><code>col_name</code>：必填。待创建视图包含的列名称。</li>
+<li><code>col_comment</code>：可选。待创建视图的列的注释。</li>
+<li><code>view_comment</code>：可选。待创建视图的注释。</li>
+<li><code>select_statement</code>：必填。select查询语句，是视图的数据来源。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb50-1"><a href="ddl-data-definition-language.html#cb50-1" tabindex="-1"></a><span class="co">-- 基于表sale_detail创建视图sale_detail_view</span></span>
+<span id="cb50-2"><a href="ddl-data-definition-language.html#cb50-2" tabindex="-1"></a><span class="kw">create</span> <span class="kw">view</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> sale_detail_view</span>
+<span id="cb50-3"><a href="ddl-data-definition-language.html#cb50-3" tabindex="-1"></a>(store_name, customer_id, price, sale_date, region)</span>
+<span id="cb50-4"><a href="ddl-data-definition-language.html#cb50-4" tabindex="-1"></a><span class="kw">comment</span> <span class="st">&#39;a view for table sale_detail&#39;</span></span>
+<span id="cb50-5"><a href="ddl-data-definition-language.html#cb50-5" tabindex="-1"></a><span class="kw">as</span> <span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> sale_detail;</span>
+<span id="cb50-6"><a href="ddl-data-definition-language.html#cb50-6" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="ddl-data-definition-language.html#cb50-7" tabindex="-1"></a><span class="co">-- 基于表sale_detail更新视图sale_detail_view</span></span>
+<span id="cb50-8"><a href="ddl-data-definition-language.html#cb50-8" tabindex="-1"></a><span class="kw">create</span> <span class="kw">or</span> <span class="kw">replace</span> <span class="kw">view</span> <span class="cf">if</span> <span class="kw">not</span> <span class="kw">exists</span> sale_detail_view</span>
+<span id="cb50-9"><a href="ddl-data-definition-language.html#cb50-9" tabindex="-1"></a>(store_name, customer_id, price)</span>
+<span id="cb50-10"><a href="ddl-data-definition-language.html#cb50-10" tabindex="-1"></a><span class="kw">comment</span> <span class="st">&#39;a view for table sale_detail&#39;</span></span>
+<span id="cb50-11"><a href="ddl-data-definition-language.html#cb50-11" tabindex="-1"></a><span class="kw">as</span> <span class="kw">select</span> shop_name, customer_id, total_price <span class="kw">from</span> sale_detail;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="重命名视图" class="section level4 hasAnchor" number="3.4.1.2">
+<h4><span class="header-section-number">3.4.1.2</span> 重命名视图<a href="ddl-data-definition-language.html#重命名视图" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb51-1"><a href="ddl-data-definition-language.html#cb51-1" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">view</span> <span class="op">&lt;</span>view_name<span class="op">&gt;</span> <span class="kw">rename</span> <span class="kw">to</span> <span class="op">&lt;</span>new_view_name<span class="op">&gt;</span>;</span></code></pre></div></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>view_name</code>：必填。需要重命名视图的名称。</li>
+<li><code>new_view_name</code>：必填。新的视图名称。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb52-1"><a href="ddl-data-definition-language.html#cb52-1" tabindex="-1"></a><span class="co">-- 将视图sale_detail_view重命名为market</span></span>
+<span id="cb52-2"><a href="ddl-data-definition-language.html#cb52-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">view</span> sale_detail_view <span class="kw">rename</span> <span class="kw">to</span> market;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="查看视图" class="section level4 hasAnchor" number="3.4.1.3">
+<h4><span class="header-section-number">3.4.1.3</span> 查看视图<a href="ddl-data-definition-language.html#查看视图" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li>查看视图的命令详情请参见查看表或视图信息。</li>
+</ul>
+</div>
+<div id="删除视图" class="section level4 hasAnchor" number="3.4.1.4">
+<h4><span class="header-section-number">3.4.1.4</span> 删除视图<a href="ddl-data-definition-language.html#删除视图" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb53-1"><a href="ddl-data-definition-language.html#cb53-1" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">view</span> [<span class="cf">if</span> <span class="kw">exists</span>] <span class="op">&lt;</span>view_name<span class="op">&gt;</span>;</span></code></pre></div></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>if exists</code>：可选。如果视图不存在且没有指定if exists，会返回报错。</li>
+<li><code>view_name</code>：必填。待删除的视图的名称。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb54-1"><a href="ddl-data-definition-language.html#cb54-1" tabindex="-1"></a><span class="co">-- 删除视图sale_detail_view</span></span>
+<span id="cb54-2"><a href="ddl-data-definition-language.html#cb54-2" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">view</span> <span class="cf">if</span> <span class="kw">exists</span> sale_detail_view;</span></code></pre></div></li>
+</ul>
+</div>
+<div id="修改视图的所有人" class="section level4 hasAnchor" number="3.4.1.5">
+<h4><span class="header-section-number">3.4.1.5</span> 修改视图的所有人<a href="ddl-data-definition-language.html#修改视图的所有人" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p><strong>命令格式</strong>：</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb55-1"><a href="ddl-data-definition-language.html#cb55-1" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">view</span> <span class="op">&lt;</span>view_name<span class="op">&gt;</span> changeowner <span class="kw">to</span> <span class="op">&lt;</span>new_owner<span class="op">&gt;</span>;</span></code></pre></div></li>
+<li><p><strong>参数说明</strong>：</p>
+<ul>
+<li><code>view_name</code>：必填。待修改Owner的视图的名称。</li>
+<li><code>new_owner</code>：必填。修改后的Owner的账号。</li>
+</ul></li>
+<li><p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb56-1"><a href="ddl-data-definition-language.html#cb56-1" tabindex="-1"></a><span class="co">-- 将视图sale_detail_view的所有人修改为ALIYUN$xxx@aliyun.com</span></span>
+<span id="cb56-2"><a href="ddl-data-definition-language.html#cb56-2" tabindex="-1"></a><span class="kw">alter</span> <span class="kw">view</span> sale_detail_view changeowner <span class="kw">to</span> <span class="st">&#39;ALIYUN$xxx@aliyun.com&#39;</span>;</span></code></pre></div></li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="基本语法.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dml-data-manipulation-language.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-cross-refs.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
